@@ -1,2 +1,2 @@
 # PVP
-Projekto vystymo projekto WEB IS
+Produkto vystymo projekto WEB IS
