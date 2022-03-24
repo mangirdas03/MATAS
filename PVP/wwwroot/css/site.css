@@ -1,11 +1,7 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
-}
+
 
 /* Provide sufficient contrast against white background */
 a {
@@ -13,16 +9,72 @@ a {
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+
+.navbar {
+    min-height: 60px;
 }
+.container-fluid {
+    min-height: 60px;
+}
+.nav.navbar-nav li a {
+    min-height: 60px;
+    font-size: 18px;
+    padding-top: 18px;
+    font-weight: bold;
+    color: blue;
+    margin: auto;
+}
+
+
+a.navbar-brand{
+    min-height: 60px;
+}
+
+
+
+.nav.navbar-nav.navbar-right li a {
+    min-height: 60px;
+    font-size: 18px;
+    padding-top: 18px;
+    font-weight: bold;
+    margin: auto;
+}
+.nav.navbar-nav.navbar-right li a:hover {
+    min-height: 60px;
+    font-size: 18px;
+    padding-top: 18px;
+    font-weight: bold;
+    color: #4b2354;
+    margin: auto;
+    text-decoration: underline;
+}
+
+.nav.navbar-nav.navbar-left li a {
+    min-height: 60px;
+    font-size: 18px;
+    padding-top: 18px;
+    font-weight: bold;
+    margin: auto;
+}
+.nav.navbar-nav.navbar-left li a:hover {
+    min-height: 60px;
+    font-size: 18px;
+    padding-top: 18px;
+    font-weight: bold;
+    color: #4b2354;
+    margin: auto;
+    text-decoration: underline;
+}
+
+
+
+
 
 /* Sticky footer styles
 -------------------------------------------------- */
@@ -51,21 +103,115 @@ button.accept-policy {
   line-height: inherit;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
+
 html {
   position: relative;
   min-height: 100%;
 }
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+
+
+.container-main {
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    position: relative;
+    z-index: 1;
 }
+
+
+.container-main::before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(93,84,240,0.5);
+    background: -webkit-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
+    background: -o-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
+    background: -moz-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
+    background: linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
+    pointer-events: none;
+}
+
+.container-footer {
+    width: 100%;
+
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    position: relative;
+    z-index: 1;
+}
+
+
+.container-footer::before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(93,84,240,0.5);
+    background: -webkit-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
+    background: -o-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
+    background: -moz-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
+    background: linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
+    pointer-events: none;
+}
+
+
+/* FOOTER
+-------------------------------------------------- */
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    border-top: solid;
+    border-width: 1px;
+    border-color: #4b2354;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.footer .copyright {
+    text-align: center;
+    padding-top: 15px;
+    color: #4b2354;
+    padding-bottom: 10px;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.alignleft {
+    width: 33.33333%;
+    text-align: left;
+    font-size: 18px;
+}
+
+.aligncenter {
+    width: 33.33333%;
+    text-align: center;
+    font-size: 18px;
+}
+
+.alignright {
+    width: 33.33333%;
+    text-align: right;
+    font-size: 18px;
 }

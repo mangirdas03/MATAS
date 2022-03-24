@@ -18,10 +18,37 @@ namespace PVP.Controllers
             _logger = logger;
         }
 
+
         public IActionResult Index()
         {
             return View();
         }
+
+
+        [Route("login")]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public IActionResult Privacy()
         {

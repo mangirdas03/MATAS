@@ -37,3 +37,4 @@ C:\Users\gladi\Desktop\PVP\PVP\obj\Debug\net5.0\ref\PVP.dll
 C:\Users\gladi\Desktop\PVP\PVP\obj\Debug\net5.0\PVP.pdb
 C:\Users\gladi\Desktop\PVP\PVP\obj\Debug\net5.0\PVP.genruntimeconfig.cache
 C:\Users\gladi\Desktop\PVP\PVP\obj\Debug\net5.0\PVP.csproj.CopyComplete
+C:\Users\gladi\Desktop\PVP\PVP\obj\Debug\net5.0\Razor\Views\Home\Login.cshtml.g.cs
