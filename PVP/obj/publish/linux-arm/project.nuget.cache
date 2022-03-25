@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "aLYkwO+4GHKPAiclQ9pw5/xcriOZagX1TAhqjEaWC0Ahipr2e2ZXLtj5Hz1r3cKNEYL4bAjyZ1iWQ2aJHK6fjA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\gladi\\Desktop\\PVP\\PVP\\PVP.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\gladi\\.nuget\\packages\\microsoft.netcore.app.runtime.linux-arm\\5.0.15\\microsoft.netcore.app.runtime.linux-arm.5.0.15.nupkg.sha512",
+    "C:\\Users\\gladi\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.linux-arm\\5.0.15\\microsoft.aspnetcore.app.runtime.linux-arm.5.0.15.nupkg.sha512",
+    "C:\\Users\\gladi\\.nuget\\packages\\microsoft.netcore.app.host.linux-arm\\5.0.15\\microsoft.netcore.app.host.linux-arm.5.0.15.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -5,7 +5,6 @@ C:\Users\gladi\Desktop\PVP\PVP\bin\Debug\net5.0\PVP.deps.json
 C:\Users\gladi\Desktop\PVP\PVP\bin\Debug\net5.0\PVP.runtimeconfig.json
 C:\Users\gladi\Desktop\PVP\PVP\bin\Debug\net5.0\PVP.runtimeconfig.dev.json
 C:\Users\gladi\Desktop\PVP\PVP\bin\Debug\net5.0\PVP.dll
-C:\Users\gladi\Desktop\PVP\PVP\bin\Debug\net5.0\ref\PVP.dll
 C:\Users\gladi\Desktop\PVP\PVP\bin\Debug\net5.0\PVP.pdb
 C:\Users\gladi\Desktop\PVP\PVP\bin\Debug\net5.0\PVP.Views.dll
 C:\Users\gladi\Desktop\PVP\PVP\bin\Debug\net5.0\PVP.Views.pdb
@@ -38,3 +37,5 @@ C:\Users\gladi\Desktop\PVP\PVP\obj\Debug\net5.0\PVP.pdb
 C:\Users\gladi\Desktop\PVP\PVP\obj\Debug\net5.0\PVP.genruntimeconfig.cache
 C:\Users\gladi\Desktop\PVP\PVP\obj\Debug\net5.0\PVP.csproj.CopyComplete
 C:\Users\gladi\Desktop\PVP\PVP\obj\Debug\net5.0\Razor\Views\Home\Login.cshtml.g.cs
+C:\Users\gladi\Desktop\PVP\PVP\bin\Debug\net5.0\ref\PVP.dll
+C:\Users\gladi\Desktop\PVP\PVP\obj\Debug\net5.0\Razor\Views\Home\Register.cshtml.g.cs

@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "b0AWl8fyBRPrxZk4T8JJZU0ylOBR6phXvSYO1ZVrIFzyCOpovLpMm8qNH03gCkGYu+0pv5bgJr8y2x89yMSZQA==",
+  "dgSpecHash": "dZtbor2D6DLwxpFCmKY5wAqWlphcdvS6J1ivTIxLRI4YZPpy+dKmetke3eHoFp6ApQ1tGsdn7pPRLhEulTEUPw==",
   "success": true,
   "projectFilePath": "C:\\Users\\gladi\\Desktop\\PVP\\PVP\\PVP.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\gladi\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.12\\microsoft.netcore.app.host.win-x64.5.0.12.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }
