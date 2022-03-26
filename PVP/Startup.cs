@@ -10,6 +10,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using PVP.Models;
+using PVP.Helpers;
 
 namespace PVP
 {
@@ -27,10 +30,12 @@ namespace PVP
         {
             services.AddControllersWithViews();
             services.AddSession();
+            services.AddCors();
             services.AddMvc(option => option.EnableEndpointRouting = false);
-
-
+            string mySqlConnectionStr = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContextPool<PVPContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<JwtService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,9 +64,13 @@ namespace PVP
             });
 
             app.UseRouting();
-
             app.UseAuthorization();
-
+            app.UseCors(options => options
+                .WithOrigins(new[] { "http://localhost:5001" })
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+            );
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

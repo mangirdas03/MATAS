@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+@model PVP.ViewModels.RegisterDTO
+@{
+    ViewData["Title"] = "Register";
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -19,37 +25,38 @@
 
     @*<div class="container-login100" >*@
     <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">
-        <form class="login100-form validate-form">
+        <form form asp-action="Register" class="login100-form validate-form" id="fform">
             <span class="login100-form-title p-b-37">
                 Registracija
             </span>
-
-            <div class="wrap-input100 validate-input m-b-20" data-validate="Enter username or email">
-                <input class="input100" type="text" name="username" placeholder="El. pašto adresas">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="wrap-input100 m-b-20">
+                <input asp-for="Mail" class="input100" type="text" name="Mail" placeholder="El. pašto adresas">
                 <span class="focus-input100"></span>
             </div>
-
-            <div class="wrap-input100 validate-input m-b-25" data-validate="Enter password">
-                <input class="input100" type="password" name="pass" placeholder="Slaptažodis">
+            <span asp-validation-for="Mail" class="text-danger"> </span>
+            <div class="wrap-input100 m-b-25">
+                <input asp-for="Password" class="input100" type="password" name="Password" placeholder="Slaptažodis">
                 <span class="focus-input100"></span>
             </div>
-            <div class="wrap-input100 validate-input m-b-25" data-validate="Enter password">
-                <input class="input100" type="password" name="pass" placeholder="Pakartokite slaptažodį">
+            <span asp-validation-for="Password" class="text-danger"> </span>
+            <div class="wrap-input100 m-b-25">
+                <input asp-for="ConfirmPassword" class="input100" type="password" name="ConfirmPassword" placeholder="Pakartokite slaptažodį">
                 <span class="focus-input100"></span>
             </div>
-            <div class="container-login100-form-btn">
+            <span asp-validation-for="ConfirmPassword" class="text-danger"> </span>
+            <div class="container-login100-form-btn" type="submit" onclick="myFunction(event)">
                 <button class="login100-form-btn">
-                    Užsirgistruoti
+                    Užsiregistruoti
                 </button>
             </div>
+
             <div class="container-login100-form-btn" style="margin-top:40px;">
-                <button class="login100-form-btn">
+                <a class="login100-form-btn" href="@Url.Action("Login", "Home")">
                     Jau turite paskyrą?<br>Prisijungti
-                </button>
+                </a>
             </div>
         </form>
-
-
     </div>
     @*</div>*@
 
@@ -71,6 +78,19 @@
     <script src="/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
     <script src="/js/main.js"></script>
+    <script>
+        function myFunction(event) {
+            //event.preventDefault();
 
+            //Swal.fire({
+            //    position: 'top-end',
+            //    icon: 'success',
+            //    title: 'Your work has been saved',
+            //    showConfirmButton: false,
+            //    timer: 1500
+            //})
+            //document.getElementById("fform").submit();
+        }
+    </script>
 </body>
 </html>

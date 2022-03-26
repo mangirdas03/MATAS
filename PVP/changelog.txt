@@ -1,0 +1,11 @@
+﻿22/3/26
+BUGS:
+bugas su navbaru, keicias fontas judant tarp login ir home page
+validation message formatting
+
+TODO:
+login validation
+user page
+landing page
+swal
+
