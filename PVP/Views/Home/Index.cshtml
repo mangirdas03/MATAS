@@ -1,8 +1,37 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Pagrindinis";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>LANDING PAGE </p>
 </div>
+
+
+
+
+
+<script type="text/javascript">
+    // LOGIN/LOGOUT messages
+    window.onload = function () {
+        if ('@TempData["LoginSuccessMessage"]' == 'LoginSuccess') {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Sėkmingai prisijungėte!',
+                showConfirmButton: false,
+                timer: 1600
+            });
+        }
+        else if ('@TempData["LogoutSuccessMessage"]' == 'LogoutSuccess') {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Sėkmingai atsijungėte!',
+                showConfirmButton: false,
+                timer: 1600
+            });
+        }
+    };
+</script>
+

@@ -77,11 +77,21 @@ namespace PVP.Controllers
             User user = FindUserByName(logindto.Mail);
 
             if (user == null)
-                return (RedirectToAction("Error"));
+            {
+                //return Json("Invalid", JsonRequestBehavior.AllowGet);
+                //ModelState.AddModelError(string.Empty, "The user name or password is incorrect");
+                ViewBag.PromptMessage = "invalidCredentials";
+                return View(logindto);
+                //return (RedirectToAction("Error"));
+            }
+
+                //return (RedirectToAction("Error"));
 
             if (!BCryptNet.Verify(logindto.Password, user.pass_hash))
             {
-                return (RedirectToAction("Error"));
+                //return (RedirectToAction("Error"));
+                ViewBag.PromptMessage = "invalidCredentials";
+                return View(logindto);
             }
 
             var jwt = _jwtservice.Generate(user.id);
@@ -91,7 +101,7 @@ namespace PVP.Controllers
             {
                 HttpOnly = true
             });
-
+            TempData["LoginSuccessMessage"] = "LoginSuccess";
             return (RedirectToAction("Index"));
         }
 
@@ -119,7 +129,7 @@ namespace PVP.Controllers
             }
             catch (Exception)
             {
-                return (RedirectToAction("Error"));
+                return (RedirectToAction("Login"));
             }
         }
 
@@ -127,8 +137,25 @@ namespace PVP.Controllers
         public IActionResult Logout()
         {
             //HttpContext.Session.Remove("Token");
-            Response.Cookies.Delete("jwt");
-            return (RedirectToAction("Index"));
+            //Response.Cookies.Delete("jwt");
+            //TempData["LogoutSuccessMessage"] = "LogoutSuccess";
+            //return (RedirectToAction("Index"));
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                var token = _jwtservice.Verify(jwt);
+                int userId = int.Parse(token.Issuer);
+                var user = FindUserById(userId);
+
+                Response.Cookies.Delete("jwt");
+                TempData["LogoutSuccessMessage"] = "LogoutSuccess";
+                return (RedirectToAction("Index"));
+            }
+            catch (Exception)
+            {
+                return (RedirectToAction("Login"));
+            }
+
         }
 
 

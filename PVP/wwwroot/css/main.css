@@ -32,6 +32,10 @@ body, html {
 	font-family: SourceSansPro-Regular, sans-serif;
 }*/
 
+body {
+	padding-right: 0 !important;
+}
+
 /*---------------------------------------------*/
 a {
 	font-family: SourceSansPro-Regular;

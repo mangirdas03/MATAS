@@ -1,7 +1,7 @@
 ﻿@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
 @model PVP.ViewModels.RegisterDTO
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Registracija";
 }
 
 <!DOCTYPE html>
@@ -34,23 +34,22 @@
                 <input asp-for="Mail" class="input100" type="text" name="Mail" placeholder="El. pašto adresas">
                 <span class="focus-input100"></span>
             </div>
-            <span asp-validation-for="Mail" class="text-danger"> </span>
+            <div><span asp-validation-for="Mail" class="text-danger"></span></div>    
             <div class="wrap-input100 m-b-25">
                 <input asp-for="Password" class="input100" type="password" name="Password" placeholder="Slaptažodis">
                 <span class="focus-input100"></span>
             </div>
-            <span asp-validation-for="Password" class="text-danger"> </span>
+            <div><span asp-validation-for="Password" class="text-danger"></span></div> 
             <div class="wrap-input100 m-b-25">
                 <input asp-for="ConfirmPassword" class="input100" type="password" name="ConfirmPassword" placeholder="Pakartokite slaptažodį">
                 <span class="focus-input100"></span>
             </div>
-            <span asp-validation-for="ConfirmPassword" class="text-danger"> </span>
+            <div><span asp-validation-for="ConfirmPassword" class="text-danger"></span></div> 
             <div class="container-login100-form-btn" type="submit" onclick="myFunction(event)">
                 <button class="login100-form-btn">
                     Užsiregistruoti
                 </button>
             </div>
-
             <div class="container-login100-form-btn" style="margin-top:40px;">
                 <a class="login100-form-btn" href="@Url.Action("Login", "Home")">
                     Jau turite paskyrą?<br>Prisijungti

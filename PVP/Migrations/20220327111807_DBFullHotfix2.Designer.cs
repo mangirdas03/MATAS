@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PVP.Models;
 
 namespace PVP.Migrations
 {
     [DbContext(typeof(PVPContext))]
-    partial class PVPContextModelSnapshot : ModelSnapshot
+    [Migration("20220327111807_DBFullHotfix2")]
+    partial class DBFullHotfix2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -7,6 +7,8 @@ namespace PVP.ViewModels
 {
     public class Data
     {
-        public string Wattage { get; set; }
+        public int Wattage { get; set; }
+
+        public string id { get; set; }
     }
 }

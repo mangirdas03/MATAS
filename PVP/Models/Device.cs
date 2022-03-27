@@ -24,8 +24,7 @@ namespace PVP.Models
 
         public string tag { get; set; }
 
-        public int treshold { get; set; }
-
+        public int? treshold { get; set; }
 
         public virtual User fk_userNavigation { get; set; }
 

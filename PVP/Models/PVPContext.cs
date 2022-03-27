@@ -63,6 +63,7 @@ namespace PVP.Models
             modelBuilder.Entity<RealtimeInfo>().Property(u => u.wattage).HasColumnType("int").HasColumnName("wattage").IsRequired();
             modelBuilder.Entity<RealtimeInfo>().HasIndex(u => u.fk_device_id).HasDatabaseName("fk_device_id");
             modelBuilder.Entity<RealtimeInfo>().Property(u => u.fk_device_id).IsRequired().HasColumnName("fk_device_id");
+            // reikia padaryt 1 to 0..1 relation
         }
     }
 }
