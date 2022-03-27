@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PVP.Models;
 
 namespace PVP.Migrations
 {
     [DbContext(typeof(PVPContext))]
-    partial class PVPContextModelSnapshot : ModelSnapshot
+    [Migration("20220327102919_DBFull")]
+    partial class DBFull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,6 +25,7 @@ namespace PVP.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasColumnName("id1")
                         .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("fk_user")
@@ -44,7 +47,7 @@ namespace PVP.Migrations
 
                     b.Property<string>("tag")
                         .HasColumnType("nvarchar(50)")
-                        .HasColumnName("tag");
+                        .HasColumnName("id");
 
                     b.Property<int>("treshold")
                         .HasColumnType("int")
