@@ -22,25 +22,25 @@
                     <a class="navbar-brand" href="#">K053 Logo</a>
                 </div>
                 <ul class="nav navbar-nav navbar-left">
-                    <li><a href="@Url.Action("Index", "Home")">Pradžia</a></li>
-                    <li><a href="#">Page 1</a></li>
-                    <li><a href="#">Page 2</a></li>
+                    <li><a href="@Url.Action("Index", "Home")"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Pradžia</a></li>
+                    @{
+                        if (Context.Request.Cookies["jwt"] != null)
+                        {
+                            <li><a href="@Url.Action("Statistics1", "Electricity")"><span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;Statistika 1</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;Statistika 2</a></li>
+                        }
+                    }
                 </ul>
-                @*<ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Pradžia</a></li>
-                        <li><a href="#">Page 1</a></li>
-                        <li><a href="#">Page 2</a></li>
-                    </ul>*@
             <ul class="nav navbar-nav navbar-right">
                 @{
                     if (Context.Request.Cookies["jwt"] != null)
                     {
-                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Nustatymai</a></li>
-                        <li><a href="@Url.Action("Logout", "Home")"><span class="glyphicon glyphicon-log-out"></span> Atsijungti</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Nustatymai</a></li>
+                        <li><a href="@Url.Action("Logout", "Home")"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Atsijungti</a></li>
                     }
                     else
                     {
-                        <li><a href="@Url.Action("Login", "Home")"><span class="glyphicon glyphicon-log-in"></span> Prisijungti</a></li>
+                        <li><a href="@Url.Action("Login", "Home")"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Prisijungti</a></li>
                     }
                 }
             </ul>

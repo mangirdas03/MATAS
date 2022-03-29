@@ -53,3 +53,4 @@ C:\Users\gladi\Desktop\PVP\PVP\bin\Debug\net5.0\Microsoft.IdentityModel.JsonWebT
 C:\Users\gladi\Desktop\PVP\PVP\bin\Debug\net5.0\Microsoft.IdentityModel.Logging.dll
 C:\Users\gladi\Desktop\PVP\PVP\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\gladi\Desktop\PVP\PVP\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\gladi\Desktop\PVP\PVP\obj\Debug\net5.0\Razor\Views\Electricity\Statistics1.cshtml.g.cs

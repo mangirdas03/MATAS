@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Statistics";
+}
+
+<div class="text-center">
+
+    <p style="font-size: 40px; color: white; font-weight: bold;">Live/manual update test</p>
+    <br />
+    <br />
+    <p style="font-size: 30px; color: white; font-weight: bold;">Auto: (kas 5s.)</p>
+
+    <p id="live-text" style="font-size: 30px; color: white; font-weight: bold;">0</p>
+    <br />
+    <p style="font-size: 30px; color: white; font-weight: bold;">Manual:</p>
+    <p id="manual-text" style="font-size: 30px; color: white; font-weight: bold;">0</p>
+
+    <div class="container-login100-form-btn m-t-20" onclick="fetchDataManual()">
+        <button class="login100-form-btn">
+            Atnaujinti
+        </button>
+    </div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+   
+    setInterval(function fetchDataAuto() {
+        $.ajax({
+            url: "https://localhost:5001/api/wattage/1",
+            //data: JSON.stringify({ device_id: 1 }),
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            type: "GET",
+            success: function (result) {
+                //Swal.fire({
+                //    icon: 'success',
+                //    title: result,
+                //    showConfirmButton: true,
+                //});
+                document.getElementById("live-text").innerHTML = result;
+            }
+        });
+    }, 5000); // ms
+
+    function fetchDataManual() {
+        $.ajax({
+            url: "https://localhost:5001/api/wattage/1",
+            type: "GET",
+            success: function (result) {
+                document.getElementById("manual-text").innerHTML = result;
+            }
+        });
+    }
+
+    window.onload = function fetchDataInitial() {
+            $.ajax({
+                url: "https://localhost:5001/api/wattage/1",
+                type: "GET",
+                success: function (result) {
+                    document.getElementById("manual-text").innerHTML = result;
+                    document.getElementById("live-text").innerHTML = result;
+                }
+            });
+        }
+</script>
+

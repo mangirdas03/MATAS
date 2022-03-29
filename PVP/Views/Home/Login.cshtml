@@ -29,21 +29,21 @@
                 Prisijungimas
             </span>
 
-            <div class="wrap-input100 validate-input m-b-20" data-validate="Enter username or email">
+            <div class="wrap-input100 m-b-20">
                 <input asp-for="Mail" class="input100" type="text" name="Mail" placeholder="Prisijungimo vardas">
                 <span class="focus-input100"></span>
             </div>
 
-            <div class="wrap-input100 validate-input m-b-25" data-validate="Enter password">
+            <div class="wrap-input100 m-b-15">
                 <input asp-for="Password" class="input100" type="password" name="Password" placeholder="Slaptažodis">
                 <span class="focus-input100"></span>
             </div>
-            <div class="text-center">
-                <a href="#" class="txt2 hov1">
+            <div class="text-center" style="margin-bottom: 10px;">
+                <a href="#" class="txt2 hov1" style="font-size:15px;">
                     Pamiršote slaptažodį?
                 </a>
             </div>
-            <div class="container-login100-form-btn" type="submit" onclick="validateLogin(event)">
+            <div class="container-login100-form-btn m-t-20" type="submit" onclick="validateLogin(event)">
                 <button class="login100-form-btn">
                     Prisijungti
                 </button>
@@ -53,10 +53,12 @@
             <input type="submit" value="Login" class="btn btn-primary" />
         </div>*@
 
-
-            <div class="container-login100-form-btn" style="margin-top:40px;">
+            <div class="text-center-small m-t-50">
+                <p>Neturite paskyros?</p>
+            </div>
+            <div class="container-login100-form-btn">
                 <a class="login100-form-btn" href="@Url.Action("Register", "Home")">
-                    Neturite paskyros?<br>Užsiregistruoti
+                    Užsiregistruoti
                 </a>
             </div>
         </form>

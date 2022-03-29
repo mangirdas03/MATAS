@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace PVP.ViewModels
 {
-    public class Data
+    public class WattageJSON
     {
         public int Wattage { get; set; }
 
-        public string id { get; set; }
+        public string id { get; set; } // setup string
     }
 }

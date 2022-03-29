@@ -133,6 +133,7 @@ html {
     background-size: 100% 100%;
     position: relative;
     z-index: 1;
+    margin-top: 50px;
 }
 
 
@@ -219,4 +220,16 @@ html {
     width: 33.33333%;
     text-align: right;
     font-size: 18px;
+}
+
+.text-center-small {
+    display: block;
+    font-family: SourceSansPro-Bold;
+    font-size: 20px;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.text-center-small p {
+    font-size: 15px;
 }
