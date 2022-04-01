@@ -26,7 +26,7 @@ namespace PVP.Controllers
             _context = context;
             _jwtservice = jwtservice;
         }
-
+        // test
         [HttpPost("wattage")]
         public IActionResult ReceiveWattage(WattageJSON data)
         {
