@@ -233,3 +233,67 @@ html {
 .text-center-small p {
     font-size: 15px;
 }
+
+
+/*INDEX*/
+/* Split the screen in half */
+.split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.quarter {
+    height: 50%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.quarter-top {
+    left: 50%;
+    top: 6%;
+    background-color: white;
+}
+
+.quarter-bottom {
+    left: 50%;
+    top: 50%;
+    background-color: lightgray;
+}
+
+/* Control the left side */
+.split-left {
+    left: 0;
+    background-color: orange;
+}
+
+/* Control the right side */
+.split-right {
+    right: 0;
+    background-color: white;
+}
+
+/* If you want the content centered horizontally and vertically */
+.split-centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.split-quarter {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}

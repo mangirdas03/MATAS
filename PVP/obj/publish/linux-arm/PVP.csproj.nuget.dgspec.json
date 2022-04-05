@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\PVP.csproj": {}
+    "C:\\Users\\saule\\source\\repos\\mangirdas03\\PVP\\PVP\\PVP.csproj": {}
   },
   "projects": {
-    "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\PVP.csproj": {
+    "C:\\Users\\saule\\source\\repos\\mangirdas03\\PVP\\PVP\\PVP.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\PVP.csproj",
+        "projectUniqueName": "C:\\Users\\saule\\source\\repos\\mangirdas03\\PVP\\PVP\\PVP.csproj",
         "projectName": "PVP",
-        "projectPath": "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\PVP.csproj",
-        "packagesPath": "C:\\Users\\gladi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\obj\\publish\\linux-arm\\",
+        "projectPath": "C:\\Users\\saule\\source\\repos\\mangirdas03\\PVP\\PVP\\PVP.csproj",
+        "packagesPath": "C:\\Users\\saule\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\saule\\source\\repos\\mangirdas03\\PVP\\PVP\\obj\\publish\\linux-arm\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\gladi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\saule\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -80,15 +83,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Runtime.linux-arm",
-              "version": "[5.0.12, 5.0.12]"
+              "version": "[5.0.14, 5.0.14]"
             },
             {
               "name": "Microsoft.NETCore.App.Host.linux-arm",
-              "version": "[5.0.12, 5.0.12]"
+              "version": "[5.0.14, 5.0.14]"
             },
             {
               "name": "Microsoft.NETCore.App.Runtime.linux-arm",
-              "version": "[5.0.12, 5.0.12]"
+              "version": "[5.0.14, 5.0.14]"
             }
           ],
           "frameworkReferences": {
@@ -99,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.405\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

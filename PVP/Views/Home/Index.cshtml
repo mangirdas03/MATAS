@@ -2,12 +2,35 @@
     ViewData["Title"] = "Pagrindinis";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>LANDING PAGE </p>
+@*<div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>LANDING PAGE </p>
+    </div>*@
+
+<div class="split split-left">
+    <div class="split-centered">
+        <h2>Logotipas</h2>
+        <p>(jo dar nėra)</p>
+    </div>
 </div>
 
+<div class="split split-right">
+    <div class="quarter quarter-top">
+        <div class="split-quarter">
+            <h2>Jau turite įrenginį?</h2>
+            <a href="@Url.Action("Login", "Home")"><h3><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Prisijungti</h3></a>
 
+        </div>
+    </div>
+
+    <div class="quarter quarter-bottom">
+        <div class="split-quarter">
+            <h2>Neturite įrenginio?</h2>
+            <a href="https://bongo.cat/" target="_blank"><h3>Pirkti</h3></a>
+        </div>
+    </div>
+
+</div>
 
 
 
