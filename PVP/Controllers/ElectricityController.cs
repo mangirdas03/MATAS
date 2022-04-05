@@ -10,10 +10,10 @@ namespace PVP.Controllers
 {
     public class ElectricityController : Controller
     {
-        private readonly PVPContext _context;
+        private readonly pvpContext _context;
         private readonly JwtService _jwtservice;
 
-        public ElectricityController(PVPContext context, JwtService jwtservice)
+        public ElectricityController(pvpContext context, JwtService jwtservice)
         {
             _context = context;
             _jwtservice = jwtservice;
@@ -38,7 +38,7 @@ namespace PVP.Controllers
         }
         private User FindUserById(int id)
         {
-            return _context.Users.FirstOrDefault(e => e.id == id);
+            return _context.Users.FirstOrDefault(e => e.Id == id);
         }
 
     }

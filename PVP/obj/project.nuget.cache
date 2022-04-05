@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ny1ROtA9Fe4ai3rPcr8Bx1iYDKLic3+6MszFTZPJEnoVGc9oq4EJD544bzdH0fdLwEHGbqgQyY5OR+G235JiEA==",
+  "dgSpecHash": "jUqVrBvP065vXbfK78rjLlLQzbtIckiXAUka+bitfdPs5ttp99TJwaMAO5a2R7bAHV4/UIZ9Jtpfnbn+yd9YKA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\gladi\\Desktop\\PVP\\PVP\\PVP.csproj",
+  "projectFilePath": "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\PVP.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\gladi\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\gladi\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

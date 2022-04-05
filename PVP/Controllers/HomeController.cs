@@ -17,10 +17,10 @@ namespace PVP.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly PVPContext _context;
+        private readonly pvpContext _context;
         private readonly JwtService _jwtservice;
 
-        public HomeController(PVPContext context, JwtService jwtservice)
+        public HomeController(pvpContext context, JwtService jwtservice)
         {
             _context = context;
             _jwtservice = jwtservice;
@@ -59,8 +59,8 @@ namespace PVP.Controllers
             //string mySalt = BCryptNet.GenerateSalt();
             var user = new User
             {
-                mail = registerdto.Mail,
-                pass_hash = BCryptNet.HashPassword(registerdto.Password),
+                Mail = registerdto.Mail,
+                PassHash = BCryptNet.HashPassword(registerdto.Password),
             };
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -87,14 +87,14 @@ namespace PVP.Controllers
 
                 //return (RedirectToAction("Error"));
 
-            if (!BCryptNet.Verify(logindto.Password, user.pass_hash))
+            if (!BCryptNet.Verify(logindto.Password, user.PassHash))
             {
                 //return (RedirectToAction("Error"));
                 ViewBag.PromptMessage = "invalidCredentials";
                 return View(logindto);
             }
 
-            var jwt = _jwtservice.Generate(user.id);
+            var jwt = _jwtservice.Generate(user.Id);
             //HttpContext.Session.SetString("Token", jwt);
 
             Response.Cookies.Append("jwt", jwt, new CookieOptions
@@ -107,11 +107,11 @@ namespace PVP.Controllers
 
         private User FindUserByName(string mail)
         {
-            return _context.Users.FirstOrDefault(e => e.mail == mail);
+            return _context.Users.FirstOrDefault(e => e.Mail == mail);
         }
         private User FindUserById(int id)
         {
-            return _context.Users.FirstOrDefault(e => e.id == id);
+            return _context.Users.FirstOrDefault(e => e.Id == id);
         }
 
 

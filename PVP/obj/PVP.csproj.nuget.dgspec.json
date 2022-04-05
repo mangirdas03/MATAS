@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\gladi\\Desktop\\PVP\\PVP\\PVP.csproj": {}
+    "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\PVP.csproj": {}
   },
   "projects": {
-    "C:\\Users\\gladi\\Desktop\\PVP\\PVP\\PVP.csproj": {
+    "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\PVP.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gladi\\Desktop\\PVP\\PVP\\PVP.csproj",
+        "projectUniqueName": "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\PVP.csproj",
         "projectName": "PVP",
-        "projectPath": "C:\\Users\\gladi\\Desktop\\PVP\\PVP\\PVP.csproj",
+        "projectPath": "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\PVP.csproj",
         "packagesPath": "C:\\Users\\gladi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gladi\\Desktop\\PVP\\PVP\\obj\\",
+        "outputPath": "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\gladi\\AppData\\Roaming\\NuGet\\NuGet.Config",

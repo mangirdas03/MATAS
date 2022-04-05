@@ -18,10 +18,10 @@ namespace PVP.Controllers
     [ApiController]
     public class APIController : ControllerBase
     {
-        private readonly PVPContext _context;
+        private readonly pvpContext _context;
         private readonly JwtService _jwtservice;
 
-        public APIController(PVPContext context, JwtService jwtservice)
+        public APIController(pvpContext context, JwtService jwtservice)
         {
             _context = context;
             _jwtservice = jwtservice;
@@ -32,14 +32,14 @@ namespace PVP.Controllers
         {
             try
             {
-                var device = _context.Devices.FirstOrDefault(e => e.setup_string == data.id);
+                var device = _context.Devices.FirstOrDefault(e => e.SetupString == data.id);
                 if(device == null)
                     return Unauthorized("Authorization error.");
                 var info = new Info
                 {
-                    fk_device_id = device.id,
-                    date_time = DateTime.Now,
-                    wattage = data.Wattage
+                    FkDeviceId = device.Id,
+                    DateTime = DateTime.Now,
+                    Wattage = data.Wattage
                 };
                 _context.Infos.Add(info);
                 _context.SaveChanges();
@@ -55,7 +55,7 @@ namespace PVP.Controllers
 
         private User FindUserById(int id)
         {
-            return _context.Users.FirstOrDefault(e => e.id == id);
+            return _context.Users.FirstOrDefault(e => e.Id == id);
         }
 
         [HttpGet("wattage/{device_id}")]
@@ -69,14 +69,14 @@ namespace PVP.Controllers
                 var token = _jwtservice.Verify(jwt);
                 int userId = int.Parse(token.Issuer);
                 var user = FindUserById(userId);
-                var device = _context.Devices.FirstOrDefault(d => d.id.Equals(device_id));
+                var device = _context.Devices.FirstOrDefault(d => d.Id.Equals(device_id));
 
-                if(user != null && device != null && user.id == device.fk_user)
+                if(user != null && device != null && user.Id == device.FkUser)
                 {
-                    var rti = _context.RealtimeInfos.FirstOrDefault(i => i.fk_device_id.Equals(device_id));
+                    var rti = _context.Realtimeinfos.FirstOrDefault(i => i.FkDeviceId.Equals(device_id));
                     if (rti == null)
                         return Unauthorized("Error has occured.");
-                    return Ok(rti.wattage);
+                    return Ok(rti.Wattage);
 
                 }
                 else return Unauthorized("Authorization error.");
@@ -94,12 +94,12 @@ namespace PVP.Controllers
         {
             try
             {
-                var device = _context.Devices.FirstOrDefault(e => e.setup_string == data.id);
+                var device = _context.Devices.FirstOrDefault(e => e.SetupString == data.id);
                 if (device == null)
                     return Unauthorized("Authorization error.");
 
-                var rti = _context.RealtimeInfos.FirstOrDefault(i => i.fk_device_id.Equals(device.id));
-                rti.wattage = data.Wattage;
+                var rti = _context.Realtimeinfos.FirstOrDefault(i => i.FkDeviceId.Equals(device.Id));
+                rti.Wattage = data.Wattage;
 
                 _context.Update(rti);
                 _context.SaveChanges();

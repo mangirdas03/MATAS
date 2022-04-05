@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
+#nullable disable
 
 namespace PVP.Models
 {
-    public class RealtimeInfo
+    public partial class Realtimeinfo
     {
-        public int id { get; set; }
-        public int fk_device_id { get; set; } // fk
-        public int wattage { get; set; }
-
+        public int Id { get; set; }
+        public int FkDeviceId { get; set; }
+        public int Wattage { get; set; }
     }
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\gladi\\Desktop\\PVP\\PVP\\PVP.csproj": {}
+    "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\PVP.csproj": {}
   },
   "projects": {
-    "C:\\Users\\gladi\\Desktop\\PVP\\PVP\\PVP.csproj": {
+    "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\PVP.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gladi\\Desktop\\PVP\\PVP\\PVP.csproj",
+        "projectUniqueName": "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\PVP.csproj",
         "projectName": "PVP",
-        "projectPath": "C:\\Users\\gladi\\Desktop\\PVP\\PVP\\PVP.csproj",
+        "projectPath": "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\PVP.csproj",
         "packagesPath": "C:\\Users\\gladi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gladi\\Desktop\\PVP\\PVP\\obj\\publish\\linux-arm\\",
+        "outputPath": "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\obj\\publish\\linux-arm\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\gladi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -39,6 +39,34 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "Microsoft.AspNetCore.Cors": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.15, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.15, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[5.0.4, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.16.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -52,15 +80,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Runtime.linux-arm",
-              "version": "[5.0.15, 5.0.15]"
+              "version": "[5.0.12, 5.0.12]"
             },
             {
               "name": "Microsoft.NETCore.App.Host.linux-arm",
-              "version": "[5.0.15, 5.0.15]"
+              "version": "[5.0.12, 5.0.12]"
             },
             {
               "name": "Microsoft.NETCore.App.Runtime.linux-arm",
-              "version": "[5.0.15, 5.0.15]"
+              "version": "[5.0.12, 5.0.12]"
             }
           ],
           "frameworkReferences": {
@@ -71,7 +99,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

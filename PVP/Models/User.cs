@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
+
+#nullable disable
 
 namespace PVP.Models
 {
-    public class User
+    public partial class User
     {
         public User()
         {
             Devices = new HashSet<Device>();
         }
 
-        public int id { get; set; }
-
-        public string mail { get; set; }
-
-        public string pass_hash { get; set; }
-
+        public int Id { get; set; }
+        public string Mail { get; set; }
+        public string PassHash { get; set; }
 
         public virtual ICollection<Device> Devices { get; set; }
     }
