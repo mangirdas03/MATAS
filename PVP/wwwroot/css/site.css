@@ -297,3 +297,22 @@ html {
     transform: translate(-50%, -50%);
     text-align: center;
 }
+
+
+.index-button {
+    min-height: 60px;
+    font-size: 18px;
+    padding-top: 18px;
+    font-weight: bold;
+    margin: auto;
+}
+
+.index-button:hover {
+    min-height: 60px;
+    font-size: 18px;
+    padding-top: 18px;
+    font-weight: bold;
+    color: #4b2354;
+    margin: auto;
+    text-decoration: underline;
+}

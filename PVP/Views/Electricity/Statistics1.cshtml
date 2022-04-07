@@ -26,10 +26,11 @@
 
 
 <script type="text/javascript">
-   
+
     setInterval(function fetchDataAuto() {
         $.ajax({
-            url: "https://localhost:5001/api/wattage/1",
+            url: "@Url.Action("LiveWattage", "Electricity", new { device_id = 1 })",
+            //url: "https://localhost:5001/api/wattage/1",
             //data: JSON.stringify({ device_id: 1 }),
             //contentType: "application/json; charset=utf-8",
             //dataType: "json",
@@ -47,7 +48,8 @@
 
     function fetchDataManual() {
         $.ajax({
-            url: "https://localhost:5001/api/wattage/1",
+            //url: "https://localhost:5001/api/wattage/1",
+            url: "@Url.Action("LiveWattage", "Electricity", new { device_id = 1 })",
             type: "GET",
             success: function (result) {
                 document.getElementById("manual-text").innerHTML = result;
@@ -56,8 +58,9 @@
     }
 
     window.onload = function fetchDataInitial() {
-            $.ajax({
-                url: "https://localhost:5001/api/wattage/1",
+        $.ajax({
+                url: "@Url.Action("LiveWattage", "Electricity", new { device_id = 1 })",
+                //url: "https://localhost:5001/api/wattage/1",
                 type: "GET",
                 success: function (result) {
                     document.getElementById("manual-text").innerHTML = result;

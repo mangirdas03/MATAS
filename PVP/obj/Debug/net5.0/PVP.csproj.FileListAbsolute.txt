@@ -167,3 +167,4 @@ C:\Users\saule\source\repos\mangirdas03\PVP\PVP\obj\Debug\net5.0\PVP.dll
 C:\Users\saule\source\repos\mangirdas03\PVP\PVP\obj\Debug\net5.0\ref\PVP.dll
 C:\Users\saule\source\repos\mangirdas03\PVP\PVP\obj\Debug\net5.0\PVP.pdb
 C:\Users\saule\source\repos\mangirdas03\PVP\PVP\obj\Debug\net5.0\PVP.genruntimeconfig.cache
+C:\Users\gladi\Desktop\PVP3\PVP\bin\Debug\net5.0\PVP.StaticWebAssets.xml
