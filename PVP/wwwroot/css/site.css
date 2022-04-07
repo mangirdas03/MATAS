@@ -27,6 +27,8 @@ html {
 .container-fluid {
     min-height: 60px;
 }
+
+
 .nav.navbar-nav li a {
     min-height: 60px;
     font-size: 18px;
@@ -36,11 +38,9 @@ html {
     margin: auto;
 }
 
-
 a.navbar-brand{
     min-height: 60px;
 }
-
 
 
 .nav.navbar-nav.navbar-right li a {
@@ -127,7 +127,7 @@ html {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    padding: 15px;
+    padding: 5px;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
