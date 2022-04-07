@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2022 at 06:16 PM
+-- Generation Time: Apr 07, 2022 at 08:37 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -64,7 +64,8 @@ CREATE TABLE `infos` (
 INSERT INTO `infos` (`id`, `fk_device_id`, `date_time`, `wattage`) VALUES
 (1, 1, '2022-03-27 14:28:00', 420),
 (2, 1, '2022-03-27 14:28:21', 421),
-(3, 1, '2022-03-27 14:29:52', 423);
+(3, 1, '2022-03-27 14:29:52', 423),
+(4, 1, '2022-03-29 23:03:25', 701);
 
 -- --------------------------------------------------------
 
@@ -77,6 +78,13 @@ CREATE TABLE `realtimeinfos` (
   `fk_device_id` int(11) NOT NULL,
   `wattage` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `realtimeinfos`
+--
+
+INSERT INTO `realtimeinfos` (`id`, `fk_device_id`, `wattage`) VALUES
+(1, 1, 78);
 
 -- --------------------------------------------------------
 
@@ -173,13 +181,13 @@ ALTER TABLE `devices`
 -- AUTO_INCREMENT for table `infos`
 --
 ALTER TABLE `infos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `realtimeinfos`
 --
 ALTER TABLE `realtimeinfos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
