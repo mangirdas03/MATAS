@@ -19,7 +19,7 @@ namespace PVP.Controllers
             _jwtservice = jwtservice;
         }
 
-        [Route("statistics")]
+        [Route("live-statistics")]
         public IActionResult Statistics1()
         {
             try
@@ -29,7 +29,8 @@ namespace PVP.Controllers
                 var token = _jwtservice.Verify(jwt);
                 int userId = int.Parse(token.Issuer);
                 var user = FindUserById(userId);
-                return View();
+                var devices = _context.Devices.Where(e => e.FkUser.Equals(userId)); // users' devices
+                return View(devices);
             }
             catch (Exception)
             {

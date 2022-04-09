@@ -1,24 +1,37 @@
 ﻿@{
     ViewData["Title"] = "Statistics";
 }
+@model IEnumerable<PVP.Models.Device>
 
-<div class="text-center">
 
-    <p style="font-size: 40px; color: white; font-weight: bold;">Live/manual update test</p>
-    <br />
-    <br />
-    <p style="font-size: 30px; color: white; font-weight: bold;">Auto: (kas 5s.)</p>
 
-    <p id="live-text" style="font-size: 30px; color: white; font-weight: bold;">0</p>
-    <br />
-    <p style="font-size: 30px; color: white; font-weight: bold;">Manual:</p>
-    <p id="manual-text" style="font-size: 30px; color: white; font-weight: bold;">0</p>
 
-    <div class="container-login100-form-btn m-t-20" onclick="fetchDataManual()">
+<div class="center-container">
+    <h1 class="center-text-title">Statistika realiu laiku</h1>
+
+    <p class="container-text">Lorem ipsum.</p>
+
+    <table class="table table-hover" id="table-realtime">
+        <colgroup>
+            <col span="1" style="width: 70%;">
+            <col span="1" style="width: 30%;">
+        </colgroup>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="table-main">
+                    <td><span class="glyphicon glyphicon-modal-window"></span>&nbsp;@Html.DisplayFor(modelItem => item.Tag)</td>
+                    <td id="device-@item.Id">Atnaujinama...</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @*<div class="container-login100-form-btn m-t-20" onclick="fetchDataManual()">
         <button class="login100-form-btn">
             Atnaujinti
         </button>
-    </div>
+    </div>*@
 </div>
 
 
@@ -28,6 +41,29 @@
 <script type="text/javascript">
 
     setInterval(function fetchDataAuto() {
+        var device_id_list = @Html.Raw(Json.Serialize(@Model.Select(item => item.Id).ToArray()));
+        for (const d_id of device_id_list) {
+            fetchData(d_id);
+        }
+    }, 5000); // ms
+
+    function fetchData(d_id) {
+        $.ajax({
+            url: "@Url.Action("LiveWattage", "Electricity")",
+            data: { device_id: d_id },
+            type: "GET",
+            success: function (result) {
+                document.getElementById("device-" + d_id).innerHTML = "<span class=\"glyphicon glyphicon-flash\" style=\"color: #ffdc5f\"></span>&nbsp;" + result;
+                document.getElementById("device-" + d_id).style.fontWeight = "bold";
+            }
+        });
+    }
+
+
+
+
+
+    @*setInterval(function fetchDataAuto() {
         $.ajax({
             url: "@Url.Action("LiveWattage", "Electricity", new { device_id = 1 })",
             //url: "https://localhost:5001/api/wattage/1",
@@ -44,9 +80,10 @@
                 document.getElementById("live-text").innerHTML = result;
             }
         });
-    }, 5000); // ms
+    }, 5000); // ms*@
 
-    function fetchDataManual() {
+
+    @*function fetchDataManual() {
         $.ajax({
             //url: "https://localhost:5001/api/wattage/1",
             url: "@Url.Action("LiveWattage", "Electricity", new { device_id = 1 })",
@@ -67,6 +104,7 @@
                     document.getElementById("live-text").innerHTML = result;
                 }
             });
-        }
+        }*@
+
 </script>
 

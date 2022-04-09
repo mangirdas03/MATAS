@@ -45,7 +45,7 @@
                 <span class="focus-input100"></span>
             </div>
             <div><span asp-validation-for="ConfirmPassword" class="text-danger"></span></div>
-            <div class="container-login100-form-btn" type="submit" onclick="myFunction(event)">
+            <div class="container-login100-form-btn" type="submit">
                 <button class="login100-form-btn">
                     Užsiregistruoti
                 </button>
@@ -81,18 +81,28 @@
     <!--===============================================================================================-->
     <script src="/js/main.js"></script>
     <script>
-        function myFunction(event) {
-            //event.preventDefault();
-
-            //Swal.fire({
-            //    position: 'top-end',
-            //    icon: 'success',
-            //    title: 'Your work has been saved',
-            //    showConfirmButton: false,
-            //    timer: 1500
-            //})
-            //document.getElementById("fform").submit();
+        window.onload = function () {
+        if ('@TempData["RegisterSuccessMessage"]' == 'RegisterSuccess') {
+            Swal.fire({
+                icon: 'success',
+                title: 'Sėkmingai užsiregistravote!\n\nDabar galite prisijungti.',
+                buttonsStyling: false,
+                showConfirmButton: false,
+                confirmButtonColor: '#bd59d4',
+                html: '<br><div class=\"container-login100-form-btn\"><button class= \"login100-form-btn\" id=\"swal-custom-button\">Gerai</button></div><br><br><br>'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "@Url.Action("Login", "Home")";//"/login";
+                }
+            })
         }
+        $(document).on('click', '#swal-custom-button', function () {
+            swal.clickConfirm();
+        });
+    };
+
+
     </script>
+
 </body>
 </html>

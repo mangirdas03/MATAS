@@ -52,7 +52,11 @@ namespace PVP.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Register(RegisterDTO registerdto)
         {
-            if(!ModelState.IsValid)
+            if (_context.Users.FirstOrDefault(x => x.Mail.Equals(registerdto.Mail)) != null)
+            {
+                ModelState.AddModelError("Mail", "Naudotojas jau registruotas!");
+            }
+            if (!ModelState.IsValid)
             {
                 return View();
             }
@@ -65,7 +69,10 @@ namespace PVP.Controllers
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            return RedirectToAction("login");
+
+            TempData["RegisterSuccessMessage"] = "RegisterSuccess";
+            //return RedirectToAction("login");
+            return View();
         }
 
 
@@ -157,15 +164,6 @@ namespace PVP.Controllers
             }
 
         }
-
-
-
-
-
-
-
-
-
 
 
         public IActionResult Privacy()

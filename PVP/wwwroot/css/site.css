@@ -31,7 +31,7 @@ html {
 
 .nav.navbar-nav li a {
     min-height: 60px;
-    font-size: 18px;
+    font-size: 20px;
     padding-top: 18px;
     font-weight: bold;
     color: blue;
@@ -45,41 +45,44 @@ a.navbar-brand{
 
 .nav.navbar-nav.navbar-right li a {
     min-height: 60px;
-    font-size: 18px;
+    font-size: 20px;
     padding-top: 18px;
     font-weight: bold;
     margin: auto;
 }
 .nav.navbar-nav.navbar-right li a:hover {
     min-height: 60px;
-    font-size: 18px;
+    font-size: 20px;
     padding-top: 18px;
     font-weight: bold;
     color: #4b2354;
     margin: auto;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .nav.navbar-nav.navbar-left li a {
     min-height: 60px;
-    font-size: 18px;
+    font-size: 20px;
     padding-top: 18px;
     font-weight: bold;
     margin: auto;
 }
 .nav.navbar-nav.navbar-left li a:hover {
     min-height: 60px;
-    font-size: 18px;
+    font-size: 20px;
     padding-top: 18px;
     font-weight: bold;
     color: #4b2354;
     margin: auto;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
-
-
-
+.glyphicon {
+    top: 2px !important;
+}
+.glyphicon.glyphicon-shopping-cart {
+    top: 0px !important;
+}
 
 /* Sticky footer styles
 -------------------------------------------------- */
@@ -315,4 +318,52 @@ html {
     color: #4b2354;
     margin: auto;
     text-decoration: underline;
+}
+
+
+/* Page container */
+
+.center-container{
+    border-radius: 10px;
+    padding: 100px;
+    width: 60vw;
+    min-height: 70vh;
+    background-color: white;
+    margin-top: 40px;
+}
+
+.center-text-title {
+    font-family: SourceSansPro-SemiBold;
+    font-size: 36px;
+    color: black;
+    line-height: 1.2;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 90px;
+}
+
+.container-text {
+    font-size: 20px;
+    font-family: SourceSansPro-SemiBold;
+    line-height: 1.2;
+}
+
+
+#table-realtime {
+    width: 60%;
+    margin: auto;
+    margin-top: 90px;
+}
+
+.table-main {
+    font-size: 28px;
+    text-align:left;
+}
+
+.responsive-image{
+    width: 100%;
+    max-width: 500px;
+    max-height: 150px;
+    height: auto;
 }

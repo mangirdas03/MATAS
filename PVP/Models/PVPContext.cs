@@ -145,7 +145,7 @@ namespace PVP.Models
             {
                 entity.ToTable("users");
 
-                entity.HasIndex(e => e.Mail, "Email");
+                entity.HasIndex(e => e.Mail, "Email").IsUnique();
 
                 entity.HasIndex(e => e.PassHash, "Pass_hash");
 
