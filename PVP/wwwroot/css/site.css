@@ -349,6 +349,15 @@ html {
     line-height: 1.2;
 }
 
+.error-text {
+    font-size: 24px;
+    font-family: SourceSansPro-SemiBold;
+    line-height: 1.2;
+    text-align: center;
+    font-weight: bold;
+    padding-top: 70px;
+}
+
 
 #table-realtime {
     width: 60%;

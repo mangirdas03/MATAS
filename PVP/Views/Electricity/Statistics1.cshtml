@@ -10,28 +10,33 @@
     <h1 class="center-text-title">Statistika realiu laiku</h1>
 
     <p class="container-text">Lorem ipsum.</p>
-
-    <table class="table table-hover" id="table-realtime">
-        <colgroup>
-            <col span="1" style="width: 70%;">
-            <col span="1" style="width: 30%;">
-        </colgroup>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr class="table-main">
-                    <td><span class="glyphicon glyphicon-modal-window"></span>&nbsp;@Html.DisplayFor(modelItem => item.Tag)</td>
-                    <td id="device-@item.Id">Atnaujinama...</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
+    @if (Model.Count() != 0)
+    {
+        <table class="table table-hover" id="table-realtime">
+            <colgroup>
+                <col span="1" style="width: 70%;">
+                <col span="1" style="width: 30%;">
+            </colgroup>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="table-main">
+                        <td><span class="glyphicon glyphicon-modal-window"></span>&nbsp;@Html.DisplayFor(modelItem => item.Tag)</td>
+                        <td id="device-@item.Id">Atnaujinama...</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="error-text">Neturite pridėtų įrenginių.</p>
+    }
     @*<div class="container-login100-form-btn m-t-20" onclick="fetchDataManual()">
-        <button class="login100-form-btn">
-            Atnaujinti
-        </button>
-    </div>*@
+            <button class="login100-form-btn">
+                Atnaujinti
+            </button>
+        </div>*@
 </div>
 
 
@@ -55,6 +60,9 @@
             success: function (result) {
                 document.getElementById("device-" + d_id).innerHTML = "<span class=\"glyphicon glyphicon-flash\" style=\"color: #ffdc5f\"></span>&nbsp;" + result;
                 document.getElementById("device-" + d_id).style.fontWeight = "bold";
+            },
+            error: function (result) {
+                document.getElementById("device-" + d_id).innerHTML = "Duomenų perdavimo klaida."
             }
         });
     }
