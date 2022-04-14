@@ -1,0 +1,154 @@
+﻿@{
+    ViewData["Title"] = "Devices";
+}
+@model IEnumerable<PVP.Models.Device>
+
+
+
+
+<div class="center-container-wider">
+    <h1 class="center-text-title">Jūsų įrenginiai</h1>
+
+    <p class="container-text">Lorem ipsum.</p>
+    @if (Model.Count() != 0)
+    {
+        <table class="table table-hover" id="table-realtime">
+            <colgroup>
+                <col span="1" style="width: 4%;">
+                <col span="1" style="width: 52%;">
+                <col span="1" style="width: 14%;">
+                <col span="1" style="width: 10%;">
+                <col span="1" style="width: 12%;">
+                <col span="1" style="width: 8%;">
+            </colgroup>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr class="table-main" style="font-size: 18px;">
+                    <td><span class="glyphicon glyphicon-modal-window"></span></td>
+                    @if (item.Tag == null || item.Tag == "")
+                    {
+                        <td style="color: darkgray"><strong>Įrenginys @item.SetupString</strong></td>
+                    }
+                    else
+                    {
+                        <td><strong>@Html.DisplayFor(modelItem => item.Tag)</strong></td>
+                    }
+                    <td style="font-size: 12px;"><button onclick="editTag(@item.Id, '@item.Tag')">Keisti pavadinimą</button></td>
+                    <td style="font-size: 12px;"><button onclick="">Keisti limitą</button></td>
+                    <td style="font-size: 12px;"><button onclick="">Ištrinti statistiką</button></td>
+                    <td style="font-size: 12px;"><button onclick=""><span title="Pašalinti įrenginį" class="glyphicon glyphicon-trash"></span></button></td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="error-text">Neturite pridėtų įrenginių.</p>
+    }
+
+</div>
+<div class="center-container">
+    <h1 class="center-text-title">Naujo įrenginio pridėjimas</h1>
+    <p class="container-text">Lorem ipsum.</p>
+
+    <div class="device-form">
+        <div class="wrap-input100 m-b-60">
+            <input class="input100" type="text" id="setupInput" placeholder="Įrenginio atpažinimo kodas" style="font-size: 14px;">
+            <span class="focus-input100"></span>
+        </div>
+        <div class="wrap-input100 m-b-15" style="margin-bottom: 25px; margin-top: 25px;">
+            <input class="input100" type="text" id="tagInput" placeholder="Įrenginio pavadinimas (nebūtina)" style="font-size: 14px;">
+            <span class="focus-input100"></span>
+        </div>
+        <div class="container-login100-form-btn m-t-20" onclick="newDevice()">
+            <button class="login100-form-btn">
+                Pridėti
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+    <script type="text/javascript">
+
+    function editTag(device_id, currentTag) {
+        Swal.fire({
+            title: 'Įveskite naują įrenginio pavadinimą:',
+            input: 'text',
+            inputPlaceholder: currentTag,
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Išsaugoti',
+            cancelButtonText: 'Atšaukti',
+            showLoaderOnConfirm: true,
+            preConfirm: (login) => {
+                if (login.length > 50)
+                {
+                    Swal.showValidationMessage(`Įrenginio pavadinimas negali būti ilgesnis nei 50 simbolių!`)
+                }
+                else {
+                    var tagjson = JSON.stringify({ id: device_id, tag: login });
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("UpdateTag", "Home")",
+                        contentType: "application/json; charset=utf-8",
+                        data: tagjson,
+                        success: function () {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Pakeitimai išsaugoti!',
+                                confirmButtonText: 'Gerai',
+                            }).then((result) => {
+                                location.reload();
+                            })
+                        },
+                        error: function () {
+                            Swal.fire('Vidinė klaida.')
+                        }
+                    });
+                }
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        })
+    }
+
+
+    function newDevice() {
+        var setupInput = document.getElementById('setupInput').value
+        var tagInput = document.getElementById('tagInput').value
+
+        var tagjson = JSON.stringify({ setupString: setupInput, tag: tagInput });
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("NewDevice", "Home")",
+            contentType: "application/json; charset=utf-8",
+            data: tagjson,
+            success: function () {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Įrenginys pridėtas!',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Gerai',
+                }).then((result) => {
+                    location.reload();
+                })
+            },
+            error: function (response) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: response.responseText,
+                    text: 'Įsitikinkite, jog teisingai įvedėte atpažinimo kodą.',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Gerai'
+                })
+            }
+        });
+
+    }
+    </script>

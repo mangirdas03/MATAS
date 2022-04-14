@@ -24,23 +24,23 @@
 
 
     @*<div class="container-login100" >*@
-    <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">
+    <div class="wrap-login100 p-l-55 p-r-55 p-t-50 p-b-30">
         <form form asp-action="Register" class="login100-form validate-form" id="fform">
-            <span class="login100-form-title p-b-37">
+            <span class="login100-form-title p-b-40">
                 Registracija
             </span>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="wrap-input100 m-b-20">
+            <div class="wrap-input100 m-b-15">
                 <input asp-for="Mail" class="input100" type="text" name="Mail" placeholder="El. pašto adresas">
                 <span class="focus-input100"></span>
             </div>
             <div><span asp-validation-for="Mail" class="text-danger"></span></div>
-            <div class="wrap-input100 m-b-20">
+            <div class="wrap-input100 m-b-15">
                 <input asp-for="Password" class="input100" type="password" name="Password" placeholder="Slaptažodis">
                 <span class="focus-input100"></span>
             </div>
             <div><span asp-validation-for="Password" class="text-danger"></span></div>
-            <div class="wrap-input100 m-b-20">
+            <div class="wrap-input100 m-b-15">
                 <input asp-for="ConfirmPassword" class="input100" type="password" name="ConfirmPassword" placeholder="Pakartokite slaptažodį">
                 <span class="focus-input100"></span>
             </div>
@@ -50,7 +50,7 @@
                     Užsiregistruoti
                 </button>
             </div>
-            <div class="text-center-small m-t-60">
+            <div class="text-center-small m-t-40">
                 <p>Jau turite paskyrą?</p>
             </div>
             <div class="container-login100-form-btn">

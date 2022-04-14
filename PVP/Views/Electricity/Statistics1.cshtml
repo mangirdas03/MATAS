@@ -14,16 +14,23 @@
     {
         <table class="table table-hover" id="table-realtime">
             <colgroup>
-                <col span="1" style="width: 70%;">
-                <col span="1" style="width: 30%;">
+                <col span="1" style="width: 80%;">
+                <col span="1" style="width: 20%;">
             </colgroup>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr class="table-main">
+                <tr class="table-main">
+                    @if (item.Tag == null || item.Tag == "")
+                    {
+                        <td style="color: darkgray"><span class="glyphicon glyphicon-modal-window"></span>&nbsp;Įrenginys @item.SetupString</td>
+                    }
+                    else
+                    {
                         <td><span class="glyphicon glyphicon-modal-window"></span>&nbsp;@Html.DisplayFor(modelItem => item.Tag)</td>
-                        <td id="device-@item.Id">Atnaujinama...</td>
-                    </tr>
+                    }
+                    <td id="device-@item.Id">Atnaujinama...</td>
+                </tr>
                 }
             </tbody>
         </table>

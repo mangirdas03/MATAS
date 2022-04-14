@@ -22,15 +22,15 @@ html {
 
 
 .navbar {
-    min-height: 60px;
+    min-height: 55px;
 }
 .container-fluid {
-    min-height: 60px;
+    min-height: 55px;
 }
 
 
 .nav.navbar-nav li a {
-    min-height: 60px;
+    min-height: 55px;
     font-size: 20px;
     padding-top: 18px;
     font-weight: bold;
@@ -39,21 +39,23 @@ html {
 }
 
 a.navbar-brand{
-    min-height: 60px;
+    min-height: 55px;
 }
 
 
 .nav.navbar-nav.navbar-right li a {
-    min-height: 60px;
-    font-size: 20px;
-    padding-top: 18px;
+    min-height: 55px;
+    font-size: 18px;
+    padding-top: 17px;
+    padding-bottom: 16px;
     font-weight: bold;
     margin: auto;
 }
 .nav.navbar-nav.navbar-right li a:hover {
-    min-height: 60px;
-    font-size: 20px;
-    padding-top: 18px;
+    min-height: 55px;
+    font-size: 18px;
+    padding-top: 17px;
+    padding-bottom: 16px;
     font-weight: bold;
     color: #4b2354;
     margin: auto;
@@ -61,16 +63,18 @@ a.navbar-brand{
 }
 
 .nav.navbar-nav.navbar-left li a {
-    min-height: 60px;
-    font-size: 20px;
-    padding-top: 18px;
+    min-height: 55px;
+    font-size: 18px;
+    padding-top: 17px;
+    padding-bottom: 16px;
     font-weight: bold;
     margin: auto;
 }
 .nav.navbar-nav.navbar-left li a:hover {
-    min-height: 60px;
-    font-size: 20px;
-    padding-top: 18px;
+    min-height: 55px;
+    font-size: 18px;
+    padding-top: 17px;
+    padding-bottom: 16px;
     font-weight: bold;
     color: #4b2354;
     margin: auto;
@@ -129,14 +133,16 @@ html {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    /*align-items: center;*/
     padding: 5px;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
     position: relative;
     z-index: 1;
-    margin-top: 50px;
+    margin-top: 55px;
+    padding-top: 15px;
+    padding-bottom: 50px;
 }
 
 
@@ -200,9 +206,8 @@ html {
 
 .footer .copyright {
     text-align: center;
-    padding-top: 15px;
+    padding-top: 10px;
     color: #4b2354;
-    padding-bottom: 10px;
     display: flex;
     flex-flow: row wrap;
 }
@@ -210,19 +215,19 @@ html {
 .alignleft {
     width: 33.33333%;
     text-align: left;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .aligncenter {
     width: 33.33333%;
     text-align: center;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .alignright {
     width: 33.33333%;
     text-align: right;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .text-center-small {
@@ -234,7 +239,7 @@ html {
 }
 
 .text-center-small p {
-    font-size: 15px;
+    font-size: 12px;
 }
 
 
@@ -323,28 +328,54 @@ html {
 
 /* Page container */
 
-.center-container{
+.center-container {
     border-radius: 10px;
     padding: 100px;
+    padding-bottom: 70px;
+    padding-top: 50px;
     width: 60vw;
     min-height: 70vh;
     background-color: white;
-    margin-top: 40px;
+    margin: 0 auto;
+    margin-top: 35px;
+
+    box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.4);
+    -o-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.4);
+    -ms-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.4);
 }
+
+.center-container-wider {
+    border-radius: 10px;
+    padding: 100px;
+    padding-bottom: 70px;
+    padding-top: 50px;
+    width: 80vw;
+    min-height: 70vh;
+    background-color: white;
+    margin-top: 35px;
+    box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.4);
+    -o-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.4);
+    -ms-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.4);
+}
+
 
 .center-text-title {
     font-family: SourceSansPro-SemiBold;
-    font-size: 36px;
+    font-size: 32px;
     color: black;
     line-height: 1.2;
     text-transform: uppercase;
     text-align: center;
     font-weight: bold;
-    margin-bottom: 90px;
+    margin-bottom: 80px;
 }
 
 .container-text {
-    font-size: 20px;
+    font-size: 16px;
     font-family: SourceSansPro-SemiBold;
     line-height: 1.2;
 }
@@ -360,13 +391,13 @@ html {
 
 
 #table-realtime {
-    width: 60%;
+    width: 100%;
     margin: auto;
-    margin-top: 90px;
+    margin-top: 50px;
 }
 
 .table-main {
-    font-size: 28px;
+    font-size: 22px;
     text-align:left;
 }
 
@@ -375,4 +406,10 @@ html {
     max-width: 500px;
     max-height: 150px;
     height: auto;
+}
+
+.device-form {
+    width: 75%;
+    margin: 0 auto;
+    margin-top: 40px;
 }

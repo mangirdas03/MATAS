@@ -23,6 +23,8 @@ namespace PVP.Models
         public virtual DbSet<Realtimeinfo> Realtimeinfos { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
+        public virtual DbSet<ManufacturedDevice> ManufacturedDevices { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -166,6 +168,22 @@ namespace PVP.Models
                     .HasColumnName("pass_hash")
                     .UseCollation("utf8_general_ci")
                     .HasCharSet("utf8");
+            });
+
+            modelBuilder.Entity<ManufacturedDevice>(entity =>
+            {
+                entity.ToTable("manufactureddevices");
+
+                entity.Property(e => e.Id)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("id");
+
+                entity.Property(e => e.SetupString)
+                    .HasMaxLength(30)
+                    .HasColumnName("setupString")
+                    .UseCollation("utf8_general_ci")
+                    .HasCharSet("utf8");
+
             });
 
             OnModelCreatingPartial(modelBuilder);

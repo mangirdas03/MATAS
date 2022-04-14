@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using PVP.Models;
 using PVP.Helpers;
+using Microsoft.EntityFrameworkCore;
+using PVP.ViewModels;
 
 namespace PVP.Controllers
 {
@@ -19,6 +21,33 @@ namespace PVP.Controllers
             _jwtservice = jwtservice;
         }
 
+        [Route("statistics")]
+        public async Task<IActionResult> Statistics()
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                //var jwt = HttpContext.Session.GetString("Token");
+                var token = _jwtservice.Verify(jwt);
+                int userId = int.Parse(token.Issuer);
+                //var user = FindUserById(userId);
+                var devices = _context.Devices.Where(e => e.FkUser.Equals(userId)).ToList(); // users' devices
+
+                List<Info> infos = new List<Info>(); // infos from all user's devices
+                
+                foreach (var device in devices)
+                {
+                    var temp = await _context.Infos.Where(e => e.FkDeviceId.Equals(device.Id)).ToListAsync();
+                    infos.AddRange(temp);
+                }
+                return View(infos);
+            }
+            catch (Exception)
+            {
+                return (RedirectToAction("Login", "Home"));
+            }
+        }
+
         [Route("live-statistics")]
         public IActionResult Statistics1()
         {
@@ -28,7 +57,7 @@ namespace PVP.Controllers
                 //var jwt = HttpContext.Session.GetString("Token");
                 var token = _jwtservice.Verify(jwt);
                 int userId = int.Parse(token.Issuer);
-                var user = FindUserById(userId);
+                //var user = FindUserById(userId);
                 var devices = _context.Devices.Where(e => e.FkUser.Equals(userId)); // users' devices
                 return View(devices);
             }
@@ -70,6 +99,11 @@ namespace PVP.Controllers
                 return Unauthorized("Error has occured.");
             }
 
+
         }
+
+
+
+       
     }
 }

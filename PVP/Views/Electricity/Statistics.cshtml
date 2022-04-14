@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Statistics";
+}
+@model IEnumerable<PVP.Models.Info>
+
+
+<div class="center-container-wider">
+    <h1 class="center-text-title">Statistika</h1>
+
+    <p class="container-text">Lorem ipsum.</p>
+    
+    @if (Model.Count() != 0)
+    {
+        <table class="table table-hover" id="table-realtime">
+            <colgroup>
+                <col span="1" style="width: 40%;">
+                <col span="1" style="width: 40%;">
+                <col span="1" style="width: 15%;">
+                <col span="1" style="width: 5%;">
+            </colgroup>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr class="table-main" style="font-size: 12px;">
+
+                    @if (item.FkDevice.Tag == null || item.FkDevice.Tag == "")
+                    {
+                        <td style="color: darkgray">Įrenginys @item.FkDevice.SetupString</td>
+                    }
+                    else
+                    {
+                        <td>@item.FkDevice.Tag</td>
+                    }
+                    <td>@item.DateTime</td>
+                    <td>@item.Wattage</td>
+                    <td><button onclick=""><span title="Pašalinti įrašą" class="glyphicon glyphicon-trash"></span></button></td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="error-text">Neturite pridėtų įrenginių.</p>
+    }
+</div>
+
+
+
+
+
+<script type="text/javascript">
+
+</script>
+

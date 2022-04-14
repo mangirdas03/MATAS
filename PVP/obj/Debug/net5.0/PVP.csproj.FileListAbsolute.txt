@@ -168,3 +168,5 @@ C:\Users\saule\source\repos\mangirdas03\PVP\PVP\obj\Debug\net5.0\ref\PVP.dll
 C:\Users\saule\source\repos\mangirdas03\PVP\PVP\obj\Debug\net5.0\PVP.pdb
 C:\Users\saule\source\repos\mangirdas03\PVP\PVP\obj\Debug\net5.0\PVP.genruntimeconfig.cache
 C:\Users\gladi\Desktop\PVP3\PVP\bin\Debug\net5.0\PVP.StaticWebAssets.xml
+C:\Users\gladi\Desktop\PVP3\PVP\obj\Debug\net5.0\Razor\Views\Electricity\Statistics.cshtml.g.cs
+C:\Users\gladi\Desktop\PVP3\PVP\obj\Debug\net5.0\Razor\Views\Home\Devices.cshtml.g.cs

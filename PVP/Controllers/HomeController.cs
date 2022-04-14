@@ -152,7 +152,7 @@ namespace PVP.Controllers
                 var jwt = Request.Cookies["jwt"];
                 var token = _jwtservice.Verify(jwt);
                 int userId = int.Parse(token.Issuer);
-                var user = FindUserById(userId);
+                //var user = FindUserById(userId);
 
                 Response.Cookies.Delete("jwt");
                 TempData["LogoutSuccessMessage"] = "LogoutSuccess";
@@ -164,6 +164,114 @@ namespace PVP.Controllers
             }
 
         }
+
+
+
+        [Route("devices")]
+        public async Task<IActionResult> Devices()
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                //var jwt = HttpContext.Session.GetString("Token");
+                var token = _jwtservice.Verify(jwt);
+                int userId = int.Parse(token.Issuer);
+                //var user = FindUserById(userId);
+                var devices = await _context.Devices.Where(e => e.FkUser.Equals(userId)).ToListAsync(); // users' devices
+                return View(devices);
+            }
+            catch (Exception)
+            {
+                return (RedirectToAction("Login", "Home"));
+            }
+        }
+
+
+
+        [HttpPost]
+        public IActionResult UpdateTag([FromBody] TagJSON data)
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                //var jwt = HttpContext.Session.GetString("Token");
+                var token = _jwtservice.Verify(jwt);
+                int userId = int.Parse(token.Issuer);
+                //var user = FindUserById(userId);
+                //var devices = await _context.Devices.Where(e => e.FkUser.Equals(userId)).ToListAsync(); // users' devices
+                //return View(devices);
+                if (data.tag.Length > 50)
+                    return NotFound();
+
+
+                var device = _context.Devices.FirstOrDefault(i => i.Id.Equals(data.id));
+                if (device != null)
+                    device.Tag = data.tag;
+
+                //rti.Wattage = data.Wattage;
+
+                _context.Update(device);
+                _context.SaveChanges();
+
+                // return Error;
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return (RedirectToAction("Login", "Home"));
+            }
+        }
+
+        [HttpPost]
+        public IActionResult NewDevice([FromBody] DeviceJSON data)
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                //var jwt = HttpContext.Session.GetString("Token");
+                var token = _jwtservice.Verify(jwt);
+                int userId = int.Parse(token.Issuer);
+                //var user = FindUserById(userId);
+
+                if (_context.Devices.FirstOrDefault(e => e.SetupString.Equals(data.setupString)) != null)
+                    return BadRequest("Toks įrenginys jau naudojamas!");
+
+                if(_context.ManufacturedDevices.FirstOrDefault(e => e.SetupString.Equals(data.setupString)) != null)
+                {
+                    Device tempDevice = new Device
+                    {
+                        FkUser = userId,
+                        IsOn = true,
+                        IsRealtime = false,
+                        SetupString = data.setupString,
+                        Tag = data.tag,
+                        Treshold = null
+                    };
+                    _context.Devices.Add(tempDevice);
+                    _context.SaveChanges();
+                    var device = _context.Devices.FirstOrDefault(e => e.SetupString.Equals(data.setupString));
+                    Realtimeinfo rti = new Realtimeinfo
+                    {
+                        FkDeviceId = device.Id,
+                        Wattage = 0
+                    };
+                    _context.Realtimeinfos.Add(rti);
+                    _context.SaveChanges();
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound("Įrenginys nerastas!");
+                }
+            }
+            catch (Exception)
+            {
+                return (RedirectToAction("Login", "Home"));
+            }
+        }
+
+
+
 
 
         public IActionResult Privacy()

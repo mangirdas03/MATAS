@@ -19,7 +19,7 @@
         <nav class="navbar navbar-default navbar-fixed-top" style="margin-bottom: 0px;">
             <div class="container-fluid">
                 <div class="navbar-header" >
-                    <div style="padding:8px; padding-bottom:7px;">
+                    <div style="padding:5px; padding-bottom:5px;">
                         <img src="/images/logo.png" alt="Image" width="150" height="45">
                     </div>
                     @*<a class="navbar-brand" href="#">K053 Logo</a>*@
@@ -30,7 +30,7 @@
                     @{
                         if (Context.Request.Cookies["jwt"] != null)
                         {
-                            <li><a href="@Url.Action("Statistics1", "Electricity")"><span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;Statistika 1</a></li>
+                            <li><a href="@Url.Action("Statistics", "Electricity")"><span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;Statistika</a></li>
                             <li><a href="@Url.Action("Statistics1", "Electricity")"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;Statistika realiu laiku</a></li>
                         }
                     }
@@ -39,7 +39,7 @@
                 @{
                     if (Context.Request.Cookies["jwt"] != null)
                     {
-                        <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Nustatymai</a></li>
+                        <li><a href="@Url.Action("Devices", "Home")"><span class="glyphicon glyphicon-wrench"></span>&nbsp;&nbsp;Įrenginiai</a></li>
                         <li><a href="@Url.Action("Logout", "Home")"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Atsijungti</a></li>
                     }
                     else
