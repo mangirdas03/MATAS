@@ -4,40 +4,57 @@
 @model IEnumerable<PVP.Models.Device>
 
 
-
-
 <div class="center-container-wider">
     <h1 class="center-text-title">Jūsų įrenginiai</h1>
 
     <p class="container-text">Lorem ipsum.</p>
     @if (Model.Count() != 0)
     {
-        <table class="table table-hover" id="table-realtime">
+        <table class="table table-hover" id="table-devices">
             <colgroup>
-                <col span="1" style="width: 4%;">
-                <col span="1" style="width: 52%;">
-                <col span="1" style="width: 14%;">
-                <col span="1" style="width: 10%;">
-                <col span="1" style="width: 12%;">
-                <col span="1" style="width: 8%;">
+                <col span="1" style="width: 5%;">
+                <col span="1" style="width: 63%;">
+                <col span="1" style="width: 25%;">
+                <col span="1" style="width: 7%; float: right;">
             </colgroup>
             <tbody>
+                <tr style="font-size: 18px;">
+                    <th></th>
+                    <th>Pavadinimas</th>
+                    <th>Limitas</th>
+                    <th>Parinktys</th>
+                </tr>
                 @foreach (var item in Model)
                 {
-                <tr class="table-main" style="font-size: 18px;">
-                    <td><span class="glyphicon glyphicon-modal-window"></span></td>
-                    @if (item.Tag == null || item.Tag == "")
-                    {
-                        <td style="color: darkgray"><strong>Įrenginys @item.SetupString</strong></td>
-                    }
-                    else
-                    {
-                        <td><strong>@Html.DisplayFor(modelItem => item.Tag)</strong></td>
-                    }
-                    <td style="font-size: 12px;"><button onclick="editTag(@item.Id, '@item.Tag')">Keisti pavadinimą</button></td>
-                    <td style="font-size: 12px;"><button onclick="">Keisti limitą</button></td>
-                    <td style="font-size: 12px;"><button onclick="">Ištrinti statistiką</button></td>
-                    <td style="font-size: 12px;"><button onclick=""><span title="Pašalinti įrenginį" class="glyphicon glyphicon-trash"></span></button></td>
+                 <tr class="table-main" style="font-size: 17px;">
+                    <td style="font-size: 20px;"><span class="glyphicon glyphicon-modal-window"></span></td>
+                @if (item.Tag == null || item.Tag == "")
+                {
+                    <td style="color: darkgray">Įrenginys @item.SetupString</td>
+                }
+                else
+                {
+                    <td>@Html.DisplayFor(modelItem => item.Tag)</td>
+                }
+                @if (item.Treshold == null || item.Treshold == 0)
+                {
+                    <td style="font-size: 14px;">&nbsp;Nėra</td>
+                }
+                else
+                {
+                    <td style="font-size: 14px;">&nbsp;@Html.DisplayFor(modelItem => item.Treshold)</td>
+                }
+                    <td>
+                        <div class="dropdown" style="float:right;">
+                            <span title="Parinktys" class="glyphicon glyphicon-option-vertical" style="font-size: 20px;"></span>
+                            <div class="dropdown-content">
+                                <a onclick="editTag(@item.Id, '@item.Tag')"><span title="Keisti pavadinimą" class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Keisti pavadinimą</a>
+                                <a onclick="editTreshold(@item.Id, '@item.Treshold')"><span title="Keisti limitą" class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Keisti limitą</a>
+                                <a onclick="clearStatistics(@item.Id)"><span title="Ištrinti statistiką" class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Ištrinti statistiką</a>
+                                <a onclick="removeDevice(@item.Id)"><span title="Pašalinti įrenginį" class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Pašalinti</a>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
                 }
             </tbody>
@@ -45,7 +62,7 @@
     }
     else
     {
-        <p class="error-text">Neturite pridėtų įrenginių.</p>
+        <p class="error-text">Neturite pridėtų įrenginių. Pridėti įrenginį galite šio puslapio apačioje.</p>
     }
 
 </div>
@@ -72,10 +89,11 @@
 
 
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
     function editTag(device_id, currentTag) {
         Swal.fire({
+            icon: 'question',
             title: 'Įveskite naują įrenginio pavadinimą:',
             input: 'text',
             inputPlaceholder: currentTag,
@@ -86,13 +104,13 @@
             confirmButtonText: 'Išsaugoti',
             cancelButtonText: 'Atšaukti',
             showLoaderOnConfirm: true,
-            preConfirm: (login) => {
-                if (login.length > 50)
+            preConfirm: (tg) => {
+                if (tg.length > 50)
                 {
                     Swal.showValidationMessage(`Įrenginio pavadinimas negali būti ilgesnis nei 50 simbolių!`)
                 }
                 else {
-                    var tagjson = JSON.stringify({ id: device_id, tag: login });
+                    var tagjson = JSON.stringify({ id: device_id, value: tg });
                     $.ajax({
                         type: "POST",
                         url: "@Url.Action("UpdateTag", "Home")",
@@ -116,7 +134,6 @@
             allowOutsideClick: () => !Swal.isLoading()
         })
     }
-
 
     function newDevice() {
         var setupInput = document.getElementById('setupInput').value
@@ -151,4 +168,126 @@
         });
 
     }
-    </script>
+
+    function editTreshold(device_id, currentTreshold) {
+        Swal.fire({
+            icon: 'question',
+            title: 'Įveskite naują limitą:',
+            text: 'Jei norite panaikinti limitą, įveskite 0 arba palikite lauką tuščią.',
+            input: 'text',
+            inputPlaceholder: currentTreshold,
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Išsaugoti',
+            cancelButtonText: 'Atšaukti',
+            showLoaderOnConfirm: true,
+            preConfirm: (tr) => {
+                if (tr.length > 10)
+                {
+                    Swal.showValidationMessage(`Įrenginio limitas negali būti ilgesnis nei 10 simbolių!`)
+                }
+                else if (isNaN(tr) || tr < 0) {
+                    Swal.showValidationMessage(`Veskite tik sveikus teigiamus skaičius!`)
+                }
+                else {
+                    if (!tr) {
+                        tr = '0';
+                    }
+                    var tagjson = JSON.stringify({ id: device_id, value: tr });
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("UpdateTreshold", "Home")",
+                        contentType: "application/json; charset=utf-8",
+                        data: tagjson,
+                        success: function () {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Pakeitimai išsaugoti!',
+                                confirmButtonText: 'Gerai',
+                            }).then((result) => {
+                                location.reload();
+                            })
+                        },
+                        error: function () {
+                            Swal.fire('Vidinė klaida.')
+                        }
+                    });
+                }
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        })
+    }
+
+    function clearStatistics(device_id) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Ar tikrai norite ištrinti visus šio įrenginio įrašus?',
+            text: 'Ištrintų įrenginio elektros sunaudojimo įrašų atkurti nebus galima.',
+            showCancelButton: true,
+            confirmButtonText: 'Ištrinti',
+            cancelButtonText: 'Atšaukti',
+            showLoaderOnConfirm: true,
+            preConfirm: (tr) => {
+                var tagjson = JSON.stringify({ id: device_id, value: '' });
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("ClearStatistics", "Home")",
+                    contentType: "application/json; charset=utf-8",
+                    data: tagjson,
+                    success: function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Įrašai ištrinti.',
+                            confirmButtonText: 'Gerai',
+                        }).then((result) => {
+                            location.reload();
+                        })
+                    },
+                    error: function () {
+                        Swal.fire('Klaida.')
+                    }
+                });
+
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        })
+    }
+
+    function removeDevice(device_id) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Ar tikrai norite pašalinti įrenginį ir visus jo sukauptus duomenis?',
+            text: 'Jei įrenginį pametėte, jis nepataisomai sugedo, ar norite jį atiduoti kitam naudotojui, galite jį pašalinti.',
+            showCancelButton: true,
+            confirmButtonText: 'Pašalinti',
+            cancelButtonText: 'Atšaukti',
+            showLoaderOnConfirm: true,
+            preConfirm: (tr) => {
+                var tagjson = JSON.stringify({ id: device_id, value: '' });
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("RemoveDevice", "Home")",
+                    contentType: "application/json; charset=utf-8",
+                    data: tagjson,
+                    success: function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Įrenginys pašalintas.',
+                            confirmButtonText: 'Gerai',
+                        }).then((result) => {
+                            location.reload();
+                        })
+                    },
+                    error: function () {
+                        Swal.fire('Klaida.')
+                    }
+                });
+
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        })
+    }
+
+</script>

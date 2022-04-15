@@ -23,7 +23,7 @@
                 <tr class="table-main">
                     @if (item.Tag == null || item.Tag == "")
                     {
-                        <td style="color: darkgray"><span class="glyphicon glyphicon-modal-window"></span>&nbsp;Įrenginys @item.SetupString</td>
+                        <td style="color: darkgray"><span style="color: black" class="glyphicon glyphicon-modal-window"></span>&nbsp;Įrenginys @item.SetupString</td>
                     }
                     else
                     {
@@ -37,7 +37,7 @@
     }
     else
     {
-        <p class="error-text">Neturite pridėtų įrenginių.</p>
+        <p class="error-text">Neturite pridėtų įrenginių. Pridėti naują įrenginį galite meniu juostoje paspaudus "Įrenginiai".</p>
     }
     @*<div class="container-login100-form-btn m-t-20" onclick="fetchDataManual()">
             <button class="login100-form-btn">
@@ -73,10 +73,6 @@
             }
         });
     }
-
-
-
-
 
     @*setInterval(function fetchDataAuto() {
         $.ajax({

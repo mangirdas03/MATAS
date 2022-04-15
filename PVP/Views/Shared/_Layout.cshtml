@@ -27,6 +27,7 @@
                 </div>
                 <ul class="nav navbar-nav navbar-left">
                     <li><a href="@Url.Action("Index", "Home")"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Pradžia</a></li>
+                    <li><a href="@Url.Action("FAQ", "Home")"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;D.U.K</a></li>
                     @{
                         if (Context.Request.Cookies["jwt"] != null)
                         {

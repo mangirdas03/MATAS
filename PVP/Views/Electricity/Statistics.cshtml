@@ -21,7 +21,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr class="table-main" style="font-size: 12px;">
+                <tr class="table-main" style="font-size: 14px;">
 
                     @if (item.FkDevice.Tag == null || item.FkDevice.Tag == "")
                     {
@@ -33,7 +33,7 @@
                     }
                     <td>@item.DateTime</td>
                     <td>@item.Wattage</td>
-                    <td><button onclick=""><span title="Pašalinti įrašą" class="glyphicon glyphicon-trash"></span></button></td>
+                    <td><button onclick="removeEntry(@item.Id)"><span title="Pašalinti įrašą" class="glyphicon glyphicon-trash"></span></button></td>
                 </tr>
                 }
             </tbody>
@@ -41,7 +41,7 @@
     }
     else
     {
-        <p class="error-text">Neturite pridėtų įrenginių.</p>
+        <p class="error-text">Elektros sunaudojimo istorijos sąrašas tuščias.</p>
     }
 </div>
 
@@ -51,5 +51,39 @@
 
 <script type="text/javascript">
 
+    function removeEntry(info_id) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Ar tikrai norite ištrinti šį įrašą?',
+            text: 'Ištrintų elektros sunaudojimo įrašų negalima atkurti.',
+            showCancelButton: true,
+            confirmButtonText: 'Ištrinti',
+            cancelButtonText: 'Atšaukti',
+            showLoaderOnConfirm: true,
+            preConfirm: (tr) => {
+                var tagjson = JSON.stringify({ id: info_id, value: '' });
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("RemoveEntry", "Electricity")",
+                    contentType: "application/json; charset=utf-8",
+                    data: tagjson,
+                    success: function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Įrašas ištrintas.',
+                            confirmButtonText: 'Gerai',
+                        }).then((result) => {
+                            location.reload();
+                        })
+                    },
+                    error: function () {
+                        Swal.fire('Klaida.')
+                    }
+                });
+
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        })
+    }
 </script>
 

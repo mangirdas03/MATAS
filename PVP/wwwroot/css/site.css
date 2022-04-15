@@ -396,6 +396,13 @@ html {
     margin-top: 50px;
 }
 
+
+#table-devices {
+    width: 80%;
+    margin: auto;
+    margin-top: 50px;
+}
+
 .table-main {
     font-size: 22px;
     text-align:left;
@@ -412,4 +419,47 @@ html {
     width: 75%;
     margin: 0 auto;
     margin-top: 40px;
+}
+
+
+/* Dropdown */
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    padding-right:10px;
+    padding-left:12px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 10px;
+    right:0;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 6px 16px;
+    text-decoration: none;
+    display: block;
+    border-radius: 10px;
+    right: 0;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    color: #4b2354;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }

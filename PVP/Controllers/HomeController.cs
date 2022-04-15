@@ -32,6 +32,12 @@ namespace PVP.Controllers
             return View();
         }
 
+        [Route("duk")]
+        public IActionResult FAQ()
+        {
+            return View();
+        }
+
 
         [Route("login")]
         public IActionResult Login()
@@ -121,7 +127,7 @@ namespace PVP.Controllers
             return _context.Users.FirstOrDefault(e => e.Id == id);
         }
 
-
+        // test page
         [HttpGet("user")]
         public IActionResult UserSettings()
         {
@@ -166,7 +172,6 @@ namespace PVP.Controllers
         }
 
 
-
         [Route("devices")]
         public async Task<IActionResult> Devices()
         {
@@ -187,9 +192,8 @@ namespace PVP.Controllers
         }
 
 
-
         [HttpPost]
-        public IActionResult UpdateTag([FromBody] TagJSON data)
+        public IActionResult UpdateTag([FromBody] ParamJSON data)
         {
             try
             {
@@ -200,27 +204,60 @@ namespace PVP.Controllers
                 //var user = FindUserById(userId);
                 //var devices = await _context.Devices.Where(e => e.FkUser.Equals(userId)).ToListAsync(); // users' devices
                 //return View(devices);
-                if (data.tag.Length > 50)
-                    return NotFound();
+                if (data.value.Length > 50)
+                    return NotFound("Blogi duomenys.");
 
 
                 var device = _context.Devices.FirstOrDefault(i => i.Id.Equals(data.id));
                 if (device != null)
-                    device.Tag = data.tag;
+                    device.Tag = data.value;
 
                 //rti.Wattage = data.Wattage;
 
                 _context.Update(device);
                 _context.SaveChanges();
 
-                // return Error;
                 return Ok();
             }
             catch (Exception)
             {
-                return (RedirectToAction("Login", "Home"));
+                return NotFound("Aut. klaida");
+                //return (RedirectToAction("Login", "Home"));
             }
         }
+
+
+        [HttpPost]
+        public IActionResult UpdateTreshold([FromBody] ParamJSON data)
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                var token = _jwtservice.Verify(jwt);
+                int userId = int.Parse(token.Issuer);
+
+                int tresh;
+                if (data.value.Length > 10 || !int.TryParse(data.value, out tresh))
+                    return NotFound("Blogi duomenys");
+
+                var device = _context.Devices.FirstOrDefault(i => i.Id.Equals(data.id));
+                if (device != null)
+                    if(tresh == 0)
+                        device.Treshold = null;
+                    else device.Treshold = tresh;
+
+                _context.Update(device);
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return NotFound("Aut. klaida");
+                //return (RedirectToAction("Login", "Home"));
+            }
+        }
+
+
 
         [HttpPost]
         public IActionResult NewDevice([FromBody] DeviceJSON data)
@@ -266,10 +303,73 @@ namespace PVP.Controllers
             }
             catch (Exception)
             {
-                return (RedirectToAction("Login", "Home"));
+                return NotFound("Aut. klaida");
+                //return (RedirectToAction("Login", "Home"));
             }
         }
 
+
+
+        [HttpPost]
+        public IActionResult ClearStatistics([FromBody] ParamJSON data)
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                var token = _jwtservice.Verify(jwt);
+                int userId = int.Parse(token.Issuer);
+
+                var device = _context.Devices.FirstOrDefault(e => e.Id.Equals(data.id));
+                if (device.FkUser.Equals(userId))
+                {
+                    var rowsToDelete = _context.Infos.Where(e => e.FkDeviceId.Equals(data.id));
+                    _context.Infos.RemoveRange(rowsToDelete);
+                    _context.SaveChanges();
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound("Blogi duomenys.");
+                }
+            }
+            catch (Exception)
+            {
+                return NotFound("Aut. klaida");
+                //return (RedirectToAction("Login", "Home"));
+            }
+        }
+
+        [HttpPost]
+        public IActionResult RemoveDevice([FromBody] ParamJSON data)
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                var token = _jwtservice.Verify(jwt);
+                int userId = int.Parse(token.Issuer);
+
+                var device = _context.Devices.FirstOrDefault(e => e.Id.Equals(data.id));
+                if (device.FkUser.Equals(userId))
+                {
+                    var statistics = _context.Infos.Where(e => e.FkDeviceId.Equals(data.id));
+                    var realtime = _context.Realtimeinfos.Where(e => e.FkDeviceId.Equals(data.id));
+                    _context.Infos.RemoveRange(statistics);
+                    _context.Realtimeinfos.RemoveRange(realtime);
+                    _context.Devices.Remove(device);
+                    _context.SaveChanges();
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound("Blogi duomenys.");
+                }
+            }
+            catch (Exception)
+            {
+                return NotFound("Aut. klaida");
+                //return (RedirectToAction("Login", "Home"));
+            }
+        }
 
 
 

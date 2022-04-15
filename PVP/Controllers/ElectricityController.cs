@@ -21,6 +21,7 @@ namespace PVP.Controllers
             _jwtservice = jwtservice;
         }
 
+        // Statistics page
         [Route("statistics")]
         public async Task<IActionResult> Statistics()
         {
@@ -48,6 +49,7 @@ namespace PVP.Controllers
             }
         }
 
+        // Live statistics page
         [Route("live-statistics")]
         public IActionResult Statistics1()
         {
@@ -71,6 +73,8 @@ namespace PVP.Controllers
             return _context.Users.FirstOrDefault(e => e.Id == id);
         }
 
+
+        // grazina live statistics page'ui duomenis kas 5 sek.
         [HttpGet]
         public IActionResult LiveWattage(int device_id)
         {
@@ -99,11 +103,36 @@ namespace PVP.Controllers
                 return Unauthorized("Error has occured.");
             }
 
+        }
 
+
+        [HttpPost]
+        public IActionResult RemoveEntry([FromBody] ParamJSON data)
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                var token = _jwtservice.Verify(jwt);
+                int userId = int.Parse(token.Issuer);
+
+                var info = _context.Infos.FirstOrDefault(e => e.Id.Equals(data.id));
+                if (info != null)
+                {
+                    _context.Infos.Remove(info);
+                    _context.SaveChanges();
+                    return Ok();
+                }
+                else return BadRequest("Blogi duomenys.");
+
+            }
+            catch (Exception)
+            {
+                return BadRequest("Aut. klaida.");
+            }
         }
 
 
 
-       
+
     }
 }

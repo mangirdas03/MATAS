@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace PVP.ViewModels
 {
-    public class TagJSON
+    public class ParamJSON
     {
         public int id { get; set; }
 
-        public string tag { get; set; } // tag
+        public string value { get; set; } // tag, treshold
     }
 }
