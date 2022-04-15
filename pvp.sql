@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2022 at 08:37 PM
+-- Generation Time: Apr 15, 2022 at 03:57 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -42,7 +42,9 @@ CREATE TABLE `devices` (
 --
 
 INSERT INTO `devices` (`fk_user`, `is_on`, `is_realtime`, `setup_string`, `id`, `treshold`, `tag`) VALUES
-(13, 1, 0, 'qwerty', 1, NULL, NULL);
+(13, 1, 0, 'qwerty', 1, 3000, 'Vonia'),
+(13, 1, 1, 'qwertyu', 2, 6000, ''),
+(52, 1, 0, 'asdfg', 11, 543, '313');
 
 -- --------------------------------------------------------
 
@@ -65,7 +67,9 @@ INSERT INTO `infos` (`id`, `fk_device_id`, `date_time`, `wattage`) VALUES
 (1, 1, '2022-03-27 14:28:00', 420),
 (2, 1, '2022-03-27 14:28:21', 421),
 (3, 1, '2022-03-27 14:29:52', 423),
-(4, 1, '2022-03-29 23:03:25', 701);
+(9, 1, '2022-04-15 16:47:06', 100),
+(10, 1, '2022-04-15 16:47:48', 1000),
+(11, 2, '2022-04-15 16:47:57', 6700);
 
 -- --------------------------------------------------------
 
@@ -84,7 +88,9 @@ CREATE TABLE `realtimeinfos` (
 --
 
 INSERT INTO `realtimeinfos` (`id`, `fk_device_id`, `wattage`) VALUES
-(1, 1, 78);
+(1, 1, 1020),
+(2, 2, 2009),
+(8, 11, 0);
 
 -- --------------------------------------------------------
 
@@ -104,7 +110,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `mail`, `pass_hash`) VALUES
 (7, 'test@test.com', '$2a$11$py8GV0vKRXhMOfzeDJJKZeRG5CFSlBvXX44r8X2s2DjQM4/bmFjFG'),
-(13, 'testas@test.com', '$2a$11$bA1jcVOw0XElYbKAsYhy.OjMCTIpY9yhMySd3s7sGymWCCUmDej9i');
+(13, 'testas@test.com', '$2a$11$bA1jcVOw0XElYbKAsYhy.OjMCTIpY9yhMySd3s7sGymWCCUmDej9i'),
+(52, 'gilbertas@hotmail.com', '$2a$11$FQFO4cxFfFYCi6W2iqTZDuAhr5JPvjkNZg6NsdBH7TXz92CLYOaA.');
 
 -- --------------------------------------------------------
 
@@ -158,6 +165,7 @@ ALTER TABLE `realtimeinfos`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `mail` (`mail`),
   ADD KEY `Email` (`mail`),
   ADD KEY `Pass_hash` (`pass_hash`);
 
@@ -175,25 +183,25 @@ ALTER TABLE `__efmigrationshistory`
 -- AUTO_INCREMENT for table `devices`
 --
 ALTER TABLE `devices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `infos`
 --
 ALTER TABLE `infos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `realtimeinfos`
 --
 ALTER TABLE `realtimeinfos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- Constraints for dumped tables
