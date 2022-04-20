@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2022 at 03:57 PM
+-- Generation Time: Apr 20, 2022 at 07:06 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -42,7 +42,7 @@ CREATE TABLE `devices` (
 --
 
 INSERT INTO `devices` (`fk_user`, `is_on`, `is_realtime`, `setup_string`, `id`, `treshold`, `tag`) VALUES
-(13, 1, 0, 'qwerty', 1, 3000, 'Vonia'),
+(13, 1, 0, 'qwerty', 1, 3000, 'Voniaa'),
 (13, 1, 1, 'qwertyu', 2, 6000, ''),
 (52, 1, 0, 'asdfg', 11, 543, '313');
 
@@ -70,6 +70,27 @@ INSERT INTO `infos` (`id`, `fk_device_id`, `date_time`, `wattage`) VALUES
 (9, 1, '2022-04-15 16:47:06', 100),
 (10, 1, '2022-04-15 16:47:48', 1000),
 (11, 2, '2022-04-15 16:47:57', 6700);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `manufactureddevices`
+--
+
+CREATE TABLE `manufactureddevices` (
+  `id` int(11) NOT NULL,
+  `setupString` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `manufactureddevices`
+--
+
+INSERT INTO `manufactureddevices` (`id`, `setupString`) VALUES
+(1, 'qwerty'),
+(2, 'qwertyu'),
+(3, 'zxcvbnm'),
+(4, 'asdfg');
 
 -- --------------------------------------------------------
 
@@ -154,6 +175,12 @@ ALTER TABLE `infos`
   ADD KEY `fk_device_id` (`fk_device_id`);
 
 --
+-- Indexes for table `manufactureddevices`
+--
+ALTER TABLE `manufactureddevices`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `realtimeinfos`
 --
 ALTER TABLE `realtimeinfos`
@@ -190,6 +217,12 @@ ALTER TABLE `devices`
 --
 ALTER TABLE `infos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `manufactureddevices`
+--
+ALTER TABLE `manufactureddevices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `realtimeinfos`
