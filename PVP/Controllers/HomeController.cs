@@ -26,34 +26,35 @@ namespace PVP.Controllers
             _jwtservice = jwtservice;
         }
 
-
+        // home page
         public IActionResult Index()
         {
             return View();
         }
 
-        [Route("duk")]
+        // faq page
+        [Route("Duk")]
         public IActionResult FAQ()
         {
             return View();
         }
 
-
-        [Route("login")]
+        // login page
+        [Route("Login")]
         public IActionResult Login()
         {
             return View();
         }
 
-
-        [Route("register")]
+        // register page
+        [Route("Register")]
         public IActionResult Register()
         {
             return View();
         }
 
-
-        [Route("register")]
+        // register POST
+        [Route("Register")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Register(RegisterDTO registerdto)
@@ -82,7 +83,8 @@ namespace PVP.Controllers
         }
 
 
-        [Route("login")]
+        // login POST
+        [Route("Login")]
         [HttpPost]
         public IActionResult Login(LoginDTO logindto)
         {
@@ -127,8 +129,9 @@ namespace PVP.Controllers
             return _context.Users.FirstOrDefault(e => e.Id == id);
         }
 
+
         // test page
-        [HttpGet("user")]
+        [HttpGet("User")]
         public IActionResult UserSettings()
         {
             try
@@ -146,7 +149,8 @@ namespace PVP.Controllers
             }
         }
 
-        [Route("logout")]
+        // Logout
+        [Route("Logout")]
         public IActionResult Logout()
         {
             //HttpContext.Session.Remove("Token");
@@ -171,8 +175,10 @@ namespace PVP.Controllers
 
         }
 
+        // ------------------------DEVICES--------------------------
 
-        [Route("devices")]
+        // Devices page
+        [Route("Devices")]
         public async Task<IActionResult> Devices()
         {
             try
@@ -191,7 +197,7 @@ namespace PVP.Controllers
             }
         }
 
-
+        // Update device tag
         [HttpPost]
         public IActionResult UpdateTag([FromBody] ParamJSON data)
         {
@@ -226,7 +232,7 @@ namespace PVP.Controllers
             }
         }
 
-
+        // update device treshold
         [HttpPost]
         public IActionResult UpdateTreshold([FromBody] ParamJSON data)
         {
@@ -258,7 +264,7 @@ namespace PVP.Controllers
         }
 
 
-
+        // add new device
         [HttpPost]
         public IActionResult NewDevice([FromBody] DeviceJSON data)
         {
@@ -309,7 +315,7 @@ namespace PVP.Controllers
         }
 
 
-
+        // clear device statistics
         [HttpPost]
         public IActionResult ClearStatistics([FromBody] ParamJSON data)
         {
@@ -339,6 +345,7 @@ namespace PVP.Controllers
             }
         }
 
+        // remove device
         [HttpPost]
         public IActionResult RemoveDevice([FromBody] ParamJSON data)
         {
@@ -370,6 +377,9 @@ namespace PVP.Controllers
                 //return (RedirectToAction("Login", "Home"));
             }
         }
+
+
+
 
 
 

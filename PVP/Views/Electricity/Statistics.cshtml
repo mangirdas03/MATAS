@@ -1,57 +1,190 @@
 ﻿@{
     ViewData["Title"] = "Statistics";
 }
-@model IEnumerable<PVP.Models.Info>
+@*@model IEnumerable<PVP.Models.Info>*@
+@model ReflectionIT.Mvc.Paging.PagingList<PVP.Models.Info>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
 
 
 <div class="center-container-wider">
     <h1 class="center-text-title">Statistika</h1>
 
-    <p class="container-text">Lorem ipsum.</p>
-    
     @if (Model.Count() != 0)
     {
+        <p class="container-text">Lorem ipsum.</p>
+
+
         <table class="table table-hover" id="table-realtime">
             <colgroup>
                 <col span="1" style="width: 40%;">
-                <col span="1" style="width: 40%;">
-                <col span="1" style="width: 15%;">
-                <col span="1" style="width: 5%;">
+                <col span="1" style="width: 25%;">
+                <col span="1" style="width: 25%;">
+                <col span="1" style="width: 10%;">
             </colgroup>
             <tbody>
-                @foreach (var item in Model)
-                {
-                <tr class="table-main" style="font-size: 14px;">
-
-                    @if (item.FkDevice.Tag == null || item.FkDevice.Tag == "")
+                <tr>
+                    <th class="header-text">Pavadinimas</th>
+                    @if (ViewData["SortParam"].ToString() == "DateTime")
                     {
-                        <td style="color: darkgray">Įrenginys @item.FkDevice.SetupString</td>
+                        <th><a class="sort-text" asp-controller="Electricity" asp-action="Statistics" asp-route-sortExpression="-DateTime"><strong><u>Data ir laikas (did.)</u></strong></a></th>
+                    }
+                    else if (ViewData["SortParam"].ToString() == "-DateTime")
+                    {
+                        <th><a class="sort-text" asp-controller="Electricity" asp-action="Statistics" asp-route-sortExpression="DateTime"><strong><u>Data ir laikas (maž.)</u></strong></a></th>
                     }
                     else
                     {
-                        <td>@item.FkDevice.Tag</td>
+                        <th><a class="sort-text" asp-controller="Electricity" asp-action="Statistics" asp-route-sortExpression="-DateTime">Data ir laikas</a></th>
                     }
-                    <td>@item.DateTime</td>
-                    <td>@item.Wattage</td>
-                    <td><button onclick="removeEntry(@item.Id)"><span title="Pašalinti įrašą" class="glyphicon glyphicon-trash"></span></button></td>
+
+                    @if (ViewData["SortParam"].ToString() == "Wattage")
+                    {
+                        <th><a class="sort-text" asp-controller="Electricity" asp-action="Statistics" asp-route-sortExpression="-Wattage"><strong><u>Rodmenys (did.)</u></strong></a></th>
+                    }
+                    else if (ViewData["SortParam"].ToString() == "-Wattage")
+                    {
+                        <th><a class="sort-text" asp-controller="Electricity" asp-action="Statistics" asp-route-sortExpression="Wattage"><strong><u>Rodmenys (maž.)</u></strong></a></th>
+                    }
+                    else
+                    {
+                        <th><a class="sort-text" asp-controller="Electricity" asp-action="Statistics" asp-route-sortExpression="-Wattage">Rodmenys</a></th>
+                    }
+                    <th>Šalinti</th>
                 </tr>
+                @foreach (var item in Model)
+                {
+                    <tr class="table-main" style="font-size: 14px;">
+
+                        @if (item.FkDevice.Tag == null || item.FkDevice.Tag == "")
+                        {
+                            <td style="color: darkgray">Įrenginys @item.FkDevice.SetupString</td>
+                        }
+                        else
+                        {
+                            <td>@item.FkDevice.Tag</td>
+                        }
+                        <td>@item.DateTime.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>@item.Wattage</td>
+                        <td><button style="padding-left:10px;" type="button" onclick="removeEntry(@item.Id)"><span title="Pašalinti įrašą" class="glyphicon glyphicon-trash"></span></button></td>
+                    </tr>
                 }
             </tbody>
         </table>
+        <div style="display: flex; justify-content: flex-end;">
+            <div class="pagebutton" aria-label="Suppliers navigation example">
+                @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+            </div>
+        </div>
     }
     else
     {
         <p class="error-text">Elektros sunaudojimo istorijos sąrašas tuščias.</p>
     }
 </div>
+<div class="center-container-wider">
+<h1 class="center-text-title">Grafinis duomenų vaizdavimas</h1>
+
+@if (Model.Count() != 0)
+{
+    <p class="container-text">Lorem ipsum.</p>
+    <div class="filter-div">
+        <p class="container-text" style="color:black;">Pasirinkite grafiko intervalą:</p>
+        <table class="filter-div-table">
+            <colgroup>
+                <col span="1" style="width: 58%;">
+                <col span="1" style="width: 19%;">
+                <col span="1" style="width: 4%;">
+                <col span="1" style="width: 19%;">
+            </colgroup>
+            <tr>
+                <td>
+                    <label class="radio-container">
+                        <input type="radio" name="interval" value="1">
+                        <span class="checkmark"></span>
+                        Laisvai pasirenkamas intervalas. (Max 60d.)
+                    </label>
+                </td>
+                <td>
+                    <div class='input-group date' id='datetimepicker1' style="max-width: 150px; ">
+                        <input type='text' class="form-control" id="startdate" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </td>
+                <td style="text-align: center;">
+                    <strong>–</strong>
+                </td>
+                <td>
+                    <div class='input-group date' id='datetimepicker2' style="max-width: 150px;">
+                        <input type='text' class="form-control" id="enddate" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="radio-container">
+                        7 dienos.
+                        <input type="radio" name="interval" value="7">
+                        <span class="checkmark"></span>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="radio-container">
+                        <input type="radio" name="interval" value="30">
+                        <span class="checkmark"></span>
+                        30 dienų.
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="radio-container">
+                        <input type="radio" name="interval" value="60">
+                        <span class="checkmark"></span>
+                        60 dienų.
+                    </label>
+                </td>
+            </tr>
+        </table>
+        <div class="container-login100-form-btn m-t-15">
+            <button class="login100-form-btn" type="submit" onclick="drawGraph();">
+                Rodyti
+            </button>
+        </div>
+    </div>
+    <canvas id="myChart" style="width:100%;max-width:500px"></canvas>
+}
+else
+{
+    <p class="error-text">Elektros sunaudojimo istorijos sąrašas tuščias.</p>
+}
+</div>
 
 
-
-
-
+<link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+<script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script type="text/javascript">
 
+    $(function () {
+        $('#datetimepicker1').datetimepicker({ format: "YYYY-MM-DD" });
+    });
+    $(function () {
+        $('#datetimepicker2').datetimepicker({ format: "YYYY-MM-DD" });
+    });
+
+
     function removeEntry(info_id) {
+        //document.forms[0].submit();
         Swal.fire({
             icon: 'warning',
             title: 'Ar tikrai norite ištrinti šį įrašą?',
@@ -73,17 +206,117 @@
                             title: 'Įrašas ištrintas.',
                             confirmButtonText: 'Gerai',
                         }).then((result) => {
-                            location.reload();
+                            //location.reload();
+                            window.location = window.location;
                         })
                     },
                     error: function () {
-                        Swal.fire('Klaida.')
+
+                        Swal.fire('Klaida!')
                     }
                 });
 
             },
             allowOutsideClick: () => !Swal.isLoading()
         })
+    }
+
+
+    function drawGraph() {
+
+        var date1 = $('input[name="interval"]:checked').val();
+        var date2 = null;
+        if (date1 == 1) {
+            date1 = document.getElementById("startdate").value;
+            date2 = document.getElementById("enddate").value;
+            if (!date1 || !date2) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Įveskite intervalo pradžią bei pabaigą!',
+                    confirmButtonText: 'Gerai',
+                });
+                return;
+            }
+            else if (date1 == date2) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Intervalas negali būti vienos dienos ilgio!',
+                    confirmButtonText: 'Gerai',
+                });
+                return;
+            }
+        }
+        else if (date1 == null) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Pasirinkite grafiko intervalą!',
+                confirmButtonText: 'Gerai',
+            });
+            return;
+        }
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("GetStatistics", "Electricity")",
+            contentType: "application/json; charset=utf-8",
+            data: { device_id: @Context.Request.RouteValues["id"], start: date1, end: date2 },
+            success: function (response) {
+                var labels = response.map(function (e) {
+                    return e.date;
+                });
+                var values = response.map(function (e) {
+                    return e.wattage;
+                });
+
+                $('#myChart').replaceWith($('<canvas id="myChart" ></canvas>'));
+
+                var grapharea = document.getElementById("myChart").getContext("2d");
+
+                myChart = new Chart(grapharea, {
+                    type: "bar",
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            backgroundColor: "#bd59d4",
+                            data: values,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        legend: { display: false },
+                        scales: {
+                            yAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Sąnaudos'
+                                }
+                            }],
+                            xAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Diena'
+                                }
+                            }]
+                        }
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                if (xhr.responseText == "Bad interval.") {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Blogas intervalas!',
+                        confirmButtonText: 'Gerai',
+                    });
+                }
+                else if (xhr.responseText == "Interval too long.") {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Pasirinktas intervalas per ilgas! (Max 60d.)',
+                        confirmButtonText: 'Gerai',
+                    });
+                }
+            }
+        });
     }
 </script>
 

@@ -1,0 +1,140 @@
+﻿@{
+    ViewData["Title"] = "Statistics";
+}
+@model IEnumerable<PVP.Models.Info>
+
+
+<div class="center-container-wider">
+    <h1 class="center-text-title">Statistika</h1>
+
+    <p class="container-text">Lorem ipsum.</p>
+    <button onclick="test();">SHOW</button>
+    <canvas id="myChart" style="width:100%;max-width:500px"></canvas>
+
+    @if (Model.Count() != 0)
+    {
+        <table class="table table-hover" id="table-realtime">
+            <colgroup>
+                <col span="1" style="width: 40%;">
+                <col span="1" style="width: 40%;">
+                <col span="1" style="width: 15%;">
+                <col span="1" style="width: 5%;">
+            </colgroup>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="table-main" style="font-size: 14px;">
+
+                        @if (item.FkDevice.Tag == null || item.FkDevice.Tag == "")
+                        {
+                            <td style="color: darkgray">Įrenginys @item.FkDevice.SetupString</td>
+                        }
+                        else
+                        {
+                            <td>@item.FkDevice.Tag</td>
+                        }
+                        <td>@item.DateTime</td>
+                        <td>@item.Wattage</td>
+                        <td><button onclick="removeEntry(@item.Id)"><span title="Pašalinti įrašą" class="glyphicon glyphicon-trash"></span></button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="error-text">Elektros sunaudojimo istorijos sąrašas tuščias.</p>
+    }
+</div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
+<script type="text/javascript">
+
+    function removeEntry(info_id) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Ar tikrai norite ištrinti šį įrašą?',
+            text: 'Ištrintų elektros sunaudojimo įrašų negalima atkurti.',
+            showCancelButton: true,
+            confirmButtonText: 'Ištrinti',
+            cancelButtonText: 'Atšaukti',
+            showLoaderOnConfirm: true,
+            preConfirm: (tr) => {
+                var tagjson = JSON.stringify({ id: info_id, value: '' });
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("RemoveEntry", "Electricity")",
+                    contentType: "application/json; charset=utf-8",
+                    data: tagjson,
+                    success: function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Įrašas ištrintas.',
+                            confirmButtonText: 'Gerai',
+                        }).then((result) => {
+                            location.reload();
+                        })
+                    },
+                    error: function () {
+                        Swal.fire('Klaida.')
+                    }
+                });
+
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        })
+    }
+
+
+
+
+    function test() {
+
+
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("GetStatistics", "Electricity")",
+            contentType: "application/json; charset=utf-8",
+            data: { device_id: 1, interval: 110 },
+            success: function (response) {
+
+                var labels = response.map(function (e) {
+                    return e.date;
+                });
+                var values = response.map(function (e) {
+                    return e.wattage;
+                });;
+
+                new Chart("myChart", {
+                    type: "bar",
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: values,
+                            borderColor: "blue",
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        legend: { display: false }
+                    }
+                });
+            },
+            error: function () {
+                Swal.fire('Klaida.')
+            }
+        });
+
+
+    }
+
+
+
+
+
+
+</script>
+

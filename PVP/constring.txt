@@ -1,0 +1,3 @@
+﻿"server=10.0.0.4; port=3306; user=pvp; password=Slaptazodis123!; database=pvp"
+
+"server=localhost; port=3306; user=pvp; password=pvp; database=pvp"

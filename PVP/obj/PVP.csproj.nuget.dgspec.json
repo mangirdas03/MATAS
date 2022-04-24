@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\PVP.csproj": {}
+    "C:\\Users\\gladi\\Desktop\\PVP4\\PVP\\PVP.csproj": {}
   },
   "projects": {
-    "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\PVP.csproj": {
+    "C:\\Users\\gladi\\Desktop\\PVP4\\PVP\\PVP.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\PVP.csproj",
+        "projectUniqueName": "C:\\Users\\gladi\\Desktop\\PVP4\\PVP\\PVP.csproj",
         "projectName": "PVP",
-        "projectPath": "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\PVP.csproj",
+        "projectPath": "C:\\Users\\gladi\\Desktop\\PVP4\\PVP\\PVP.csproj",
         "packagesPath": "C:\\Users\\gladi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gladi\\Desktop\\PVP3\\PVP\\obj\\",
+        "outputPath": "C:\\Users\\gladi\\Desktop\\PVP4\\PVP\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\gladi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -61,6 +61,10 @@
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
               "version": "[5.0.4, )"
+            },
+            "ReflectionIT.Mvc.Paging": {
+              "target": "Package",
+              "version": "[5.1.1, )"
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",

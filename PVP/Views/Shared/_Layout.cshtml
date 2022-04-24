@@ -31,7 +31,8 @@
                     @{
                         if (Context.Request.Cookies["jwt"] != null)
                         {
-                            <li><a href="@Url.Action("Statistics", "Electricity")"><span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;Statistika</a></li>
+                            <li><a href="@Url.Action("DeviceSelect", "Electricity")"><span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;Statistika</a></li>
+                            @*<li> <a class='btn btn-primary' asp-controller="Electricity" asp-action="Statistics" asp-route-id="1">STAT</a></li>*@
                             <li><a href="@Url.Action("Statistics1", "Electricity")"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;Statistika realiu laiku</a></li>
                         }
                     }
@@ -69,7 +70,7 @@
         </footer>
     </div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
