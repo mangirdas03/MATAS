@@ -6,17 +6,16 @@
 <div class="center-container">
     <h1 class="center-text-title">Pasirinkite įrengnį</h1>
 
-    <p class="container-text">Lorem ipsum.</p>
+    <p class="container-text">Paspauskite ant  įrenginio, kurio rodmenis norite pamatyti.</p>
 
     @if (Model.Count() != 0)
     {
-
     <div class="cards">
     @foreach (var item in Model)
     {
         @if (item.Tag == null || item.Tag == "")
         {
-            <a class="card" asp-controller="Electricity" asp-action="Statistics" asp-route-id="@item.Id">
+            <a class="card-box" asp-controller="Electricity" asp-action="Statistics" asp-route-id="@item.Id">
                 <article class="text">
                     <div class="device-icon-box"><span class="glyphicon glyphicon-modal-window"></span></div>
                     <p class="center-option" style="color: gray;">
@@ -27,7 +26,7 @@
         }
         else
         {
-            <a class="card" asp-controller="Electricity" asp-action="Statistics" asp-route-id="@item.Id">
+            <a class="card-box" asp-controller="Electricity" asp-action="Statistics" asp-route-id="@item.Id">
                 <article class="text">
                     <div class="device-icon-box"><span class="glyphicon glyphicon-modal-window"></span></div>
                     <p class="center-option">

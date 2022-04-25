@@ -33,7 +33,7 @@ namespace PVP.Controllers
         }
 
         // faq page
-        [Route("Duk")]
+        [Route("FAQ")]
         public IActionResult FAQ()
         {
             return View();

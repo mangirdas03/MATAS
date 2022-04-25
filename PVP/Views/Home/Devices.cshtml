@@ -3,11 +3,10 @@
 }
 @model IEnumerable<PVP.Models.Device>
 
-
 <div class="center-container-wider">
     <h1 class="center-text-title">Jūsų įrenginiai</h1>
 
-    <p class="container-text">Lorem ipsum.</p>
+    <p class="container-text">Šioje puslapio dalyje galite valdyti pridėtus įrenginius: keisti pavadinimą bei limitą, ištrinti įrenginio sukauptus duomenis, pašalinti pasirinktą įrenginį.</p>
     @if (Model.Count() != 0)
     {
         <table class="table table-hover" id="table-devices">
@@ -68,7 +67,8 @@
 </div>
 <div class="center-container">
     <h1 class="center-text-title">Naujo įrenginio pridėjimas</h1>
-    <p class="container-text">Lorem ipsum.</p>
+    <p class="container-text">Šioje puslapio dalyje galite pridėti naują įrenginį.<br>
+    Įveskite turimo įrenginio unikalų atpažinimo kodą (10 simbolių ilgio kodas esantis ant prietaiso).</p>
 
     <div class="device-form">
         <div class="wrap-input100 m-b-60">

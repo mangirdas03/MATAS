@@ -436,7 +436,6 @@ html {
     cursor: pointer;
 }
 
-/* Create a custom radio button */
 .checkmark {
     margin-top: 6px;
     position: absolute;
@@ -511,13 +510,15 @@ html {
 }
 
 
+/*   Device select Cards   */
+
 .device-icon-box {
     font-size: 70px;
     padding-top: 10%;
     text-align: center;
 }
 
-.card {
+.card-box {
     display: block;
     width: 23rem;
     min-height: 21rem;
@@ -536,7 +537,7 @@ html {
     word-break: break-all;
 }
 
-.card:hover {
+.card-box:hover {
     box-shadow: 0 6px 6px 0 rgba(0,0,0,.14),0 7px 5px -2px rgba(0,0,0,.2),0 5px 9px 0 rgba(0,0,0,.12);
     top: -4px;
     transform: translateY(-4px);
@@ -544,7 +545,7 @@ html {
     color: #bd59d4;
 }
 
-.card:active {
+.card-box:active {
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
     transform: translateY(4px);
     text-decoration: none;
@@ -586,6 +587,9 @@ html {
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
+/*   NAVBAR   */
+
 
 .topnav {
     overflow: hidden;
@@ -689,4 +693,37 @@ html {
 
 .glyphicon.glyphicon-shopping-cart {
     top: 0px !important;
+}
+
+/*  FAQ  */
+#accordion{
+    margin-top: 50px;
+}
+
+.panel-title > a {
+    font-size: 16px;
+    font-family: SourceSansPro-SemiBold;
+    line-height: 1.2;
+    color: #333 !important;
+}
+
+.panel-title > a:hover, .panel-title > a:focus, .panel-title > a:active {
+    text-decoration: none;
+}
+
+.panel-default{
+    margin-bottom: 10px !important;
+}
+.panel-body {
+    font-size: 16px;
+    font-family: SourceSansPro-SemiBold;
+    line-height: 1.2;
+    color: #333 !important;
+}
+.panel-body > a {
+    color: blue;
+    font-size: 16px;
+    font-family: SourceSansPro-SemiBold;
+    line-height: 1.2;
+    text-decoration: underline;
 }

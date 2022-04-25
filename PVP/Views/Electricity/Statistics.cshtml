@@ -8,12 +8,12 @@
 
 
 <div class="center-container-wider">
-    <h1 class="center-text-title">Statistika</h1>
+
+    <h1 class="center-text-title">Įrenginio "@ViewData["DeviceName"].ToString()" Statistika</h1>
 
     @if (Model.Count() != 0)
     {
-        <p class="container-text">Lorem ipsum.</p>
-
+        <p class="container-text">Šioje puslapio dalyje yra pateikiami visi įrenginio sukaupti rodmenys. Grafike vaizduojama kiek energijos buvo sunaudota kiekvieną intervalo dieną. Matomus įrašus galite pašalinti arba rikiuoti pagal laiką ar sunaudotą energijos kiekį. </p>
 
         <table class="table table-hover" id="table-realtime">
             <colgroup>
@@ -87,7 +87,7 @@
 
 @if (Model.Count() != 0)
 {
-    <p class="container-text">Lorem ipsum.</p>
+    <p class="container-text">Šioje puslapio dalyje galite sugeneruoti grafiką iš įrenginio pateiktų duomenų. Pasirinkite norimą laiko intervalą ir spauskite mygtuką "Rodyti".</p>
     <div class="filter-div">
         <p class="container-text" style="color:black;">Pasirinkite grafiko intervalą:</p>
         <table class="filter-div-table">

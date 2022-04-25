@@ -72,6 +72,9 @@ namespace PVP.Controllers
 
                 model.Action = "Statistics";
                 ViewData["SortParam"] = sortExpression;
+                if(device.Tag == null || device.Tag == "")
+                    ViewData["DeviceName"] = device.SetupString;
+                else ViewData["DeviceName"] = device.Tag;
                 return View(model);
             }
             catch (Exception)
@@ -224,7 +227,7 @@ namespace PVP.Controllers
                 if(end == null)
                 {
                     int parsedDays = Int32.Parse(start);
-                    info.AddRange(_context.Infos.Where(e => e.FkDeviceId.Equals(device_id)).Where(e => e.DateTime >= DateTime.Now.AddDays(-parsedDays)).OrderBy(e => e.DateTime)); // .Take(30));
+                    info.AddRange(_context.Infos.Where(e => e.FkDeviceId.Equals(device_id)).Where(e => e.DateTime >= DateTime.Now.AddDays(-parsedDays)).OrderBy(e => e.DateTime));
                 }
                 else
                 {
@@ -237,31 +240,32 @@ namespace PVP.Controllers
                     else if((endDate - startDate).TotalDays > 60)
                         return BadRequest("Interval too long.");
 
-                    info.AddRange(_context.Infos.Where(e => e.FkDeviceId.Equals(device_id)).Where(e => e.DateTime >= startDate).Where(e => e.DateTime <= endDate).OrderBy(e => e.DateTime)); // .Take(30));
+                    info.AddRange(_context.Infos.Where(e => e.FkDeviceId.Equals(device_id)).Where(e => e.DateTime >= startDate).Where(e => e.DateTime <= endDate).OrderBy(e => e.DateTime));
                 }
-                    
 
-                List<DateTime> days = info.Select(e => e.DateTime.Date).Distinct().ToList();
+                List<DateTime> days = info.Select(e => e.DateTime.Date).Distinct().ToList(); // list of unique dates
 
                 for (int i = 0; i < days.Count; i++)
                 {
-                    int value = 0; int count = 0;
-                    for (int j = 0; j < info.Count; j++)
-                    {
-                        if (info[j].DateTime.Date.Equals(days[i]))
-                        {
-                            value += info[j].Wattage;
-                            count++;
-                        }
-                    }
-                    value /= count;
+                    //int value = 0; int count = 0;
+
+                    int value = info.Where(e => e.DateTime.Date.Equals(days[i])).Select(e => e.Wattage).Max();
+                    //for (int j = 0; j < info.Count; j++)
+                    //{
+                    //    if (info[j].DateTime.Date.Equals(days[i]))
+                    //    {
+                    //        value += info[j].Wattage;
+                    //        count++;
+                    //    }
+                    //}
+                    //value /= count;
                     var stat = new StatisticsJSON
                     {
                         date = days[i].ToString("MM/dd"),
                         wattage = value
                     };
                     sjson.Add(stat);
-                    value = 0; count = 0;
+                    //value = 0; count = 0;
 
                 }
                 return Ok(sjson);
