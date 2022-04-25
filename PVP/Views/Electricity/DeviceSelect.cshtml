@@ -8,8 +8,10 @@
 
     <p class="container-text">Lorem ipsum.</p>
 
-@if (Model.Count() != 0)
-{
+    @if (Model.Count() != 0)
+    {
+
+    <div class="cards">
     @foreach (var item in Model)
     {
         @if (item.Tag == null || item.Tag == "")
@@ -35,9 +37,11 @@
             </a>
         }
     }
-}
-else
-{
+    </div>
+
+    }
+    else
+    {
     <p class="error-text">Neturite pridėtų įrenginių. Pridėti naują įrenginį galite meniu juostoje paspaudus "Įrenginiai".</p>
-}
+    }
 </div>

@@ -21,72 +21,7 @@ html {
 }
 
 
-.navbar {
-    min-height: 55px;
-}
-.container-fluid {
-    min-height: 55px;
-}
 
-
-.nav.navbar-nav li a {
-    min-height: 55px;
-    font-size: 20px;
-    padding-top: 18px;
-    font-weight: bold;
-    color: blue;
-    margin: auto;
-}
-
-a.navbar-brand{
-    min-height: 55px;
-}
-
-
-.nav.navbar-nav.navbar-right li a {
-    min-height: 55px;
-    font-size: 18px;
-    padding-top: 17px;
-    padding-bottom: 16px;
-    font-weight: bold;
-    margin: auto;
-}
-.nav.navbar-nav.navbar-right li a:hover {
-    min-height: 55px;
-    font-size: 18px;
-    padding-top: 17px;
-    padding-bottom: 16px;
-    font-weight: bold;
-    color: #4b2354;
-    margin: auto;
-    text-decoration: none;
-}
-
-.nav.navbar-nav.navbar-left li a {
-    min-height: 55px;
-    font-size: 18px;
-    padding-top: 17px;
-    padding-bottom: 16px;
-    font-weight: bold;
-    margin: auto;
-}
-.nav.navbar-nav.navbar-left li a:hover {
-    min-height: 55px;
-    font-size: 18px;
-    padding-top: 17px;
-    padding-bottom: 16px;
-    font-weight: bold;
-    color: #4b2354;
-    margin: auto;
-    text-decoration: none;
-}
-
-.glyphicon {
-    top: 2px !important;
-}
-.glyphicon.glyphicon-shopping-cart {
-    top: 0px !important;
-}
 
 /* Sticky footer styles
 -------------------------------------------------- */
@@ -140,8 +75,8 @@ html {
     background-size: 100% 100%;
     position: relative;
     z-index: 1;
-    margin-top: 55px;
-    padding-top: 15px;
+    /*margin-top: 55px;*/
+    padding-top: 70px;
     padding-bottom: 50px;
 }
 
@@ -593,7 +528,7 @@ html {
     text-align: center;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
     transition: all 0.3s;
-    color: black;
+    color: #333;
     text-decoration: none;
     font-weight: bold;
     margin-top: 30px;
@@ -606,23 +541,152 @@ html {
     top: -4px;
     transform: translateY(-4px);
     text-decoration: none;
-    color: black;
+    color: #bd59d4;
 }
 
 .card:active {
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
     transform: translateY(4px);
     text-decoration: none;
-    color: black;
+    color: #333;
 }
 
 .center-option {
     padding-left: 15px;
     padding-right: 15px;
     padding-bottom: 15px;
-    color: black;
+    color: #333;
     text-decoration: none;
     font-weight: bold;
     font-size: 20px;
     word-break: break-all;
+}
+
+.cards {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-gap: 1rem;
+}
+
+@media (min-width: 720px) {
+    .cards {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media (min-width: 1110px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1530px) {
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #F4F4F4;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+    box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.2);
+    -o-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.2);
+    -ms-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.2);
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    color: #666666;
+    text-align: center;
+    padding: 14px 12px;
+    text-decoration: none;
+    font-size: 18px;
+    padding-top: 12px;
+    padding-bottom: 16px;
+    font-weight: bold;
+    margin: auto;
+}
+
+.topnav a:hover {
+    color: #4b2354;
+    text-decoration: none;
+}
+
+.topnav a:active {
+    color: #4b2354;
+    text-decoration: none;
+}
+
+.topnav a:focus {
+    color: #4b2354;
+    text-decoration: none;
+}
+
+.topnav .icon {
+    display: none;
+}
+
+.topnav a.right-item{
+    float:right;
+}
+
+@media screen and (max-width: 890px) {
+    .topnav a {
+        display: none;
+    }
+
+    .topnav a.icon {
+        float: right;
+        display: block;
+    }
+}
+
+@media screen and (max-width: 890px) {
+    .topnav.responsive {
+        position: relative;
+    }
+
+    .topnav.responsive .icon, .topnav.responsive .icon:hover,
+    .topnav.responsive .icon:active, .topnav.responsive .icon:focus {
+        position: absolute;
+        right: 0;
+        top: 0;
+        color: black;
+        text-decoration: none;
+    }
+
+    .topnav.responsive a {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+    .topnav.responsive a:not(:last-child) {
+        float: none;
+        display: block;
+        text-align: left;
+        padding: 0px;
+        padding-left: 20px;
+        padding-top: 10px;
+    }
+
+    .topnav .navbar-header {
+        display: block;
+    }
+
+}
+
+.glyphicon {
+    top: 2px !important;
+}
+
+.glyphicon.glyphicon-shopping-cart {
+    top: 0px !important;
 }
