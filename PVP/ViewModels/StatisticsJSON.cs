@@ -8,6 +8,6 @@ namespace PVP.ViewModels
     public class StatisticsJSON
     {
         public string date { get; set; }
-        public int wattage { get; set; }
+        public decimal wattage { get; set; }
     }
 }

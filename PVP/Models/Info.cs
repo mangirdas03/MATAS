@@ -10,7 +10,7 @@ namespace PVP.Models
         public int Id { get; set; }
         public int FkDeviceId { get; set; }
         public DateTime DateTime { get; set; }
-        public int Wattage { get; set; }
+        public decimal Wattage { get; set; }
 
         public virtual Device FkDevice { get; set; }
     }

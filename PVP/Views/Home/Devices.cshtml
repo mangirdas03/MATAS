@@ -12,8 +12,9 @@
         <table class="table table-hover" id="table-devices">
             <colgroup>
                 <col span="1" style="width: 5%;">
-                <col span="1" style="width: 63%;">
-                <col span="1" style="width: 25%;">
+                <col span="1" style="width: 60%;">
+                <col span="1" style="width: 15%;">
+                <col span="1" style="width: 13%;">
                 <col span="1" style="width: 7%; float: right;">
             </colgroup>
             <tbody>
@@ -21,12 +22,22 @@
                     <th></th>
                     <th>Pavadinimas</th>
                     <th>Limitas</th>
+                    <th style="text-align: center;">Būsena</th>
                     <th>Parinktys</th>
                 </tr>
                 @foreach (var item in Model)
                 {
-                 <tr class="table-main" style="font-size: 17px;">
-                    <td style="font-size: 20px;"><span class="glyphicon glyphicon-modal-window"></span></td>
+            <tr class="table-main" style="font-size: 17px;">
+                <td class="devices-icon"><span class="glyphicon glyphicon-modal-window"></span></td>
+                @*@if (item.IsOn == true)
+                {
+                    <td style="font-size: 20px; color: #5BBA47;"><span class="glyphicon glyphicon-modal-window"></span></td>
+                }
+                else
+                {
+                    <td style="font-size: 20px; color: #AA3030;"><span class="glyphicon glyphicon-modal-window"></span></td>
+                }*@
+
                 @if (item.Tag == null || item.Tag == "")
                 {
                     <td style="color: darkgray">Įrenginys @item.SetupString</td>
@@ -43,18 +54,29 @@
                 {
                     <td style="font-size: 14px;">&nbsp;@Html.DisplayFor(modelItem => item.Treshold)</td>
                 }
-                    <td>
-                        <div class="dropdown" style="float:right;">
-                            <span title="Parinktys" class="glyphicon glyphicon-option-vertical" style="font-size: 20px;"></span>
-                            <div class="dropdown-content">
-                                <a onclick="editTag(@item.Id, '@item.Tag')"><span title="Keisti pavadinimą" class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Keisti pavadinimą</a>
-                                <a onclick="editTreshold(@item.Id, '@item.Treshold')"><span title="Keisti limitą" class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Keisti limitą</a>
-                                <a onclick="clearStatistics(@item.Id)"><span title="Ištrinti statistiką" class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Ištrinti statistiką</a>
-                                <a onclick="removeDevice(@item.Id)"><span title="Pašalinti įrenginį" class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Pašalinti</a>
-                            </div>
+                <td style=" text-align: center;" class="devices-icon">
+                    @if (item.IsOn == true)
+                    {
+                        <a style=" text-align: center; color: #5BBA47; cursor:pointer;" onclick="changeStatus(@item.Id, 'išjungti')"><span class="glyphicon glyphicon-off"></span></a>
+                    }
+                    else if (item.IsOn == false)
+                    {
+                        <a style="text-align: center; color: #AA3030; cursor: pointer;" onclick="changeStatus(@item.Id, 'įjungti')"><span class="glyphicon glyphicon-off"></span></a>
+                    }
+
+                </td>
+                <td>
+                    <div class="dropdown" style="float:right;">
+                        <span title="Parinktys" class="glyphicon glyphicon-option-vertical" style="font-size: 20px;"></span>
+                        <div class="dropdown-content">
+                            <a onclick="editTag(@item.Id, '@item.Tag')"><span title="Keisti pavadinimą" class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Keisti pavadinimą</a>
+                            <a onclick="editTreshold(@item.Id, '@item.Treshold')"><span title="Keisti limitą" class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Keisti limitą</a>
+                            <a onclick="clearStatistics(@item.Id)"><span title="Ištrinti statistiką" class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Ištrinti statistiką</a>
+                            <a onclick="removeDevice(@item.Id)"><span title="Pašalinti įrenginį" class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Pašalinti</a>
                         </div>
-                    </td>
-                </tr>
+                    </div>
+                </td>
+            </tr>
                 }
             </tbody>
         </table>
@@ -72,11 +94,11 @@
 
     <div class="device-form">
         <div class="wrap-input100 m-b-60">
-            <input class="input100" type="text" id="setupInput" placeholder="Įrenginio atpažinimo kodas" style="font-size: 14px;">
+            <input class="input100" type="text" id="setupInput" placeholder="Įrenginio atpažinimo kodas">
             <span class="focus-input100"></span>
         </div>
         <div class="wrap-input100 m-b-15" style="margin-bottom: 25px; margin-top: 25px;">
-            <input class="input100" type="text" id="tagInput" placeholder="Įrenginio pavadinimas (nebūtina)" style="font-size: 14px;">
+            <input class="input100" type="text" id="tagInput" placeholder="Įrenginio pavadinimas (nebūtina)">
             <span class="focus-input100"></span>
         </div>
         <div class="container-login100-form-btn m-t-20" onclick="newDevice()">
@@ -138,6 +160,15 @@
     function newDevice() {
         var setupInput = document.getElementById('setupInput').value
         var tagInput = document.getElementById('tagInput').value
+        if (tagInput.length > 50) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Įrenginio pavadinimas negali būti ilgesnis nei 50 simbolių!',
+                confirmButtonText: 'Gerai',
+            })
+            return;
+        }
+
 
         var tagjson = JSON.stringify({ setupString: setupInput, tag: tagInput });
 
@@ -290,4 +321,37 @@
         })
     }
 
+    function changeStatus(device_id, action) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Ar tikrai norite '+ action +' įrenginį?',
+            showCancelButton: true,
+            confirmButtonText: 'Taip',
+            cancelButtonText: 'Ne',
+            showLoaderOnConfirm: true,
+            preConfirm: (tr) => {
+                var tagjson = JSON.stringify({ id: device_id, value: '' });
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("ChangeStatus", "Home")",
+                    contentType: "application/json; charset=utf-8",
+                    data: tagjson,
+                    success: function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Operacija sėkminga',
+                            confirmButtonText: 'Gerai',
+                        }).then((result) => {
+                            location.reload();
+                        })
+                    },
+                    error: function () {
+                        Swal.fire('Klaida.')
+                    }
+                });
+
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        })
+    }
 </script>

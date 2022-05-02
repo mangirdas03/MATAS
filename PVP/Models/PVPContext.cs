@@ -115,7 +115,7 @@ namespace PVP.Models
                     .HasColumnName("fk_device_id");
 
                 entity.Property(e => e.Wattage)
-                    .HasColumnType("int(11)")
+                    .HasColumnType("decimal(11, 2)")
                     .HasColumnName("wattage");
 
                 entity.HasOne(d => d.FkDevice)
@@ -140,7 +140,7 @@ namespace PVP.Models
                     .HasColumnName("fk_device_id");
 
                 entity.Property(e => e.Wattage)
-                    .HasColumnType("int(11)")
+                    .HasColumnType("decimal(11, 2)")
                     .HasColumnName("wattage");
             });
 

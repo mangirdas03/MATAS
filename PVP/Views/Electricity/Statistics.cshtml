@@ -50,11 +50,11 @@
                     {
                         <th><a class="sort-text" asp-controller="Electricity" asp-action="Statistics" asp-route-sortExpression="-Wattage">Rodmenys</a></th>
                     }
-                    <th>Šalinti</th>
+                    <th class="header-text">Šalinti</th>
                 </tr>
                 @foreach (var item in Model)
                 {
-                    <tr class="table-main" style="font-size: 14px;">
+                    <tr class="table-main">
 
                         @if (item.FkDevice.Tag == null || item.FkDevice.Tag == "")
                         {
@@ -65,7 +65,7 @@
                             <td>@item.FkDevice.Tag</td>
                         }
                         <td>@item.DateTime.ToString("yyyy-MM-dd HH:mm")</td>
-                        <td>@item.Wattage</td>
+                        <td>@item.Wattage kWh</td>
                         <td><button style="padding-left:10px;" type="button" onclick="removeEntry(@item.Id)"><span title="Pašalinti įrašą" class="glyphicon glyphicon-trash"></span></button></td>
                     </tr>
                 }
@@ -92,21 +92,25 @@
         <p class="container-text" style="color:black;">Pasirinkite grafiko intervalą:</p>
         <table class="filter-div-table">
             <colgroup>
-                <col span="1" style="width: 58%;">
-                <col span="1" style="width: 19%;">
-                <col span="1" style="width: 4%;">
-                <col span="1" style="width: 19%;">
+                <col span="1" style="width: 10%;">
+                <col span="1" style="width: 20%;">
+                <col span="1" style="width: 5%;">
+                <col span="1" style="width: 20%;">
+                <col span="1" style="width: 45%;">
             </colgroup>
             <tr>
-                <td>
+                <td colspan="5">
                     <label class="radio-container">
                         <input type="radio" name="interval" value="1">
                         <span class="checkmark"></span>
                         Laisvai pasirenkamas intervalas. (Max 60d.)
                     </label>
                 </td>
+            </tr>
+            <tr>
+                <td></td>
                 <td>
-                    <div class='input-group date' id='datetimepicker1' style="max-width: 150px; ">
+                    <div class='input-group date' id='datetimepicker1'>
                         <input type='text' class="form-control" id="startdate" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
@@ -114,10 +118,10 @@
                     </div>
                 </td>
                 <td style="text-align: center;">
-                    <strong>–</strong>
+                     <strong>–</strong>
                 </td>
                 <td>
-                    <div class='input-group date' id='datetimepicker2' style="max-width: 150px;">
+                    <div class='input-group date' id='datetimepicker2'>
                         <input type='text' class="form-control" id="enddate" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
@@ -126,7 +130,7 @@
                 </td>
             </tr>
             <tr>
-                <td>
+                <td colspan="5">
                     <label class="radio-container">
                         7 dienos.
                         <input type="radio" name="interval" value="7">
@@ -135,7 +139,7 @@
                 </td>
             </tr>
             <tr>
-                <td>
+                <td colspan="5">
                     <label class="radio-container">
                         <input type="radio" name="interval" value="30">
                         <span class="checkmark"></span>
@@ -144,7 +148,7 @@
                 </td>
             </tr>
             <tr>
-                <td>
+                <td colspan="5">
                     <label class="radio-container">
                         <input type="radio" name="interval" value="60">
                         <span class="checkmark"></span>

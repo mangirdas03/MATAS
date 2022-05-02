@@ -117,7 +117,7 @@ namespace PVP.Controllers
                 HttpOnly = true
             });
             TempData["LoginSuccessMessage"] = "LoginSuccess";
-            return (RedirectToAction("Index"));
+            return (RedirectToAction("DeviceSelect", "Electricity"));
         }
 
         private User FindUserByName(string mail)
@@ -263,7 +263,6 @@ namespace PVP.Controllers
             }
         }
 
-
         // add new device
         [HttpPost]
         public IActionResult NewDevice([FromBody] DeviceJSON data)
@@ -284,7 +283,7 @@ namespace PVP.Controllers
                     Device tempDevice = new Device
                     {
                         FkUser = userId,
-                        IsOn = true,
+                        IsOn = false,
                         IsRealtime = false,
                         SetupString = data.setupString,
                         Tag = data.tag,
@@ -313,7 +312,6 @@ namespace PVP.Controllers
                 //return (RedirectToAction("Login", "Home"));
             }
         }
-
 
         // clear device statistics
         [HttpPost]
@@ -378,10 +376,41 @@ namespace PVP.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult ChangeStatus([FromBody] ParamJSON data)
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                var token = _jwtservice.Verify(jwt);
+                int userId = int.Parse(token.Issuer);
+
+                var device = _context.Devices.FirstOrDefault(e => e.Id.Equals(data.id));
+                if (device != null)
+                {
+                    if (device.IsOn == false)
+                        device.IsOn = true;
+                    else device.IsOn = false;
 
 
+                    var rti = _context.Realtimeinfos.FirstOrDefault(i => i.FkDeviceId.Equals(device.Id));
+                    if (rti != null)
+                    {
+                        rti.Wattage = 0;
+                        _context.Update(rti);
+                    }
+                    _context.Update(device);
+                    _context.SaveChanges();
+                    return Ok();
+                }
+                else return BadRequest("Blogi duomenys.");
 
-
+            }
+            catch (Exception)
+            {
+                return BadRequest("Aut. klaida.");
+            }
+        }
 
 
         public IActionResult Privacy()

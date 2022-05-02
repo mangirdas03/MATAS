@@ -174,6 +174,8 @@ namespace PVP.Controllers
 
                 if (user != null && device != null && user.Id == device.FkUser)
                 {
+                    if (!device.IsOn)
+                        return Ok(-1);
                     var rti = _context.Realtimeinfos.FirstOrDefault(i => i.FkDeviceId.Equals(device_id));
                     if (rti == null)
                         return Unauthorized("Error has occured.");
@@ -247,25 +249,27 @@ namespace PVP.Controllers
 
                 for (int i = 0; i < days.Count; i++)
                 {
-                    //int value = 0; int count = 0;
+                    decimal value = 0; //int count = 0;
 
-                    int value = info.Where(e => e.DateTime.Date.Equals(days[i])).Select(e => e.Wattage).Max();
-                    //for (int j = 0; j < info.Count; j++)
-                    //{
-                    //    if (info[j].DateTime.Date.Equals(days[i]))
-                    //    {
-                    //        value += info[j].Wattage;
-                    //        count++;
-                    //    }
-                    //}
+                    //int value = info.Where(e => e.DateTime.Date.Equals(days[i])).Select(e => e.Wattage).Max();
+
+                    for (int j = 0; j < info.Count; j++)
+                    {
+                        if (info[j].DateTime.Date.Equals(days[i]))
+                        {
+                            value += info[j].Wattage;
+                            //count++;
+                        }
+                    }
                     //value /= count;
+
                     var stat = new StatisticsJSON
                     {
                         date = days[i].ToString("MM/dd"),
                         wattage = value
                     };
                     sjson.Add(stat);
-                    //value = 0; count = 0;
+                    value = 0; //count = 0;
 
                 }
                 return Ok(sjson);

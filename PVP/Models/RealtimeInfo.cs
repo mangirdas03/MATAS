@@ -9,6 +9,6 @@ namespace PVP.Models
     {
         public int Id { get; set; }
         public int FkDeviceId { get; set; }
-        public int Wattage { get; set; }
+        public decimal Wattage { get; set; }
     }
 }

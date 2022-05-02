@@ -268,7 +268,7 @@ html {
     padding: 100px;
     padding-bottom: 70px;
     padding-top: 50px;
-    width: 60vw;
+    width: 65vw;
     min-height: 70vh;
     background-color: white;
     margin: 0 auto;
@@ -283,7 +283,7 @@ html {
 
 .center-container-wider {
     border-radius: 10px;
-    padding: 100px;
+    padding: 80px;
     padding-bottom: 70px;
     padding-top: 50px;
     width: 80vw;
@@ -333,13 +333,17 @@ html {
 
 
 #table-devices {
-    width: 80%;
+    width: 100%;
     margin: auto;
     margin-top: 50px;
 }
 
+.devices-icon, .devices-icon > a > span{
+    font-size: 20px;
+}
+
 .table-main {
-    font-size: 22px;
+    font-size: 18px;
     text-align:left;
 }
 
@@ -347,7 +351,8 @@ html {
     width: 100%;
     max-width: 500px;
     max-height: 150px;
-    height: auto;
+    min-width: 150px;
+    min-height: 45px;
 }
 
 .device-form {
@@ -404,7 +409,6 @@ html {
     padding: 20px;
     padding-left: 30px;
     border-radius: 20px;
-    margin: 0 5%;
     margin-bottom: 70px;
     margin-top: 30px;
     box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.4);
@@ -443,13 +447,13 @@ html {
     left: 0;
     height: 20px;
     width: 20px;
-    background-color: white;
+    background-color: #A5A5A5;
     border-radius: 50%;
 }
 
 
 .radio-container:hover input ~ .checkmark {
-    background-color: gray;
+    background-color: #bd59d4;
 }
 
 .radio-container input:checked ~ .checkmark {
@@ -479,6 +483,16 @@ html {
     padding-bottom: 0px;
 }
 
+.form-control{
+    font-size: 14px !important;
+    height: 28px !important;
+    min-width: 86px !important; 
+    max-width: 86px !important;
+    padding: 4px !important;
+}
+
+
+
 .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
     background-color: #bd59d4 !important;
     border-color: #bd59d4 !important;
@@ -491,13 +505,14 @@ html {
 }
 
 .sort-text{
-    font-size: 16px;
+    font-size: 17px;
     margin: 0;
 }
 
 .header-text {
     margin: auto;
     vertical-align: central;
+    font-size: 17px;
 }
 
 .table > tbody > tr > th {
@@ -727,3 +742,228 @@ html {
     line-height: 1.2;
     text-decoration: underline;
 }
+
+
+
+/*RESPONSIVE PAGES*/
+@media screen and (max-width: 1000px) {
+    .center-container-wider {
+        padding: 50px;
+        padding-top: 50px;
+        width: 90vw;
+    }
+
+    .center-container {
+        padding: 50px;
+        padding-top: 50px;
+        width: 65vw;
+    }
+}
+@media screen and (max-width: 800px) {
+
+    /*Statistics*/
+    .filter-div {
+        padding-left: 20px;
+    }
+
+    /*Live*/
+    .table-main{
+        font-size: 15px;
+    }
+
+    .sort-text {
+        font-size: 16px;
+    }
+
+    .header-text {
+        font-size: 16px;
+    }
+
+}
+@media screen and (max-width: 670px) {
+    .center-container-wider {
+        padding: 30px;
+        padding-top: 50px;
+        width: 93vw;
+    }
+    .center-container {
+        padding: 30px;
+        padding-top: 50px;
+        width: 70vw;
+    }
+
+    /*Device select*/
+    .split-quarter > h2{
+        font-size: 24px;
+    }
+
+    /*Live*/
+    .table-main {
+        font-size: 14px;
+    }
+    .sort-text {
+        font-size: 15px;
+    }
+
+    .header-text {
+        font-size: 15px;
+    }
+
+
+
+
+    /*Statistics*/
+    #table-realtime > tbody > tr > td, #table-realtime > tbody > tr > th {
+        padding: 3px;
+    }
+
+    .radio-container {
+        font-size: 12px;
+    }
+
+    .checkmark {
+        margin-top: 4px;
+        height: 16px;
+        width: 16px;
+    }
+
+    .radio-container .checkmark:after {
+        top: 4px;
+        left: 4px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: white;
+    }
+
+    .input-group-addon {
+        padding: 1px 2px !important;
+        font-size: 11px !important;
+    }
+
+    /*Device*/
+    #table-devices > tbody > tr > td, #table-devices > tbody > tr > th, #table-devices > tbody > tr > td > a > span {
+        padding: 3px;
+        font-size: 14px;
+    }
+    .device-form{
+        width: 100%;
+    }
+    
+
+}
+@media screen and (max-width: 450px) {
+    .center-container-wider {
+        padding: 10px;
+        padding-top: 50px;
+        width: 96vw;
+    }
+
+    .center-container {
+        padding: 10px;
+        padding-top: 50px;
+        width: 75vw;
+    }
+
+    .container-text {
+        font-size: 14px;
+    }
+
+    .center-text-title {
+        font-size: 28px;
+    }
+
+    /*Device select*/
+    .card-box {
+        width: 18rem;
+        min-height: 16rem;
+    }
+
+    .device-icon-box {
+        font-size: 55px;
+    }
+
+    .center-option {
+        font-size: 16px;
+    }
+
+    /*index?*/
+    .split-quarter > h2 {
+        font-size: 20px;
+    }
+
+
+    /*Live*/
+    .table-main {
+        font-size: 13px;
+    }
+
+    .sort-text {
+        font-size: 14px;
+    }
+
+    .header-text {
+        font-size: 14px;
+    }
+
+
+
+}
+@media screen and (max-width: 380px) {
+
+    .center-container {
+        padding: 10px;
+        padding-top: 50px;
+        width: 85vw;
+    }
+
+
+
+    /*Device select*/
+    .card-box {
+        width: 16rem;
+        min-height: 14rem;
+    }
+    .device-icon-box {
+        font-size: 40px;
+    }
+    .center-option {
+        font-size: 14px;
+    }
+
+
+    /*FAQ*/
+    .panel-title > a {
+        font-size: 14px !important;
+    }
+    .panel-body {
+        font-size: 14px;
+    }
+
+
+    /*Device select*/
+    .split-quarter > h2 {
+        font-size: 15px;
+    }
+
+    /*Device*/
+    #table-devices > tbody > tr > td, #table-devices > tbody > tr > th {
+        padding: 3px;
+        font-size: 12px;
+    }
+    .input100 {
+        font-size: 12px !important;
+    }
+
+    /*Live*/
+    .table-main {
+        font-size: 12px;
+    }
+
+}
+
+
+/*FAQ DONE*/
+/*LIVE DONE*/
+/*Device select DONE*/
+/*INDEX IMAGE NOT NOT NOT DONE*/

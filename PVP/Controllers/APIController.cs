@@ -98,11 +98,15 @@ namespace PVP.Controllers
                 if (device == null)
                     return Unauthorized("Authorization error.");
 
-                var rti = _context.Realtimeinfos.FirstOrDefault(i => i.FkDeviceId.Equals(device.Id));
-                rti.Wattage = data.Wattage;
+                if (device.IsOn)
+                {
+                    var rti = _context.Realtimeinfos.FirstOrDefault(i => i.FkDeviceId.Equals(device.Id));
+                    rti.Wattage = data.Wattage;
 
-                _context.Update(rti);
-                _context.SaveChanges();
+                    _context.Update(rti);
+                    _context.SaveChanges();
+                }
+                return Ok(device.IsOn);
             }
             catch (Exception)
             {
@@ -110,7 +114,8 @@ namespace PVP.Controllers
                 return Unauthorized("Error has occured.");
             }
             //throw new Exception("test");
-            return Ok("Wattage received: " + data.Wattage);
+            //return Ok("Wattage received: " + data.Wattage);
+
         }
 
         [HttpPost("wattage")]
@@ -125,7 +130,7 @@ namespace PVP.Controllers
                 Info info = new Info
                 {
                     FkDeviceId = device.Id,
-                    DateTime = DateTime.Now,
+                    DateTime = DateTime.Now.AddHours(3),
                     Wattage = data.Wattage
                 };
                 _context.Infos.Add(info);
@@ -139,9 +144,17 @@ namespace PVP.Controllers
             return Ok("Wattage received: " + data.Wattage);
         }
 
+        [HttpGet("status/{id}")]
+        public async Task<IActionResult> GetStatus(string id)
+        {
+            var device = await _context.Devices.FirstOrDefaultAsync(e => e.SetupString.Equals(id));
+            if (device != null)
+            {
+                return Ok(device.IsOn);
+            }
+            return Unauthorized("Error has occured.");
+        }
+
+
     }
-
-
-
-
 }

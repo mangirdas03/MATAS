@@ -7,7 +7,7 @@ namespace PVP.ViewModels
 {
     public class WattageJSON
     {
-        public int Wattage { get; set; }
+        public decimal Wattage { get; set; }
 
         public string id { get; set; } // setup string
     }
