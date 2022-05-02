@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2022 at 09:31 PM
+-- Generation Time: May 02, 2022 at 08:46 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -42,10 +42,8 @@ CREATE TABLE `devices` (
 --
 
 INSERT INTO `devices` (`fk_user`, `is_on`, `is_realtime`, `setup_string`, `id`, `treshold`, `tag`) VALUES
-(13, 1, 0, 'qwerty', 1, 3000, 'Vonia'),
-(13, 1, 1, 'qwertyu', 2, 6000, 'aaa'),
-(52, 1, 0, 'asdfg', 11, 543, '313'),
-(13, 1, 0, 'zxcvbnm', 12, NULL, '');
+(13, 1, 0, 'OwCn0qs8IK', 1, 3111, 'Vonios kambarys'),
+(13, 1, 1, '4uPJgx4Exa', 2, 6000, 'Garažas');
 
 -- --------------------------------------------------------
 
@@ -57,7 +55,7 @@ CREATE TABLE `infos` (
   `id` int(11) NOT NULL,
   `fk_device_id` int(11) NOT NULL,
   `date_time` datetime NOT NULL,
-  `wattage` int(11) NOT NULL
+  `wattage` decimal(11,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -65,42 +63,45 @@ CREATE TABLE `infos` (
 --
 
 INSERT INTO `infos` (`id`, `fk_device_id`, `date_time`, `wattage`) VALUES
-(1, 1, '2022-02-27 14:28:00', 420),
-(2, 1, '2022-02-27 14:28:21', 421),
-(3, 1, '2022-02-27 14:29:52', 423),
-(9, 1, '2022-04-22 17:10:34', 543),
-(10, 1, '2022-04-21 17:10:20', 1001),
-(13, 1, '2022-04-20 17:10:08', 422),
-(14, 1, '2022-04-19 16:33:48', 1111),
-(15, 1, '2022-04-18 16:33:53', 200),
-(16, 1, '2022-04-17 16:33:54', 454),
-(17, 1, '2022-04-16 16:33:55', 423),
-(18, 1, '2022-04-15 16:33:56', 2344),
-(19, 1, '2022-04-14 16:33:57', 1456),
-(20, 1, '2022-04-13 16:33:58', 998),
-(21, 1, '2022-04-12 16:33:59', 235),
-(22, 1, '2022-04-11 16:34:01', 432),
-(23, 1, '2022-04-10 16:34:02', 233),
-(24, 1, '2022-04-10 16:34:02', 845),
-(25, 1, '2022-04-09 16:34:03', 765),
-(26, 1, '2022-04-08 16:34:03', 1166),
-(27, 1, '2022-04-08 16:34:04', 3411),
-(28, 1, '2022-04-07 16:34:04', 6544),
-(29, 1, '2022-04-06 16:34:05', 4356),
-(30, 1, '2022-04-05 16:34:06', 6222),
-(31, 1, '2022-04-04 16:34:06', 8766),
-(32, 1, '2022-04-03 16:34:07', 4334),
-(33, 1, '2022-04-02 16:34:07', 5435),
-(34, 1, '2022-04-01 16:34:08', 6544),
-(35, 1, '2022-03-22 16:34:08', 7567),
-(36, 1, '2022-03-23 16:34:09', 4234),
-(37, 1, '2022-03-24 16:34:09', 3123),
-(38, 1, '2022-03-25 16:34:10', 6126),
-(39, 1, '2022-03-26 16:34:10', 6321),
-(40, 1, '2022-03-27 16:34:11', 1233),
-(41, 1, '2022-03-28 16:34:11', 3212),
-(42, 1, '2022-03-29 16:34:12', 5435),
-(43, 1, '2022-03-30 16:34:12', 3211);
+(1, 1, '2022-02-27 14:28:00', '420.00'),
+(2, 1, '2022-02-27 14:28:21', '421.00'),
+(3, 1, '2022-02-27 14:29:52', '423.00'),
+(9, 1, '2022-04-22 17:10:34', '543.00'),
+(10, 1, '2022-04-21 17:10:20', '1001.00'),
+(13, 1, '2022-04-20 17:10:08', '422.00'),
+(14, 1, '2022-04-19 16:33:48', '1111.00'),
+(15, 1, '2022-04-18 16:33:53', '200.00'),
+(16, 1, '2022-04-17 16:33:54', '454.00'),
+(17, 1, '2022-04-16 16:33:55', '423.00'),
+(18, 1, '2022-04-15 16:33:56', '2344.00'),
+(19, 1, '2022-04-14 16:33:57', '1456.00'),
+(20, 1, '2022-04-13 16:33:58', '998.00'),
+(21, 1, '2022-04-12 16:33:59', '235.00'),
+(22, 1, '2022-04-11 16:34:01', '432.00'),
+(23, 1, '2022-04-10 16:34:02', '233.00'),
+(24, 1, '2022-04-10 16:34:02', '845.00'),
+(25, 1, '2022-04-09 16:34:03', '765.00'),
+(26, 1, '2022-04-08 16:34:03', '1166.00'),
+(27, 1, '2022-04-08 16:34:04', '3411.00'),
+(28, 1, '2022-04-07 16:34:04', '6544.00'),
+(29, 1, '2022-04-06 16:34:05', '4356.00'),
+(30, 1, '2022-04-05 16:34:06', '6222.00'),
+(31, 1, '2022-04-04 16:34:06', '8766.00'),
+(32, 1, '2022-04-03 16:34:07', '4334.00'),
+(33, 1, '2022-04-02 16:34:07', '5435.00'),
+(34, 1, '2022-04-01 16:34:08', '6544.00'),
+(35, 1, '2022-03-22 16:34:08', '7567.00'),
+(36, 1, '2022-03-23 16:34:09', '4234.00'),
+(37, 1, '2022-03-24 16:34:09', '3123.00'),
+(38, 1, '2022-03-25 16:34:10', '6126.00'),
+(39, 1, '2022-03-26 16:34:10', '6321.00'),
+(40, 1, '2022-03-27 16:34:11', '1233.00'),
+(41, 1, '2022-03-28 16:34:11', '3212.00'),
+(42, 1, '2022-03-29 16:34:12', '5435.00'),
+(43, 1, '2022-03-30 16:34:12', '3211.00'),
+(84, 1, '2022-05-02 20:58:17', '3.55'),
+(85, 1, '2022-05-02 20:59:01', '3.56'),
+(86, 1, '2022-05-03 00:27:48', '55.12');
 
 -- --------------------------------------------------------
 
@@ -118,10 +119,10 @@ CREATE TABLE `manufactureddevices` (
 --
 
 INSERT INTO `manufactureddevices` (`id`, `setupString`) VALUES
-(1, 'qwerty'),
-(2, 'qwertyu'),
-(3, 'zxcvbnm'),
-(4, 'asdfg');
+(1, 'OwCn0qs8IK'),
+(2, '4uPJgx4Exa'),
+(3, 'ezpm7phFO9'),
+(4, 'hkOHSxqqa6');
 
 -- --------------------------------------------------------
 
@@ -132,7 +133,7 @@ INSERT INTO `manufactureddevices` (`id`, `setupString`) VALUES
 CREATE TABLE `realtimeinfos` (
   `id` int(11) NOT NULL,
   `fk_device_id` int(11) NOT NULL,
-  `wattage` int(11) NOT NULL
+  `wattage` decimal(11,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -140,10 +141,8 @@ CREATE TABLE `realtimeinfos` (
 --
 
 INSERT INTO `realtimeinfos` (`id`, `fk_device_id`, `wattage`) VALUES
-(1, 1, 1020),
-(2, 2, 2009),
-(8, 11, 0),
-(9, 12, 0);
+(1, 1, '55'),
+(2, 2, '2009');
 
 -- --------------------------------------------------------
 
@@ -162,9 +161,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `mail`, `pass_hash`) VALUES
-(7, 'test@test.com', '$2a$11$py8GV0vKRXhMOfzeDJJKZeRG5CFSlBvXX44r8X2s2DjQM4/bmFjFG'),
-(13, 'testas@test.com', '$2a$11$bA1jcVOw0XElYbKAsYhy.OjMCTIpY9yhMySd3s7sGymWCCUmDej9i'),
-(52, 'gilbertas@hotmail.com', '$2a$11$FQFO4cxFfFYCi6W2iqTZDuAhr5JPvjkNZg6NsdBH7TXz92CLYOaA.');
+(13, 'testas@test.com', '$2a$11$bA1jcVOw0XElYbKAsYhy.OjMCTIpY9yhMySd3s7sGymWCCUmDej9i');
 
 -- --------------------------------------------------------
 
@@ -242,13 +239,13 @@ ALTER TABLE `__efmigrationshistory`
 -- AUTO_INCREMENT for table `devices`
 --
 ALTER TABLE `devices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `infos`
 --
 ALTER TABLE `infos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT for table `manufactureddevices`
@@ -260,13 +257,13 @@ ALTER TABLE `manufactureddevices`
 -- AUTO_INCREMENT for table `realtimeinfos`
 --
 ALTER TABLE `realtimeinfos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- Constraints for dumped tables
