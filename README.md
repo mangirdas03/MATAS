@@ -5,8 +5,8 @@ PhpMyAdmin MySQL settings: server=localhost; user=pvp; password=pvp; database=pv
 
 
 Test site account:
-Email: testas@test.com
-Pass: 12345678
+Email: mangirdas@mail.com
+Pass: pvpk053
 
 Device setup strings:
 OwCn0qs8IK - Vonia
