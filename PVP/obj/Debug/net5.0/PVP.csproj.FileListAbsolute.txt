@@ -550,3 +550,4 @@ C:\Users\gladi\Desktop\PVP4\PVP\bin\Debug\net5.0\tr\Microsoft.CodeAnalysis.CShar
 C:\Users\gladi\Desktop\PVP4\PVP\bin\Debug\net5.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
 C:\Users\gladi\Desktop\PVP4\PVP\bin\Debug\net5.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
 C:\Users\gladi\Desktop\PVP4\PVP\obj\Debug\net5.0\PVP.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\gladi\Desktop\PVP4\PVP\obj\Debug\net5.0\Razor\Views\Home\Settings.cshtml.g.cs

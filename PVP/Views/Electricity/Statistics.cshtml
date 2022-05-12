@@ -13,14 +13,15 @@
 
     @if (Model.Count() != 0)
     {
-        <p class="container-text">Šioje puslapio dalyje yra pateikiami visi įrenginio sukaupti rodmenys. Grafike vaizduojama kiek energijos buvo sunaudota kiekvieną intervalo dieną. Matomus įrašus galite pašalinti arba rikiuoti pagal laiką ar sunaudotą energijos kiekį. </p>
+        <p class="container-text">Šioje puslapio dalyje yra pateikiami visi įrenginio sukaupti rodmenys. Grafike vaizduojama kiek energijos buvo sunaudota kiekvieną intervalo dieną. Matomus įrašus galite pašalinti arba rikiuoti pagal laiką ar sunaudotą energijos kiekį/kainą. </p>
 
         <table class="table table-hover" id="table-realtime">
             <colgroup>
-                <col span="1" style="width: 40%;">
-                <col span="1" style="width: 25%;">
-                <col span="1" style="width: 25%;">
-                <col span="1" style="width: 10%;">
+                <col span="1" style="width: 32%;">
+                <col span="1" style="width: 20%;">
+                <col span="1" style="width: 20%;">
+                <col span="1" style="width: 20%;">
+                <col span="1" style="width: 8%;">
             </colgroup>
             <tbody>
                 <tr>
@@ -50,24 +51,47 @@
                     {
                         <th><a class="sort-text" asp-controller="Electricity" asp-action="Statistics" asp-route-sortExpression="-Wattage">Rodmenys</a></th>
                     }
+
+
+                    @if (ViewData["SortParam"].ToString() == "Wattage")
+                    {
+                        <th><a class="sort-text" asp-controller="Electricity" asp-action="Statistics" asp-route-sortExpression="-Wattage"><strong><u>Kaina (did.)</u></strong></a></th>
+                    }
+                    else if (ViewData["SortParam"].ToString() == "-Wattage")
+                    {
+                        <th><a class="sort-text" asp-controller="Electricity" asp-action="Statistics" asp-route-sortExpression="Wattage"><strong><u>Kaina (maž.)</u></strong></a></th>
+                    }
+                    else
+                    {
+                        <th><a class="sort-text" asp-controller="Electricity" asp-action="Statistics" asp-route-sortExpression="-Wattage">Kaina</a></th>
+                    }
+                    @*<th class="header-text">Kaina</th>*@
                     <th class="header-text">Šalinti</th>
                 </tr>
                 @foreach (var item in Model)
                 {
-                    <tr class="table-main">
+            <tr class="table-main">
 
-                        @if (item.FkDevice.Tag == null || item.FkDevice.Tag == "")
-                        {
-                            <td style="color: darkgray">Įrenginys @item.FkDevice.SetupString</td>
-                        }
-                        else
-                        {
-                            <td>@item.FkDevice.Tag</td>
-                        }
-                        <td>@item.DateTime.ToString("yyyy-MM-dd HH:mm")</td>
-                        <td>@item.Wattage kWh</td>
-                        <td><button style="padding-left:10px;" type="button" onclick="removeEntry(@item.Id)"><span title="Pašalinti įrašą" class="glyphicon glyphicon-trash"></span></button></td>
-                    </tr>
+                @if (item.FkDevice.Tag == null || item.FkDevice.Tag == "")
+                {
+                    <td style="color: darkgray">Įrenginys @item.FkDevice.SetupString</td>
+                }
+                else
+                {
+                    <td>@item.FkDevice.Tag</td>
+                }
+                <td>@item.DateTime.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>@item.Wattage kWh</td>
+                @if (item.FkDevice.Tariff == 0)
+                {
+                    <td>Nėra tarifo</td>
+                }
+                else
+                {
+                    <td>@String.Format("{0:.##}", item.Wattage * item.FkDevice.Tariff) Eur</td>
+                }
+                <td><button style="padding-left:10px;" type="button" onclick="removeEntry(@item.Id)"><span title="Pašalinti įrašą" class="glyphicon glyphicon-trash"></span></button></td>
+            </tr>
                 }
             </tbody>
         </table>
@@ -83,7 +107,7 @@
     }
 </div>
 <div class="center-container-wider">
-<h1 class="center-text-title">Grafinis duomenų vaizdavimas</h1>
+<h1 class="center-text-title">Grafinis energijos sąnaudų vaizdavimas</h1>
 
 @if (Model.Count() != 0)
 {

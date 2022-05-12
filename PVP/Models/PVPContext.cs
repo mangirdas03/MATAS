@@ -80,6 +80,10 @@ namespace PVP.Models
                     .HasForeignKey(d => d.FkUser)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("has");
+
+                entity.Property(e => e.Tariff)
+                    .HasColumnType("decimal(11, 4)")
+                    .HasColumnName("tariff");
             });
 
             modelBuilder.Entity<Efmigrationshistory>(entity =>
@@ -169,6 +173,10 @@ namespace PVP.Models
                     .HasColumnName("pass_hash")
                     .UseCollation("utf8_general_ci")
                     .HasCharSet("utf8");
+
+                entity.Property(e => e.Created)
+                    .HasColumnType("datetime")
+                    .HasColumnName("created");
             });
 
             modelBuilder.Entity<ManufacturedDevice>(entity =>

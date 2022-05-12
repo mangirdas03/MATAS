@@ -15,6 +15,7 @@ namespace PVP.Models
         public int Id { get; set; }
         public string Mail { get; set; }
         public string PassHash { get; set; }
+        public DateTime Created { get; set; }
 
         public virtual ICollection<Device> Devices { get; set; }
     }

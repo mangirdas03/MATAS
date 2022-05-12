@@ -19,6 +19,7 @@ namespace PVP.Models
         public int Id { get; set; }
         public int? Treshold { get; set; }
         public string Tag { get; set; }
+        public decimal Tariff { get; set; }
 
         public virtual User FkUserNavigation { get; set; }
         public virtual ICollection<Info> Infos { get; set; }

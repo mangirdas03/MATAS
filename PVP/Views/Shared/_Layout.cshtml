@@ -21,29 +21,27 @@
     <header>
         <nav class="topnav" id="myTopnav">
 
-                <a class="navbar-header" style="padding: 0px; padding-top: 2px; margin-right: 30px;" href="@Url.Action("Index", "Home")">
-                    <div style="padding:5px; padding-bottom:5px;">
-                        <img src="/images/logo.png" alt="Image" width="150" height="45">
-                    </div>
-                </a>
+            <a class="navbar-header" style="padding: 0px; padding-top: 2px; margin-right: 30px;" href="@Url.Action("Index", "Home")">
+                <div style="padding:5px; padding-bottom:5px;">
+                    <img src="/images/logo.png" alt="Image" width="150" height="45">
+                </div>
+            </a>
 
-                    <a href="@Url.Action("FAQ", "Home")"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;D.U.K</a>
-                    @{
-                        if (Context.Request.Cookies["jwt"] != null)
-                        {
-                            <a href="@Url.Action("DeviceSelect", "Electricity")"><span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;Statistika</a>
-                            <a href="@Url.Action("Statistics1", "Electricity")"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;Statistika realiu laiku</a>
-                        }
-                        if (Context.Request.Cookies["jwt"] != null)
-                        {
-                            <a href="@Url.Action("Devices", "Home")"><span class="glyphicon glyphicon-wrench"></span>&nbsp;&nbsp;Įrenginiai</a>
-                            <a class="right-item" href="@Url.Action("Logout", "Home")"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Atsijungti</a>
-                        }
-                        else
-                        {
-                            <a class="right-item" href="@Url.Action("Login", "Home")"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Prisijungti</a>
-                        }
-                    }
+            <a href="@Url.Action("FAQ", "Home")"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;D.U.K</a>
+            @{
+                if (Context.Request.Cookies["jwt"] != null)
+                {
+                    <a href="@Url.Action("DeviceSelect", "Electricity")"><span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;Statistika</a>
+                    <a href="@Url.Action("Statistics1", "Electricity")"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;Statistika realiu laiku</a>
+                    <a href="@Url.Action("Devices", "Home")"><span class="glyphicon glyphicon-wrench"></span>&nbsp;&nbsp;Įrenginiai</a>
+                    <a href="@Url.Action("Settings", "Home")"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Nustatymai</a>
+                    <a class="right-item" href="@Url.Action("Logout", "Home")"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Atsijungti</a>
+                }
+                else
+                {
+                    <a class="right-item" href="@Url.Action("Login", "Home")"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Prisijungti</a>
+                }
+            }
             <a href="javascript:void(0);" class="icon" onclick="myFunction()">
                 <i class="fa fa-bars"></i>
             </a>

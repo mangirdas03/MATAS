@@ -6,21 +6,23 @@
 <div class="center-container-wider">
     <h1 class="center-text-title">Jūsų įrenginiai</h1>
 
-    <p class="container-text">Šioje puslapio dalyje galite valdyti pridėtus įrenginius: keisti pavadinimą bei limitą, ištrinti įrenginio sukauptus duomenis, pašalinti pasirinktą įrenginį.</p>
+    <p class="container-text">Šioje puslapio dalyje galite valdyti pridėtus įrenginius: keisti pavadinimą, nustatyti tarifą bei limitą, ištrinti įrenginio sukauptus duomenis arba pašalinti pasirinktą įrenginį.<br /> Pašalinus įrenginį iš sistemos yra ištrinama <u>visa</u> jo sukaupta informacija, jis gali būti perleistas kitam naudotojui.</p>
     @if (Model.Count() != 0)
     {
         <table class="table table-hover" id="table-devices">
             <colgroup>
                 <col span="1" style="width: 5%;">
-                <col span="1" style="width: 60%;">
-                <col span="1" style="width: 15%;">
-                <col span="1" style="width: 13%;">
+                <col span="1" style="width: 40%;">
+                <col span="1" style="width: 20%;">
+                <col span="1" style="width: 18%;">
+                <col span="1" style="width: 10%;">
                 <col span="1" style="width: 7%; float: right;">
             </colgroup>
             <tbody>
                 <tr style="font-size: 18px;">
                     <th></th>
                     <th>Pavadinimas</th>
+                    <th>Tarifas</th>
                     <th>Limitas</th>
                     <th style="text-align: center;">Būsena</th>
                     <th>Parinktys</th>
@@ -30,13 +32,13 @@
             <tr class="table-main" style="font-size: 17px;">
                 <td class="devices-icon"><span class="glyphicon glyphicon-modal-window"></span></td>
                 @*@if (item.IsOn == true)
-                {
-                    <td style="font-size: 20px; color: #5BBA47;"><span class="glyphicon glyphicon-modal-window"></span></td>
-                }
-                else
-                {
-                    <td style="font-size: 20px; color: #AA3030;"><span class="glyphicon glyphicon-modal-window"></span></td>
-                }*@
+        {
+            <td style="font-size: 20px; color: #5BBA47;"><span class="glyphicon glyphicon-modal-window"></span></td>
+        }
+        else
+        {
+            <td style="font-size: 20px; color: #AA3030;"><span class="glyphicon glyphicon-modal-window"></span></td>
+        }*@
 
                 @if (item.Tag == null || item.Tag == "")
                 {
@@ -46,13 +48,24 @@
                 {
                     <td>@Html.DisplayFor(modelItem => item.Tag)</td>
                 }
-                @if (item.Treshold == null || item.Treshold == 0)
+
+                @if (item.Tariff == 0)
                 {
-                    <td style="font-size: 14px;">&nbsp;Nėra</td>
+                    <td >&nbsp;Nenustatytas</td>
                 }
                 else
                 {
-                    <td style="font-size: 14px;">&nbsp;@Html.DisplayFor(modelItem => item.Treshold)</td>
+                    <td >&nbsp;@Math.Round(item.Tariff, 4) Eur/kWh</td>
+                }
+
+
+                @if (item.Treshold == null || item.Treshold == 0)
+                {
+                    <td >&nbsp;Nėra</td>
+                }
+                else
+                {
+                    <td >&nbsp;@Html.DisplayFor(modelItem => item.Treshold) kWh</td>
                 }
                 <td style=" text-align: center;" class="devices-icon">
                     @if (item.IsOn == true)
@@ -70,6 +83,7 @@
                         <span title="Parinktys" class="glyphicon glyphicon-option-vertical" style="font-size: 20px;"></span>
                         <div class="dropdown-content">
                             <a onclick="editTag(@item.Id, '@item.Tag')"><span title="Keisti pavadinimą" class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Keisti pavadinimą</a>
+                            <a onclick="editTariff(@item.Id, '@item.Tariff')"><span title="Keisti tarifą" class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Keisti tarifą</a>
                             <a onclick="editTreshold(@item.Id, '@item.Treshold')"><span title="Keisti limitą" class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Keisti limitą</a>
                             <a onclick="clearStatistics(@item.Id)"><span title="Ištrinti statistiką" class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Ištrinti statistiką</a>
                             <a onclick="removeDevice(@item.Id)"><span title="Pašalinti įrenginį" class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Pašalinti</a>
@@ -250,6 +264,60 @@
             allowOutsideClick: () => !Swal.isLoading()
         })
     }
+
+
+    function editTariff(device_id, currentTreshold) {
+        Swal.fire({
+            icon: 'question',
+            title: 'Įveskite naują tarifą:',
+            text: 'Jei norite panaikinti tarifą, įveskite 0 arba palikite lauką tuščią.',
+            input: 'text',
+            inputPlaceholder: currentTreshold,
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Išsaugoti',
+            cancelButtonText: 'Atšaukti',
+            showLoaderOnConfirm: true,
+            preConfirm: (tr) => {
+                if (tr.length > 10)
+                {
+                    Swal.showValidationMessage(`Įrenginio tarifas negali būti ilgesnis nei 10 simbolių!`)
+                }
+                else if (isNaN(tr) || tr < 0) {
+                    Swal.showValidationMessage(`Veskite tik teigiamus skaičius!`)
+                }
+                else {
+                    if (!tr) {
+                        tr = '0';
+                    }
+                    var tagjson = JSON.stringify({ id: device_id, value: tr });
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("UpdateTariff", "Home")",
+                        contentType: "application/json; charset=utf-8",
+                        data: tagjson,
+                        success: function () {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Pakeitimai išsaugoti!',
+                                confirmButtonText: 'Gerai',
+                            }).then((result) => {
+                                location.reload();
+                            })
+                        },
+                        error: function () {
+                            Swal.fire('Vidinė klaida.')
+                        }
+                    });
+                }
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        })
+    }
+
+
 
     function clearStatistics(device_id) {
         Swal.fire({

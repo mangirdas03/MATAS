@@ -158,7 +158,7 @@ namespace PVP.Controllers
         }
 
 
-        // grazina live statistics page'ui duomenis kas 5 sek.
+        // grazina live statistics page'ui duomenis kas 1.5 sek.
         [HttpGet]
         public IActionResult LiveWattage(int device_id)
         {

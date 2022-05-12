@@ -53,6 +53,28 @@ namespace PVP.Controllers
             return View();
         }
 
+        [Route("Settings")]
+        public IActionResult Settings()
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                var token = _jwtservice.Verify(jwt);
+                int userId = int.Parse(token.Issuer);
+                var user = FindUserById(userId);
+                TempData["UserEmail"] = user.Mail;
+                TempData["UserDate"] = user.Created.ToString("yyyy-MM-dd HH:mm");
+                int deviceCount = _context.Devices.Where(e => e.FkUser.Equals(userId)).Count();
+                TempData["DeviceCount"] = deviceCount;
+            }
+            catch (Exception)
+            {
+                return (RedirectToAction("Login"));
+            }
+            
+            return View();
+        }
+
         // register POST
         [Route("Register")]
         [HttpPost]
@@ -72,6 +94,7 @@ namespace PVP.Controllers
             {
                 Mail = registerdto.Mail,
                 PassHash = BCryptNet.HashPassword(registerdto.Password),
+                Created = DateTime.Now.AddHours(3)
             };
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -131,8 +154,10 @@ namespace PVP.Controllers
 
 
         // test page
-        [HttpGet("User")]
-        public IActionResult UserSettings()
+        [Route("Settings")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Settings(PasswordDTO passwordDTO)
         {
             try
             {
@@ -141,7 +166,27 @@ namespace PVP.Controllers
                 var token = _jwtservice.Verify(jwt);
                 int userId = int.Parse(token.Issuer);
                 var user = FindUserById(userId);
-                return (RedirectToAction("Index"));
+
+                ////
+                TempData["UserEmail"] = user.Mail;
+                TempData["UserDate"] = user.Created.ToString("yyyy-MM-dd HH:mm");
+                int deviceCount = _context.Devices.Where(e => e.FkUser.Equals(userId)).Count();
+                TempData["DeviceCount"] = deviceCount;
+                ////
+
+                if (passwordDTO.OldPassword == null || !BCryptNet.Verify(passwordDTO.OldPassword, user.PassHash))
+                {
+                    ModelState.AddModelError("OldPassword", "Neteisingas dabartinis slaptažodis!");
+                }
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
+                user.PassHash = BCryptNet.HashPassword(passwordDTO.NewPassword);
+                _context.Users.Update(user);
+                _context.SaveChanges();
+                TempData["PChangeSuccessMessage"] = "PChangeSuccess";
+                return View();
             }
             catch (Exception)
             {
@@ -260,6 +305,36 @@ namespace PVP.Controllers
             {
                 return NotFound("Aut. klaida");
                 //return (RedirectToAction("Login", "Home"));
+            }
+        }
+
+        // update device tariff
+        [HttpPost]
+        public IActionResult UpdateTariff([FromBody] ParamJSON data)
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                var token = _jwtservice.Verify(jwt);
+                int userId = int.Parse(token.Issuer);
+
+                decimal tresh;
+                if (data.value.Length > 10 || !decimal.TryParse(data.value, out tresh))
+                    return NotFound("Blogi duomenys");
+
+                var device = _context.Devices.FirstOrDefault(i => i.Id.Equals(data.id));
+                if (device != null)
+                    if (tresh == 0)
+                        device.Tariff = 0;
+                    else device.Tariff = tresh;
+
+                _context.Update(device);
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return NotFound("Aut. klaida");
             }
         }
 

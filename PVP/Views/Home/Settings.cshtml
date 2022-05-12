@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "Settings";
+}
+@model PVP.ViewModels.PasswordDTO
+
+
+<div class="center-container">
+    <h1 class="center-text-title">Naudotojo nustatymai</h1>
+    <p class="container-text">
+        Šioje puslapio dalyje galite matyti savo paskyros informaciją bei pasikeisti slaptažodį.
+    </p>
+    <table class="table table-hover" id="table-realtime">
+        <colgroup>
+            <col span="1" style="width: 40%;">
+            <col span="1" style="width: 60%;">
+        </colgroup>
+        <tbody>
+            <tr class="table-main">
+                <td>El. pašto adresas:</td>
+                <td style="text-align: right;">@TempData["UserEmail"]</td>
+            </tr>
+            <tr class="table-main">
+                <td>Paskyros sukūrimo data:</td>
+                <td style="text-align: right;">@TempData["UserDate"]</td>
+            </tr>
+            <tr class="table-main">
+                <td>Pridėtų įrenginių kiekis:</td>
+                <td style="text-align: right;">@TempData["DeviceCount"]</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="device-form" style="margin-top: 100px;">
+        <form form asp-action="Settings" class="login100-form validate-form" id="fform">
+            <span class="login100-form-title p-b-40">
+                Slaptažodžio keitimas
+            </span>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="wrap-input100 m-b-60" style="margin-top: 35px;">
+                <input asp-for="OldPassword" class="input100" type="password" name="OldPassword" placeholder="Dabartinis slaptažodis">
+                <span class="focus-input100"></span>
+            </div>
+            <div><span asp-validation-for="OldPassword" class="text-danger"></span></div>
+            <div class="wrap-input100 m-b-60" style="margin-top: 20px;">
+                <input asp-for="NewPassword" class="input100" type="password" name="NewPassword" placeholder="Naujas slaptažodis">
+                <span class="focus-input100"></span>
+            </div>
+            <div><span asp-validation-for="NewPassword" class="text-danger"></span></div>
+            <div class="wrap-input100 m-b-60" style="margin-top: 20px;">
+                <input asp-for="ConfirmPassword" class="input100" type="password" name="ConfirmPassword" placeholder="Pakartokite slaptažodį">
+                <span class="focus-input100"></span>
+            </div>
+            <div><span asp-validation-for="ConfirmPassword" class="text-danger"></span></div>
+            <div class="container-login100-form-btn" type="submit" style="margin-top: 30px;">
+                <button class="login100-form-btn">
+                    Patvirtinti
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    window.onload = function () {
+        if ('@TempData["PChangeSuccessMessage"]' == 'PChangeSuccess') {
+            Swal.fire({
+                icon: 'success',
+                title: 'Slaptažodis sėkmingai pakeistas!\n\nPrašome prisijungti iš naujo.',
+                buttonsStyling: false,
+                showConfirmButton: false,
+                confirmButtonColor: '#bd59d4',
+                html: '<br><div class=\"container-login100-form-btn\"><button class= \"login100-form-btn\" id=\"swal-custom-button\">Gerai</button></div><br><br><br>'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "@Url.Action("Logout", "Home")";
+                }
+            })
+        }
+        $(document).on('click', '#swal-custom-button', function () {
+            swal.clickConfirm();
+        });
+    };
+</script>

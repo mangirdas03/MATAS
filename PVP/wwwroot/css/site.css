@@ -657,7 +657,7 @@ html {
     float:right;
 }
 
-@media screen and (max-width: 890px) {
+@media screen and (max-width: 980px) {
     .topnav a {
         display: none;
     }
@@ -668,7 +668,7 @@ html {
     }
 }
 
-@media screen and (max-width: 890px) {
+@media screen and (max-width: 980px) {
     .topnav.responsive {
         position: relative;
     }
@@ -906,7 +906,10 @@ html {
         font-size: 14px;
     }
 
-
+    /*Device*/
+    #table-devices > tbody > tr > td, #table-devices > tbody > tr > th, #table-devices > tbody > tr > td > a > span {
+        font-size: 11px;
+    }
 
 }
 @media screen and (max-width: 380px) {
@@ -946,20 +949,25 @@ html {
         font-size: 15px;
     }
 
-    /*Device*/
-    #table-devices > tbody > tr > td, #table-devices > tbody > tr > th {
-        padding: 3px;
-        font-size: 12px;
-    }
     .input100 {
         font-size: 12px !important;
     }
 
-    /*Live*/
-    .table-main {
-        font-size: 12px;
+    /*Device*/
+    #table-devices > tbody > tr > td, #table-devices > tbody > tr > th, #table-devices > tbody > tr > td > a > span {
+        font-size: 8px;
     }
 
+    /*Live*/
+    .table-main {
+        font-size: 10px;
+    }
+    .header-text {
+        font-size: 11px;
+    }
+    .sort-text {
+        font-size: 12px;
+    }
 }
 
 
