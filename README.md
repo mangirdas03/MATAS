@@ -10,8 +10,11 @@ Pass: pvpk053
 
 Device setup strings:
 OwCn0qs8IK - Vonia
+
 4uPJgx4Exa - Garažas
+
 ezpm7phFO9
+
 hkOHSxqqa6
 
 HTTP:
