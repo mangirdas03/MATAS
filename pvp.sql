@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 02, 2022 at 08:46 PM
+-- Generation Time: May 12, 2022 at 12:53 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -34,16 +34,17 @@ CREATE TABLE `devices` (
   `setup_string` varchar(50) CHARACTER SET utf8 NOT NULL,
   `id` int(11) NOT NULL,
   `treshold` int(11) DEFAULT NULL,
-  `tag` varchar(50) CHARACTER SET utf8 DEFAULT NULL
+  `tag` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `tariff` decimal(11,4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `devices`
 --
 
-INSERT INTO `devices` (`fk_user`, `is_on`, `is_realtime`, `setup_string`, `id`, `treshold`, `tag`) VALUES
-(13, 1, 0, 'OwCn0qs8IK', 1, 3111, 'Vonios kambarys'),
-(13, 1, 1, '4uPJgx4Exa', 2, 6000, 'Garažas');
+INSERT INTO `devices` (`fk_user`, `is_on`, `is_realtime`, `setup_string`, `id`, `treshold`, `tag`, `tariff`) VALUES
+(13, 1, 0, 'OwCn0qs8IK', 1, 3111, 'Vonia', '0.3400'),
+(13, 1, 1, '4uPJgx4Exa', 2, 6000, 'Garažas', '0.0000');
 
 -- --------------------------------------------------------
 
@@ -153,15 +154,16 @@ INSERT INTO `realtimeinfos` (`id`, `fk_device_id`, `wattage`) VALUES
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `mail` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `pass_hash` varchar(150) CHARACTER SET utf8 NOT NULL
+  `pass_hash` varchar(150) CHARACTER SET utf8 NOT NULL,
+  `created` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `mail`, `pass_hash`) VALUES
-(13, 'testas@test.com', '$2a$11$bA1jcVOw0XElYbKAsYhy.OjMCTIpY9yhMySd3s7sGymWCCUmDej9i');
+INSERT INTO `users` (`id`, `mail`, `pass_hash`, `created`) VALUES
+(13, 'mangirdas@mail.com', '$2a$11$1mJ5FSIFdHcPFNIB15nUEebQbao.ccvAaNvehCbZHW./nQ15UjED.', '2022-03-09 22:02:28');
 
 -- --------------------------------------------------------
 
@@ -263,7 +265,7 @@ ALTER TABLE `realtimeinfos`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- Constraints for dumped tables
