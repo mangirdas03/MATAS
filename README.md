@@ -1,6 +1,7 @@
 # MATAS - Smart Energy Solutions
 "MATAS" - tai projektas, skirtas padėti naudotojams sekti bei sumažinti energijos sąnaudas išmanių prietaisų pagalba.
 Projektas susideda iš Tinklapio (.NET Core MVC bei MySQL) ir Elektros energijos matavimo įrenginio (naudojamas Arduino mikro kompiuteris).
+
 ![image](https://user-images.githubusercontent.com/79504320/168589716-b13f8819-ccc5-4579-9615-d027dd409dfe.png)
 
 ![image](https://user-images.githubusercontent.com/79504320/168589564-ea63d160-300d-4a72-8b78-05daa16e50f7.png)
