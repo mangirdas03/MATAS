@@ -23,22 +23,14 @@
                     <th></th>
                     <th>Pavadinimas</th>
                     <th>Tarifas</th>
-                    <th>Limitas</th>
+                    <th>Dienos limitas</th>
                     <th style="text-align: center;">Būsena</th>
                     <th>Parinktys</th>
                 </tr>
                 @foreach (var item in Model)
                 {
-            <tr class="table-main" style="font-size: 17px;">
+                <tr class="table-main" style="font-size: 17px;">
                 <td class="devices-icon"><span class="glyphicon glyphicon-modal-window"></span></td>
-                @*@if (item.IsOn == true)
-        {
-            <td style="font-size: 20px; color: #5BBA47;"><span class="glyphicon glyphicon-modal-window"></span></td>
-        }
-        else
-        {
-            <td style="font-size: 20px; color: #AA3030;"><span class="glyphicon glyphicon-modal-window"></span></td>
-        }*@
 
                 @if (item.Tag == null || item.Tag == "")
                 {
@@ -51,21 +43,27 @@
 
                 @if (item.Tariff == 0)
                 {
-                    <td >&nbsp;Nenustatytas</td>
+                    <td>&nbsp;Nenustatytas</td>
                 }
                 else
                 {
-                    <td >&nbsp;@Math.Round(item.Tariff, 4) Eur/kWh</td>
+                    <td>&nbsp;@Math.Round(item.Tariff, 4) Eur/kWh</td>
                 }
-
-
-                @if (item.Treshold == null || item.Treshold == 0)
+                @if (item.Treshold == 0)
                 {
-                    <td >&nbsp;Nėra</td>
+                    <td>&nbsp;Nėra</td>
                 }
                 else
                 {
-                    <td >&nbsp;@Html.DisplayFor(modelItem => item.Treshold) kWh</td>
+                    if (item.IsRealtime)
+                    {
+                        <td>&nbsp;@Math.Round(item.Treshold, 2) kWh <b style="color: red;">(Viršytas)</b></td>
+                    }
+                    else
+                    {
+                        <td>&nbsp;@Math.Round(item.Treshold, 2) kWh</td>
+                    }
+
                 }
                 <td style=" text-align: center;" class="devices-icon">
                     @if (item.IsOn == true)
@@ -103,8 +101,10 @@
 </div>
 <div class="center-container">
     <h1 class="center-text-title">Naujo įrenginio pridėjimas</h1>
-    <p class="container-text">Šioje puslapio dalyje galite pridėti naują įrenginį.<br>
-    Įveskite turimo įrenginio unikalų atpažinimo kodą (10 simbolių ilgio kodas esantis ant prietaiso).</p>
+    <p class="container-text">
+        Šioje puslapio dalyje galite pridėti naują įrenginį.<br>
+        Įveskite turimo įrenginio unikalų atpažinimo kodą (10 simbolių ilgio kodas esantis ant prietaiso).
+    </p>
 
     <div class="device-form">
         <div class="wrap-input100 m-b-60">
@@ -121,8 +121,14 @@
             </button>
         </div>
     </div>
+    <br />
+    <h1 class="center-text-title" style="margin-top:80px; margin-bottom:30px;">Neturite įrenginio?</h1>
+    <div class="container-login100-form-btn">
+        <a class="login100-form-btn" href="https://bongo.cat/">
+            <span class="glyphicon glyphicon-shopping-cart" style="top:0px;"></span>&nbsp;&nbsp;Pirkti įrenginį
+        </a>
+    </div>
 </div>
-
 
 
 <script type="text/javascript">
@@ -132,7 +138,8 @@
             icon: 'question',
             title: 'Įveskite naują įrenginio pavadinimą:',
             input: 'text',
-            inputPlaceholder: currentTag,
+            inputValue: currentTag,
+            inputPlaceholder: "Įveskite naują pavadinimą arba palikite tuščią",
             inputAttributes: {
                 autocapitalize: 'off'
             },
@@ -220,7 +227,8 @@
             title: 'Įveskite naują limitą:',
             text: 'Jei norite panaikinti limitą, įveskite 0 arba palikite lauką tuščią.',
             input: 'text',
-            inputPlaceholder: currentTreshold,
+            inputValue: currentTreshold,
+            inputPlaceholder: "Įveskite limitą",
             inputAttributes: {
                 autocapitalize: 'off'
             },
@@ -272,7 +280,8 @@
             title: 'Įveskite naują tarifą:',
             text: 'Jei norite panaikinti tarifą, įveskite 0 arba palikite lauką tuščią.',
             input: 'text',
-            inputPlaceholder: currentTreshold,
+            inputValue: currentTreshold,
+            inputPlaceholder: "Įveskite tarifą",
             inputAttributes: {
                 autocapitalize: 'off'
             },

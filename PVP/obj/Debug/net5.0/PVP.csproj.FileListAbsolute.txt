@@ -551,3 +551,6 @@ C:\Users\gladi\Desktop\PVP4\PVP\bin\Debug\net5.0\zh-Hans\Microsoft.CodeAnalysis.
 C:\Users\gladi\Desktop\PVP4\PVP\bin\Debug\net5.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
 C:\Users\gladi\Desktop\PVP4\PVP\obj\Debug\net5.0\PVP.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\gladi\Desktop\PVP4\PVP\obj\Debug\net5.0\Razor\Views\Home\Settings.cshtml.g.cs
+C:\Users\gladi\Desktop\PVP4\PVP\bin\Debug\net5.0\MailKit.dll
+C:\Users\gladi\Desktop\PVP4\PVP\bin\Debug\net5.0\MimeKit.dll
+C:\Users\gladi\Desktop\PVP4\PVP\bin\Debug\net5.0\BouncyCastle.Crypto.dll

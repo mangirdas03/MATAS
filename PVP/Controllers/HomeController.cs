@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using PVP.ViewModels;
 using PVP.Helpers;
 
+
 namespace PVP.Controllers
 {
     public class HomeController : Controller
@@ -29,6 +30,9 @@ namespace PVP.Controllers
         // home page
         public IActionResult Index()
         {
+            var jwt = Request.Cookies["jwt"];
+            if (jwt != null && jwt != "")
+                return (RedirectToAction("DeviceSelect", "Electricity"));
             return View();
         }
 
@@ -43,6 +47,9 @@ namespace PVP.Controllers
         [Route("Login")]
         public IActionResult Login()
         {
+            var jwt = Request.Cookies["jwt"];
+            if (jwt != null && jwt != "")
+                return (RedirectToAction("DeviceSelect", "Electricity"));
             return View();
         }
 
@@ -50,9 +57,13 @@ namespace PVP.Controllers
         [Route("Register")]
         public IActionResult Register()
         {
+            var jwt = Request.Cookies["jwt"];
+            if (jwt != null && jwt != "")
+                return (RedirectToAction("DeviceSelect", "Electricity"));
             return View();
         }
 
+        // user settings page
         [Route("Settings")]
         public IActionResult Settings()
         {
@@ -89,7 +100,6 @@ namespace PVP.Controllers
             {
                 return View();
             }
-            //string mySalt = BCryptNet.GenerateSalt();
             var user = new User
             {
                 Mail = registerdto.Mail,
@@ -99,9 +109,7 @@ namespace PVP.Controllers
             _context.Users.Add(user);
             _context.SaveChanges();
 
-
             TempData["RegisterSuccessMessage"] = "RegisterSuccess";
-            //return RedirectToAction("login");
             return View();
         }
 
@@ -111,20 +119,13 @@ namespace PVP.Controllers
         [HttpPost]
         public IActionResult Login(LoginDTO logindto)
         {
-
             User user = FindUserByName(logindto.Mail);
 
             if (user == null)
             {
-                //return Json("Invalid", JsonRequestBehavior.AllowGet);
-                //ModelState.AddModelError(string.Empty, "The user name or password is incorrect");
                 ViewBag.PromptMessage = "invalidCredentials";
                 return View(logindto);
-                //return (RedirectToAction("Error"));
             }
-
-                //return (RedirectToAction("Error"));
-
             if (!BCryptNet.Verify(logindto.Password, user.PassHash))
             {
                 //return (RedirectToAction("Error"));
@@ -133,7 +134,6 @@ namespace PVP.Controllers
             }
 
             var jwt = _jwtservice.Generate(user.Id);
-            //HttpContext.Session.SetString("Token", jwt);
 
             Response.Cookies.Append("jwt", jwt, new CookieOptions
             {
@@ -143,31 +143,31 @@ namespace PVP.Controllers
             return (RedirectToAction("DeviceSelect", "Electricity"));
         }
 
+        // finds user object by name
         private User FindUserByName(string mail)
         {
             return _context.Users.FirstOrDefault(e => e.Mail == mail);
         }
+        // finds user object by id
         private User FindUserById(int id)
         {
             return _context.Users.FirstOrDefault(e => e.Id == id);
         }
 
-
-        // test page
+        // Settings password reset POST
         [Route("Settings")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Settings(PasswordDTO passwordDTO)
+        public async Task<IActionResult> Settings(PasswordDTO passwordDTO)
         {
             try
             {
                 var jwt = Request.Cookies["jwt"];
-                //var jwt = HttpContext.Session.GetString("Token");
                 var token = _jwtservice.Verify(jwt);
                 int userId = int.Parse(token.Issuer);
                 var user = FindUserById(userId);
 
-                ////
+                //// Uzkraunami puslapio duomenys po POST
                 TempData["UserEmail"] = user.Mail;
                 TempData["UserDate"] = user.Created.ToString("yyyy-MM-dd HH:mm");
                 int deviceCount = _context.Devices.Where(e => e.FkUser.Equals(userId)).Count();
@@ -184,7 +184,7 @@ namespace PVP.Controllers
                 }
                 user.PassHash = BCryptNet.HashPassword(passwordDTO.NewPassword);
                 _context.Users.Update(user);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 TempData["PChangeSuccessMessage"] = "PChangeSuccess";
                 return View();
             }
@@ -198,16 +198,11 @@ namespace PVP.Controllers
         [Route("Logout")]
         public IActionResult Logout()
         {
-            //HttpContext.Session.Remove("Token");
-            //Response.Cookies.Delete("jwt");
-            //TempData["LogoutSuccessMessage"] = "LogoutSuccess";
-            //return (RedirectToAction("Index"));
             try
             {
                 var jwt = Request.Cookies["jwt"];
                 var token = _jwtservice.Verify(jwt);
                 int userId = int.Parse(token.Issuer);
-                //var user = FindUserById(userId);
 
                 Response.Cookies.Delete("jwt");
                 TempData["LogoutSuccessMessage"] = "LogoutSuccess";
@@ -229,10 +224,8 @@ namespace PVP.Controllers
             try
             {
                 var jwt = Request.Cookies["jwt"];
-                //var jwt = HttpContext.Session.GetString("Token");
                 var token = _jwtservice.Verify(jwt);
                 int userId = int.Parse(token.Issuer);
-                //var user = FindUserById(userId);
                 var devices = await _context.Devices.Where(e => e.FkUser.Equals(userId)).ToListAsync(); // users' devices
                 return View(devices);
             }
@@ -244,73 +237,35 @@ namespace PVP.Controllers
 
         // Update device tag
         [HttpPost]
-        public IActionResult UpdateTag([FromBody] ParamJSON data)
+        public async Task<IActionResult> UpdateTag([FromBody] ParamJSON data)
         {
             try
             {
                 var jwt = Request.Cookies["jwt"];
-                //var jwt = HttpContext.Session.GetString("Token");
                 var token = _jwtservice.Verify(jwt);
                 int userId = int.Parse(token.Issuer);
-                //var user = FindUserById(userId);
-                //var devices = await _context.Devices.Where(e => e.FkUser.Equals(userId)).ToListAsync(); // users' devices
-                //return View(devices);
+
                 if (data.value.Length > 50)
                     return NotFound("Blogi duomenys.");
 
-
-                var device = _context.Devices.FirstOrDefault(i => i.Id.Equals(data.id));
+                var device = await _context.Devices.FirstOrDefaultAsync(i => i.Id.Equals(data.id));
                 if (device != null)
                     device.Tag = data.value;
 
-                //rti.Wattage = data.Wattage;
-
                 _context.Update(device);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 return Ok();
             }
             catch (Exception)
             {
                 return NotFound("Aut. klaida");
-                //return (RedirectToAction("Login", "Home"));
             }
         }
 
         // update device treshold
         [HttpPost]
-        public IActionResult UpdateTreshold([FromBody] ParamJSON data)
-        {
-            try
-            {
-                var jwt = Request.Cookies["jwt"];
-                var token = _jwtservice.Verify(jwt);
-                int userId = int.Parse(token.Issuer);
-
-                int tresh;
-                if (data.value.Length > 10 || !int.TryParse(data.value, out tresh))
-                    return NotFound("Blogi duomenys");
-
-                var device = _context.Devices.FirstOrDefault(i => i.Id.Equals(data.id));
-                if (device != null)
-                    if(tresh == 0)
-                        device.Treshold = null;
-                    else device.Treshold = tresh;
-
-                _context.Update(device);
-                _context.SaveChanges();
-                return Ok();
-            }
-            catch (Exception)
-            {
-                return NotFound("Aut. klaida");
-                //return (RedirectToAction("Login", "Home"));
-            }
-        }
-
-        // update device tariff
-        [HttpPost]
-        public IActionResult UpdateTariff([FromBody] ParamJSON data)
+        public async Task<IActionResult> UpdateTreshold([FromBody] ParamJSON data)
         {
             try
             {
@@ -322,14 +277,53 @@ namespace PVP.Controllers
                 if (data.value.Length > 10 || !decimal.TryParse(data.value, out tresh))
                     return NotFound("Blogi duomenys");
 
-                var device = _context.Devices.FirstOrDefault(i => i.Id.Equals(data.id));
+                var device = await _context.Devices.FirstOrDefaultAsync(i => i.Id.Equals(data.id));
                 if (device != null)
+                {
+                    ///// Notification reset
+                    if (device.Treshold != tresh)
+                        device.IsRealtime = false;
+                    /////
+
                     if (tresh == 0)
-                        device.Tariff = 0;
-                    else device.Tariff = tresh;
+                        device.Treshold = 0;
+                    else device.Treshold = tresh;
+
+                }
 
                 _context.Update(device);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return NotFound("Aut. klaida");
+                //return (RedirectToAction("Login", "Home"));
+            }
+        }
+
+        // update device tariff
+        [HttpPost]
+        public async Task<IActionResult> UpdateTariff([FromBody] ParamJSON data)
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                var token = _jwtservice.Verify(jwt);
+                int userId = int.Parse(token.Issuer);
+
+                decimal tar;
+                if (data.value.Length > 10 || !decimal.TryParse(data.value, out tar))
+                    return NotFound("Blogi duomenys");
+
+                var device = await _context.Devices.FirstOrDefaultAsync(i => i.Id.Equals(data.id));
+                if (device != null)
+                    if (tar == 0)
+                        device.Tariff = 0;
+                    else device.Tariff = tar;
+
+                _context.Update(device);
+                await _context.SaveChangesAsync();
                 return Ok();
             }
             catch (Exception)
@@ -340,7 +334,7 @@ namespace PVP.Controllers
 
         // add new device
         [HttpPost]
-        public IActionResult NewDevice([FromBody] DeviceJSON data)
+        public async Task<IActionResult> NewDevice([FromBody] DeviceJSON data)
         {
             try
             {
@@ -350,10 +344,10 @@ namespace PVP.Controllers
                 int userId = int.Parse(token.Issuer);
                 //var user = FindUserById(userId);
 
-                if (_context.Devices.FirstOrDefault(e => e.SetupString.Equals(data.setupString)) != null)
+                if (await _context.Devices.FirstOrDefaultAsync(e => e.SetupString.Equals(data.setupString)) != null)
                     return BadRequest("Toks įrenginys jau naudojamas!");
 
-                if(_context.ManufacturedDevices.FirstOrDefault(e => e.SetupString.Equals(data.setupString)) != null)
+                if(await _context.ManufacturedDevices.FirstOrDefaultAsync(e => e.SetupString.Equals(data.setupString)) != null)
                 {
                     Device tempDevice = new Device
                     {
@@ -362,18 +356,18 @@ namespace PVP.Controllers
                         IsRealtime = false,
                         SetupString = data.setupString,
                         Tag = data.tag,
-                        Treshold = null
+                        Treshold = 0
                     };
-                    _context.Devices.Add(tempDevice);
-                    _context.SaveChanges();
-                    var device = _context.Devices.FirstOrDefault(e => e.SetupString.Equals(data.setupString));
+                    await _context.Devices.AddAsync(tempDevice);
+                    await _context.SaveChangesAsync();
+                    var device = await _context.Devices.FirstOrDefaultAsync(e => e.SetupString.Equals(data.setupString));
                     Realtimeinfo rti = new Realtimeinfo
                     {
                         FkDeviceId = device.Id,
                         Wattage = 0
                     };
                     _context.Realtimeinfos.Add(rti);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     return Ok();
                 }
                 else
@@ -390,7 +384,7 @@ namespace PVP.Controllers
 
         // clear device statistics
         [HttpPost]
-        public IActionResult ClearStatistics([FromBody] ParamJSON data)
+        public async Task<IActionResult> ClearStatistics([FromBody] ParamJSON data)
         {
             try
             {
@@ -398,12 +392,14 @@ namespace PVP.Controllers
                 var token = _jwtservice.Verify(jwt);
                 int userId = int.Parse(token.Issuer);
 
-                var device = _context.Devices.FirstOrDefault(e => e.Id.Equals(data.id));
+                var device = await _context.Devices.FirstOrDefaultAsync(e => e.Id.Equals(data.id));
                 if (device.FkUser.Equals(userId))
                 {
                     var rowsToDelete = _context.Infos.Where(e => e.FkDeviceId.Equals(data.id));
                     _context.Infos.RemoveRange(rowsToDelete);
-                    _context.SaveChanges();
+                    device.IsRealtime = false;
+                    _context.Devices.Update(device);
+                    await _context.SaveChangesAsync();
                     return Ok();
                 }
                 else
@@ -420,7 +416,7 @@ namespace PVP.Controllers
 
         // remove device
         [HttpPost]
-        public IActionResult RemoveDevice([FromBody] ParamJSON data)
+        public async Task<IActionResult> RemoveDevice([FromBody] ParamJSON data)
         {
             try
             {
@@ -428,7 +424,7 @@ namespace PVP.Controllers
                 var token = _jwtservice.Verify(jwt);
                 int userId = int.Parse(token.Issuer);
 
-                var device = _context.Devices.FirstOrDefault(e => e.Id.Equals(data.id));
+                var device = await _context.Devices.FirstOrDefaultAsync(e => e.Id.Equals(data.id));
                 if (device.FkUser.Equals(userId))
                 {
                     var statistics = _context.Infos.Where(e => e.FkDeviceId.Equals(data.id));
@@ -436,7 +432,7 @@ namespace PVP.Controllers
                     _context.Infos.RemoveRange(statistics);
                     _context.Realtimeinfos.RemoveRange(realtime);
                     _context.Devices.Remove(device);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     return Ok();
                 }
                 else
@@ -452,7 +448,7 @@ namespace PVP.Controllers
         }
 
         [HttpPost]
-        public IActionResult ChangeStatus([FromBody] ParamJSON data)
+        public async Task<IActionResult> ChangeStatus([FromBody] ParamJSON data)
         {
             try
             {
@@ -460,7 +456,7 @@ namespace PVP.Controllers
                 var token = _jwtservice.Verify(jwt);
                 int userId = int.Parse(token.Issuer);
 
-                var device = _context.Devices.FirstOrDefault(e => e.Id.Equals(data.id));
+                var device = await _context.Devices.FirstOrDefaultAsync(e => e.Id.Equals(data.id));
                 if (device != null)
                 {
                     if (device.IsOn == false)
@@ -468,14 +464,14 @@ namespace PVP.Controllers
                     else device.IsOn = false;
 
 
-                    var rti = _context.Realtimeinfos.FirstOrDefault(i => i.FkDeviceId.Equals(device.Id));
+                    var rti = await _context.Realtimeinfos.FirstOrDefaultAsync(i => i.FkDeviceId.Equals(device.Id));
                     if (rti != null)
                     {
                         rti.Wattage = 0;
                         _context.Update(rti);
                     }
                     _context.Update(device);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     return Ok();
                 }
                 else return BadRequest("Blogi duomenys.");
@@ -486,6 +482,7 @@ namespace PVP.Controllers
                 return BadRequest("Aut. klaida.");
             }
         }
+
 
 
         public IActionResult Privacy()

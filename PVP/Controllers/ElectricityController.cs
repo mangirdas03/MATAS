@@ -10,6 +10,7 @@ using PVP.ViewModels;
 using System.Globalization;
 using ReflectionIT.Mvc.Paging;
 
+
 namespace PVP.Controllers
 {
     public class ElectricityController : Controller
@@ -23,24 +24,17 @@ namespace PVP.Controllers
             _jwtservice = jwtservice;
         }
 
-        // Device select
-        //[Route("statistics/all")]
+        // Device select page
         public async Task<IActionResult> DeviceSelect()
         {
             try
             {
                 var jwt = Request.Cookies["jwt"];
+                if(jwt == null || jwt == "")
+                    return (RedirectToAction("Login", "Home"));
                 var token = _jwtservice.Verify(jwt);
                 int userId = int.Parse(token.Issuer);
                 var devices = await _context.Devices.Where(e => e.FkUser.Equals(userId)).ToListAsync(); // users' devices
-
-                //List<Info> infos = new List<Info>(); // infos from all user's devices
-                
-                //foreach (var device in devices)
-                //{
-                //    var temp = await _context.Infos.Where(e => e.FkDeviceId.Equals(device.Id)).OrderByDescending(f => f.DateTime).ToListAsync();
-                //    infos.AddRange(temp);
-                //}
                 return View(devices);
             }
             catch (Exception)
@@ -49,11 +43,7 @@ namespace PVP.Controllers
             }
         }
 
-
-
-
-        // Statistics page
-        //[Route("statistics/{id}")]
+        // Device statistics page
         public async Task<IActionResult> Statistics(int id, int pageIndex = 1, string sortExpression = "-DateTime")
         {
             try
@@ -61,7 +51,7 @@ namespace PVP.Controllers
                 var jwt = Request.Cookies["jwt"];
                 var token = _jwtservice.Verify(jwt);
                 int userId = int.Parse(token.Issuer);
-                var device = _context.Devices.Where(e => e.FkUser.Equals(userId)).FirstOrDefault(f => f.Id.Equals(id)); // device
+                var device = await _context.Devices.Where(e => e.FkUser.Equals(userId)).FirstOrDefaultAsync(f => f.Id.Equals(id)); // device
 
                 List<Info> infos = new List<Info>(); // infos from selected user's devices
 
@@ -83,59 +73,9 @@ namespace PVP.Controllers
             }
         }
 
-        //[Route("statistics/{id}")]
-        //[HttpPost]
-        //public async Task<IActionResult> Statistics(int id, int currentPageIndex)
-        //{
-        //    try
-        //    {
-        //        var jwt = Request.Cookies["jwt"];
-        //        //var jwt = HttpContext.Session.GetString("Token");
-        //        var token = _jwtservice.Verify(jwt);
-        //        int userId = int.Parse(token.Issuer);
-        //        //var user = FindUserById(userId);
-        //        var device = _context.Devices.Where(e => e.FkUser.Equals(userId)).FirstOrDefault(f => f.Id.Equals(id)); // device
-
-        //        List<Info> infos = new List<Info>(); // infos from selected user's devices
-
-        //        //var temp = await _context.Infos.Where(e => e.FkDeviceId.Equals(device.Id)).OrderByDescending(f => f.DateTime).ToListAsync();
-        //        //infos.AddRange(temp);
-
-
-        //        //return View(infos);
-        //        return View(GetInfo(currentPageIndex, id));
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return (RedirectToAction("Login", "Home"));
-        //    }
-        //}
-
-
-        // Old paging method
-        //private Statistics GetInfo(int currentPage, int id)
-        //{
-        //    int maxRows = 20;
-        //    Statistics customerModel = new Statistics();
-
-        //    customerModel.Infos =  _context.Infos.Where(e => e.FkDeviceId.Equals(id)).OrderByDescending(f => f.DateTime).Skip((currentPage - 1) * maxRows)
-        //            .Take(maxRows).ToList();
-
-
-        //    double pageCount = (double)((decimal)_context.Infos.Count() / Convert.ToDecimal(maxRows));
-        //    customerModel.PageCount = (int)Math.Ceiling(pageCount);
-
-        //    customerModel.CurrentPageIndex = currentPage;
-
-        //    return customerModel;
-        //}
-
-
-
-
         // Live statistics page
         [Route("Live-statistics")]
-        public IActionResult Statistics1()
+        public async Task<IActionResult> Statistics1()
         {
             try
             {
@@ -152,15 +92,17 @@ namespace PVP.Controllers
                 return (RedirectToAction("Login", "Home"));
             }
         }
+
+        // Find user object by id
         private User FindUserById(int id)
         {
             return _context.Users.FirstOrDefault(e => e.Id == id);
         }
 
 
-        // grazina live statistics page'ui duomenis kas 1.5 sek.
+        // grazina live statistics page'ui duomenis (kvieciamas kas 1.5 sek)
         [HttpGet]
-        public IActionResult LiveWattage(int device_id)
+        public async Task<IActionResult> LiveWattage(int device_id)
         {
             try
             {
@@ -170,13 +112,13 @@ namespace PVP.Controllers
                 var token = _jwtservice.Verify(jwt);
                 int userId = int.Parse(token.Issuer);
                 var user = FindUserById(userId);
-                var device = _context.Devices.FirstOrDefault(d => d.Id.Equals(device_id));
+                var device = await _context.Devices.FirstOrDefaultAsync(d => d.Id.Equals(device_id));
 
                 if (user != null && device != null && user.Id == device.FkUser)
                 {
                     if (!device.IsOn)
                         return Ok(-1);
-                    var rti = _context.Realtimeinfos.FirstOrDefault(i => i.FkDeviceId.Equals(device_id));
+                    var rti = await _context.Realtimeinfos.FirstOrDefaultAsync(i => i.FkDeviceId.Equals(device_id));
                     if (rti == null)
                         return Unauthorized("Error has occured.");
                     return Ok(rti.Wattage);
@@ -189,9 +131,9 @@ namespace PVP.Controllers
             }
         }
 
-        // Panaikina viena 'info' irasa
+        // Panaikina viena statistikos 'info' irasa
         [HttpPost]
-        public IActionResult RemoveEntry([FromBody] ParamJSON data)
+        public async Task<IActionResult> RemoveEntry([FromBody] ParamJSON data)
         {
             try
             {
@@ -199,11 +141,11 @@ namespace PVP.Controllers
                 var token = _jwtservice.Verify(jwt);
                 int userId = int.Parse(token.Issuer);
 
-                var info = _context.Infos.FirstOrDefault(e => e.Id.Equals(data.id));
+                var info = await _context.Infos.FirstOrDefaultAsync(e => e.Id.Equals(data.id));
                 if (info != null)
                 {
                     _context.Infos.Remove(info);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     return Ok();
                 }
                 else return BadRequest("Blogi duomenys.");
@@ -217,7 +159,6 @@ namespace PVP.Controllers
 
 
         // Grazina 'info' duomenis JSON formatu grafiko braizymui
-        // ALGORITMAS NEGALUTINIS!!!
         [HttpGet]
         public IActionResult GetStatistics(int device_id, string start, string end)
         {
@@ -229,7 +170,8 @@ namespace PVP.Controllers
                 if(end == null)
                 {
                     int parsedDays = Int32.Parse(start);
-                    info.AddRange(_context.Infos.Where(e => e.FkDeviceId.Equals(device_id)).Where(e => e.DateTime >= DateTime.Now.AddDays(-parsedDays)).OrderBy(e => e.DateTime));
+                    // Pasirinkto irenginio infos nuo kazkiek dienu atgal iki dabar
+                    info.AddRange(_context.Infos.Where(e => e.FkDeviceId.Equals(device_id)).Where(e => e.DateTime >= (DateTime.Now.AddHours(3)).AddDays(-parsedDays)).OrderBy(e => e.DateTime));
                 }
                 else
                 {
@@ -270,7 +212,6 @@ namespace PVP.Controllers
                     };
                     sjson.Add(stat);
                     value = 0; //count = 0;
-
                 }
                 return Ok(sjson);
             }

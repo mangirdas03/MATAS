@@ -2,11 +2,6 @@
     ViewData["Title"] = "Pagrindinis";
 }
 
-@*<div class="text-center">
-        <h1 class="display-4">Welcome</h1>
-        <p>LANDING PAGE </p>
-    </div>*@
-
 <div class="split split-left">
     <div class="split-centered">
         <img src="/images/logo.png" alt="Image" class="responsive-image">
@@ -22,7 +17,7 @@
                     <span class="glyphicon glyphicon-log-in" style="top:-3px;"></span>&nbsp;&nbsp;Prisijungti
                 </a>
             </div>
-            @*<a href="@Url.Action("Login", "Home")" class="index-button"><h3><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Prisijungti</h3></a>*@
+            
         </div>
     </div>
 
@@ -34,13 +29,12 @@
                     <span class="glyphicon glyphicon-shopping-cart" style="top:0px;"></span>&nbsp;&nbsp;Pirkti
                 </a>
             </div>
-            @*<a href="https://bongo.cat/" class="index-button" target="_blank"><h3><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;Pirkti</h3></a>*@
         </div>
     </div>
 
 </div>
 <script type="text/javascript">
-    // LOGIN/LOGOUT messages
+    // LOGOUT message
     window.onload = function () {
         if ('@TempData["LogoutSuccessMessage"]' == 'LogoutSuccess') {
             Swal.fire({

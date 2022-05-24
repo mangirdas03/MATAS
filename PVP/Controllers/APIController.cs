@@ -5,12 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PVP.ViewModels;
-using Microsoft.Extensions.Logging;
 using PVP.Models;
-using System.Diagnostics;
-using BCryptNet = BCrypt.Net.BCrypt;
 using Microsoft.EntityFrameworkCore;
 using PVP.Helpers;
+
 
 namespace PVP.Controllers
 {
@@ -26,104 +24,48 @@ namespace PVP.Controllers
             _context = context;
             _jwtservice = jwtservice;
         }
-        // test
-        //[HttpPost("wattage")]
-        //public IActionResult ReceiveWattage(WattageJSON data)
-        //{
-        //    try
-        //    {
-        //        var device = _context.Devices.FirstOrDefault(e => e.SetupString == data.id);
-        //        if(device == null)
-        //            return Unauthorized("Authorization error.");
-        //        var info = new Info
-        //        {
-        //            FkDeviceId = device.Id,
-        //            DateTime = DateTime.Now,
-        //            Wattage = data.Wattage
-        //        };
-        //        _context.Infos.Add(info);
-        //        _context.SaveChanges();
-        //    }
-        //    catch (Exception)
-        //    {
 
-        //        return Unauthorized("Error has occured.");
-        //    }
-        //    //throw new Exception("test");
-        //    return Ok("Wattage received: " + data.Wattage);
-        //}
-
-        //private User FindUserById(int id)
-        //{
-        //    return _context.Users.FirstOrDefault(e => e.Id == id);
-        //}
-
-        //[HttpGet("wattage/{device_id}")]
-        //public IActionResult LiveWattage(int device_id)
-        //{
-        //    try
-        //    {
-        //        var jwt = Request.Cookies["jwt"];
-        //        if(jwt == null) 
-        //            return Unauthorized("Authorization error.");
-        //        var token = _jwtservice.Verify(jwt);
-        //        int userId = int.Parse(token.Issuer);
-        //        var user = FindUserById(userId);
-        //        var device = _context.Devices.FirstOrDefault(d => d.Id.Equals(device_id));
-
-        //        if(user != null && device != null && user.Id == device.FkUser)
-        //        {
-        //            var rti = _context.Realtimeinfos.FirstOrDefault(i => i.FkDeviceId.Equals(device_id));
-        //            if (rti == null)
-        //                return Unauthorized("Error has occured.");
-        //            return Ok(rti.Wattage);
-
-        //        }
-        //        else return Unauthorized("Authorization error.");
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return Unauthorized("Error has occured.");
-        //    }
-
-        //}
-
-
+        // Irenginys siuncia real-time duomenis Watais, jam grazinamas jo statusas
         [HttpPost("livewattage")]
-        public IActionResult ReceiveLiveWattage(WattageJSON data)
+        public async Task<IActionResult> ReceiveLiveWattage(WattageJSON data)
         {
             try
             {
-                var device = _context.Devices.FirstOrDefault(e => e.SetupString == data.id);
+                var device = await _context.Devices.FirstOrDefaultAsync(e => e.SetupString == data.id);
                 if (device == null)
                     return Unauthorized("Authorization error.");
 
                 if (device.IsOn)
                 {
-                    var rti = _context.Realtimeinfos.FirstOrDefault(i => i.FkDeviceId.Equals(device.Id));
+                    var rti = await _context.Realtimeinfos.FirstOrDefaultAsync(i => i.FkDeviceId.Equals(device.Id));
                     rti.Wattage = data.Wattage;
+                    var dateNow = DateTime.Now.AddHours(3);
+
+                    // Notification reset
+                    if (device.IsRealtime == true && dateNow.Hour == 00 && dateNow.Minute < 1 && dateNow.Second < 30)
+                    {
+                        device.IsRealtime = false;
+                        _context.Update(device);
+                    }
 
                     _context.Update(rti);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
                 return Ok(device.IsOn);
             }
             catch (Exception)
             {
-
                 return Unauthorized("Error has occured.");
             }
-            //throw new Exception("test");
-            //return Ok("Wattage received: " + data.Wattage);
-
         }
 
+        // Irenginys siuncia paprastus duomenis, kvieciams email service
         [HttpPost("wattage")]
-        public IActionResult ReceiveWattage(WattageJSON data)
+        public async Task<IActionResult> ReceiveWattage(WattageJSON data)
         {
             try
             {
-                var device = _context.Devices.FirstOrDefault(e => e.SetupString == data.id);
+                var device = await _context.Devices.FirstOrDefaultAsync(e => e.SetupString == data.id);
                 if (device == null)
                     return Unauthorized("Authorization error.");
 
@@ -135,15 +77,48 @@ namespace PVP.Controllers
                 };
                 _context.Infos.Add(info);
                 _context.SaveChanges();
+
+                //notifications
+                if (device.IsRealtime == false)
+                {
+                    var dateNow = DateTime.Now.AddHours(3);
+                    var statsSum = _context.Infos.Where(e => e.FkDeviceId.Equals(device.Id)).Where(f => f.DateTime.Date.Equals(dateNow.Date)).Select(g => g.Wattage).Sum();
+                    if (statsSum > device.Treshold && device.Treshold != 0)
+                    {
+                        string userMail = _context.Users.FirstOrDefault(e => e.Id.Equals(device.FkUser)).Mail;
+                        string title;
+                        if (device.Tag == null || device.Tag == "")
+                            title = device.SetupString;
+                        else title = device.Tag;
+                        string subject = "Įrenginio " + title + " dienos " + dateNow.ToString("MM-dd") + " limitas viršytas";
+                        string text = "<h1>Jūsų nustatytas elektros sąnaudų dienos limitas viršytas!</h1>" +
+                            "<p>Įrenginys: " + title + "</p>" +
+                            "<p>Data: " + dateNow.ToString("yyyy-MM-dd HH:mm") + "</p>" +
+                            "<p>Limitas: " + device.Treshold + " kWh</p>" +
+                            "<p>Jau pasiekta: " + statsSum + " kWh</p>" +
+                            "</br>" +
+                            "<p>Jei nebenorite gauti šių pranešimų, panaikinkite įrenginių limitus.</p>" +
+                            "<p>Šis pranešimas Jums atsiųstas automatiškai, prašome į jį neatsakinėti.</p></br><p>MATAS - Smart Energy Solutions</p>";
+
+                        EmailService es = new EmailService();
+                        bool emailSuccess = es.SendEmail(userMail, subject, text);
+                        if (emailSuccess)
+                        {
+                            device.IsRealtime = true;
+                            _context.Devices.Update(device);
+                        }
+                    }
+                }
+                await _context.SaveChangesAsync();
             }
             catch (Exception)
             {
                 return Unauthorized("Error has occured.");
             }
-            //throw new Exception("test");
             return Ok("Wattage received: " + data.Wattage);
         }
 
+        // Irenginys siuncia GET tam, kad patikrintu savo statusa, nebenaudojamas
         [HttpGet("status/{id}")]
         public async Task<IActionResult> GetStatus(string id)
         {

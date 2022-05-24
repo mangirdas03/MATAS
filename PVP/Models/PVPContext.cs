@@ -72,7 +72,7 @@ namespace PVP.Models
                     .HasCharSet("utf8");
 
                 entity.Property(e => e.Treshold)
-                    .HasColumnType("int(11)")
+                    .HasColumnType("decimal(11, 2)")
                     .HasColumnName("treshold");
 
                 entity.HasOne(d => d.FkUserNavigation)

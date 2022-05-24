@@ -17,7 +17,7 @@ namespace PVP.Models
         public bool IsRealtime { get; set; }
         public string SetupString { get; set; }
         public int Id { get; set; }
-        public int? Treshold { get; set; }
+        public decimal Treshold { get; set; }
         public string Tag { get; set; }
         public decimal Tariff { get; set; }
 
