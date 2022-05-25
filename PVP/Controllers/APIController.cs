@@ -39,18 +39,19 @@ namespace PVP.Controllers
                 {
                     var rti = await _context.Realtimeinfos.FirstOrDefaultAsync(i => i.FkDeviceId.Equals(device.Id));
                     rti.Wattage = data.Wattage;
-                    var dateNow = DateTime.Now.AddHours(3);
-
-                    // Notification reset
-                    if (device.IsRealtime == true && dateNow.Hour == 00 && dateNow.Minute < 1 && dateNow.Second < 30)
-                    {
-                        device.IsRealtime = false;
-                        _context.Update(device);
-                    }
-
-                    _context.Update(rti);
-                    await _context.SaveChangesAsync();
+                    
+                    _context.Update(rti); 
                 }
+
+                var dateNow = DateTime.Now.AddHours(3);
+                // Notification reset
+                if (device.IsRealtime == true && dateNow.Hour == 00 && dateNow.Minute < 1 && dateNow.Second < 30)
+                {
+                    device.IsRealtime = false;
+                    _context.Update(device);
+                }
+
+                await _context.SaveChangesAsync();
                 return Ok(device.IsOn);
             }
             catch (Exception)
