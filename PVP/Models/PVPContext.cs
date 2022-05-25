@@ -28,11 +28,6 @@ namespace PVP.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //if (!optionsBuilder.IsConfigured)
-            //{
-            //    //optionsBuilder.UseMySql("server=10.0.0.4; port=3306; user=pvp; password=Slaptazodis123!; database=pvp", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.4.17-mariadb"));
-            //    optionsBuilder.UseMySql("server=localhost; port=3306; user=pvp; password=pvp; database=pvp", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.4.17-mariadb"));
-            //}
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
