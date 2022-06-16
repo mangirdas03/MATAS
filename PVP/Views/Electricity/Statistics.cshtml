@@ -81,14 +81,14 @@
                     <td>@item.FkDevice.Tag</td>
                 }
                 <td>@item.DateTime.ToString("yyyy-MM-dd HH:mm")</td>
-                <td>@item.Wattage kWh</td>
+                <td>@item.Wattage Wh</td>
                 @if (item.FkDevice.Tariff == 0)
                 {
                     <td>Nėra tarifo</td>
                 }
                 else
                 {
-                    <td>@String.Format("{0:.##}", item.Wattage * item.FkDevice.Tariff) Eur</td>
+                    <td>@String.Format("{0:0.###}", (item.Wattage / 1000) * item.FkDevice.Tariff) Eur</td>
                 }
                 <td><button style="padding-left:10px;" type="button" onclick="removeEntry(@item.Id)"><span title="Pašalinti įrašą" class="glyphicon glyphicon-trash"></span></button></td>
             </tr>
@@ -315,7 +315,7 @@ else
                             yAxes: [{
                                 scaleLabel: {
                                     display: true,
-                                    labelString: 'Sąnaudos'
+                                    labelString: 'Sąnaudos (Wh)'
                                 }
                             }],
                             xAxes: [{
