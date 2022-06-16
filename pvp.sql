@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 12, 2022 at 12:53 PM
+-- Generation Time: May 25, 2022 at 07:57 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -33,7 +33,7 @@ CREATE TABLE `devices` (
   `is_realtime` tinyint(1) NOT NULL,
   `setup_string` varchar(50) CHARACTER SET utf8 NOT NULL,
   `id` int(11) NOT NULL,
-  `treshold` int(11) DEFAULT NULL,
+  `treshold` decimal(11,2) NOT NULL,
   `tag` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `tariff` decimal(11,4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -43,8 +43,8 @@ CREATE TABLE `devices` (
 --
 
 INSERT INTO `devices` (`fk_user`, `is_on`, `is_realtime`, `setup_string`, `id`, `treshold`, `tag`, `tariff`) VALUES
-(13, 1, 0, 'OwCn0qs8IK', 1, 3111, 'Vonia', '0.3400'),
-(13, 1, 1, '4uPJgx4Exa', 2, 6000, 'Garažas', '0.0000');
+(13, 1, 0, 'OwCn0qs8IK', 1, '10.00', 'Vonia', '0.3410'),
+(13, 1, 0, '4uPJgx4Exa', 2, '0.10', '', '0.0000');
 
 -- --------------------------------------------------------
 
@@ -102,7 +102,15 @@ INSERT INTO `infos` (`id`, `fk_device_id`, `date_time`, `wattage`) VALUES
 (43, 1, '2022-03-30 16:34:12', '3211.00'),
 (84, 1, '2022-05-02 20:58:17', '3.55'),
 (85, 1, '2022-05-02 20:59:01', '3.56'),
-(86, 1, '2022-05-03 00:27:48', '55.12');
+(86, 1, '2022-05-03 00:27:48', '55.12'),
+(89, 1, '2022-05-17 01:49:13', '6.11'),
+(91, 1, '2022-05-17 01:50:11', '1.20'),
+(110, 1, '2022-05-17 13:48:43', '7.00'),
+(111, 1, '2022-05-24 22:07:55', '7.00'),
+(112, 1, '2022-05-24 22:08:17', '1.10'),
+(113, 1, '2022-05-24 22:11:37', '3.10'),
+(114, 1, '2022-05-25 23:30:32', '0.10'),
+(115, 1, '2022-05-25 23:30:43', '0.03');
 
 -- --------------------------------------------------------
 
@@ -142,7 +150,7 @@ CREATE TABLE `realtimeinfos` (
 --
 
 INSERT INTO `realtimeinfos` (`id`, `fk_device_id`, `wattage`) VALUES
-(1, 1, '55'),
+(1, 1, '3'),
 (2, 2, '2009');
 
 -- --------------------------------------------------------
@@ -163,7 +171,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `mail`, `pass_hash`, `created`) VALUES
-(13, 'mangirdas@mail.com', '$2a$11$1mJ5FSIFdHcPFNIB15nUEebQbao.ccvAaNvehCbZHW./nQ15UjED.', '2022-03-09 22:02:28');
+(13, 'mangispeep@gmail.com', '$2a$11$Otu9iui9zQ0qeULFCnD27ejW.5.OItzcSnArWrCOvUihTQeL9qhC.', '2022-03-09 22:02:28');
 
 -- --------------------------------------------------------
 
@@ -247,7 +255,7 @@ ALTER TABLE `devices`
 -- AUTO_INCREMENT for table `infos`
 --
 ALTER TABLE `infos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT for table `manufactureddevices`
