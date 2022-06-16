@@ -79,12 +79,12 @@ namespace PVP.Controllers
                 _context.Infos.Add(info);
                 _context.SaveChanges();
 
-                //notifications
+                //treshold check and notifications
                 if (device.IsRealtime == false)
                 {
                     var dateNow = DateTime.Now.AddHours(3);
                     var statsSum = _context.Infos.Where(e => e.FkDeviceId.Equals(device.Id)).Where(f => f.DateTime.Date.Equals(dateNow.Date)).Select(g => g.Wattage).Sum();
-                    if (statsSum > device.Treshold && device.Treshold != 0)
+                    if (statsSum > (device.Treshold * 1000) && device.Treshold != 0)
                     {
                         string userMail = _context.Users.FirstOrDefault(e => e.Id.Equals(device.FkUser)).Mail;
                         string title;
@@ -103,11 +103,9 @@ namespace PVP.Controllers
 
                         EmailService es = new EmailService();
                         bool emailSuccess = es.SendEmail(userMail, subject, text);
-                        if (emailSuccess)
-                        {
-                            device.IsRealtime = true;
-                            _context.Devices.Update(device);
-                        }
+                        // database flag
+                        device.IsRealtime = true;
+                        _context.Devices.Update(device);
                     }
                 }
                 await _context.SaveChangesAsync();
